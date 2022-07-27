@@ -126,7 +126,8 @@ dependencies {
     //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation 'androidx.camera:camera-core:1.0.2'
-// From node_modules
+  // From node_modules
+  implementation project(path: ':react-native-vision-camera')  // From node_modules
 }
 
 if (isNewArchitectureEnabled()) {

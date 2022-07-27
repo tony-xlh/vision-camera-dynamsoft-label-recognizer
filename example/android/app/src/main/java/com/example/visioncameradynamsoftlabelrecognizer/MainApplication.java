@@ -10,6 +10,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.example.visioncameradynamsoftlabelrecognizer.newarchitecture.MainApplicationReactNativeHost;
+import com.visioncameradynamsoftlabelrecognizer.VisionCameraDynamsoftLabelRecognizerPackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+          packages.add(new VisionCameraDynamsoftLabelRecognizerPackage()); // <- add
           return packages;
         }
 
@@ -35,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSMainModuleName() {
           return "index";
         }
+
       };
 
   private final ReactNativeHost mNewArchitectureNativeHost =
