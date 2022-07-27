@@ -121,13 +121,26 @@ repositories {
   }
 }
 
+rootProject.allprojects {
+  repositories {
+    maven {
+      url "https://download2.dynamsoft.com/maven/dc/aar"
+    }
+    maven {
+      url "https://download2.dynamsoft.com/maven/dlr/aar"
+    }
+  }
+}
 
 dependencies {
     //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation 'androidx.camera:camera-core:1.0.2'
   // From node_modules
-  implementation project(path: ':react-native-vision-camera')  // From node_modules
+  implementation project(path: ':react-native-vision-camera')
+  // DLR
+  implementation 'com.dynamsoft:dynamsoftcore:1.0.0@aar'
+  implementation 'com.dynamsoft:dynamsoftlabelrecognizer:2.0.0@aar'
 }
 
 if (isNewArchitectureEnabled()) {
