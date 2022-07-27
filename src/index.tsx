@@ -5,9 +5,9 @@ export interface DLRConfig{
   license?:string;
 }
 
-export function decode(frame: Frame,config: DLRConfig): [] {
+export function recognize(frame: Frame,config: DLRConfig): [] {
   'worklet'
   // @ts-ignore
   // eslint-disable-next-line no-undef
-  return __decode(frame, config)
+  return __recognize(frame, config)
 }
