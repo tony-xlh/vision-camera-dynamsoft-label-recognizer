@@ -16,7 +16,7 @@ public class VisionCameraDynamsoftLabelRecognizerPackage implements ReactPackage
     @Override
     public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new VisionCameraDynamsoftLabelRecognizerModule(reactContext));
+        //modules.add(new VisionCameraDynamsoftLabelRecognizerModule(reactContext));
         return modules;
     }
 

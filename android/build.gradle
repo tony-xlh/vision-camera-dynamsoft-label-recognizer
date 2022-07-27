@@ -125,6 +125,7 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
+  implementation 'androidx.camera:camera-core:1.0.2'
 // From node_modules
 }
 
