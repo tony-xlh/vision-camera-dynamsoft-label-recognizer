@@ -1,19 +1,34 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'vision-camera-dynamsoft-label-recognizer';
+import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+//import { multiply } from 'vision-camera-dynamsoft-label-recognizer';
+import { Camera, useCameraDevices } from 'react-native-vision-camera';
+
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [hasPermission, setHasPermission] = React.useState(false);
+  const devices = useCameraDevices();
+  const device = devices.back;
 
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    (async () => {
+      const status = await Camera.requestCameraPermission();
+      setHasPermission(status === 'authorized');
+    })();
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+ return (
+    <SafeAreaView style={styles.container}>
+      {device != null &&
+      hasPermission && (
+      <>
+        <Camera
+        style={StyleSheet.absoluteFill}
+        device={device}
+        isActive={true}
+        />
+      </>)}
+    </SafeAreaView>
   );
 }
 
