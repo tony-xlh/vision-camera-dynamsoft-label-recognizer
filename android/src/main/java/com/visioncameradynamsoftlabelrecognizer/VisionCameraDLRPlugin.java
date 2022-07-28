@@ -1,5 +1,7 @@
 package com.visioncameradynamsoftlabelrecognizer;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.camera.core.ImageProxy;
@@ -18,28 +20,22 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
     public Object callback(ImageProxy image, Object[] params) {
         // code goes here
         if (recognizer == null) {
+            Log.d("DLR","init");
             initDLR();
         }
         WritableNativeArray array = new WritableNativeArray();
-        ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-        int nRowStride = image.getPlanes()[0].getRowStride();
-        int nPixelStride = image.getPlanes()[0].getPixelStride();
-        int length = buffer.remaining();
-        byte[] bytes = new byte[length];
-        buffer.get(bytes);
-        ImageData img = new ImageData();
-        img.bytes = bytes;
-        img.format = image.getFormat();
-        img.height = image.getHeight();
-        img.width = image.getWidth();
-        img.stride = nRowStride*nPixelStride;
+        @SuppressLint("UnsafeOptInUsageError")
+        Bitmap bm = BitmapUtils.getBitmap(image);
         try {
-            DLRResult[] results = recognizer.recognizeByBuffer(img,"");
+            DLRResult[] results = recognizer.recognizeByImage(bm,"");
             for (DLRResult result:results) {
                 for (DLRLineResult line:result.lineResults) {
+                    Log.d("DLR",line.text);
                     array.pushString(line.text);
                 }
             }
+
+            Log.d("DLR","length: "+results.length);
         } catch (LabelRecognizerException e) {
             e.printStackTrace();
         }

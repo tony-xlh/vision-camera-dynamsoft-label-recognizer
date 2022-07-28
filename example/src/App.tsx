@@ -34,7 +34,7 @@ export default function App() {
         device={device}
         isActive={true}
         frameProcessor={frameProcessor}
-        frameProcessorFps={2}
+        frameProcessorFps={1}
         />
       </>)}
     </SafeAreaView>
