@@ -25,18 +25,20 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             initDLR(license);
         }
         String templateName = "";
-        if (config.hasKey("templateName")) {
-            templateName = config.getString("templateName");
-        }
         if (config.hasKey("template")) {
+            String template = config.getString("template");
+            Log.d("DLR","template: "+template);
             try {
-                String template = config.getString("template");
-                Log.d("DLR","template: "+template);
+                recognizer.clearAppendedSettings();
                 recognizer.appendSettingsFromString(template);
             } catch (LabelRecognizerException e) {
                 e.printStackTrace();
             }
         }
+        if (config.hasKey("templateName")) {
+            templateName = config.getString("templateName");
+        }
+
         WritableNativeArray array = new WritableNativeArray();
         @SuppressLint("UnsafeOptInUsageError")
         Bitmap bm = BitmapUtils.getBitmap(image);
