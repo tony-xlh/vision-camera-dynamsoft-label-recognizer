@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { recognize, DLRConfig, ScanRegion } from 'vision-camera-dynamsoft-label-recognizer';
+import { recognize, DLRConfig, ScanRegion, EnumPresetTemplate, EnumPresetTemplateName } from 'vision-camera-dynamsoft-label-recognizer';
 import { Camera, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
 import BarcodeMask from 'react-native-barcode-mask';
 import * as REA from 'react-native-reanimated';
@@ -44,7 +44,8 @@ export default function App() {
 
     config.license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
     config.scanRegion = scanRegion;
-
+    config.template = EnumPresetTemplate.MRZ;
+    config.templateName = EnumPresetTemplateName.MRZ;
     let result = recognize(frame,config);
     console.log(result);
   }, [])
