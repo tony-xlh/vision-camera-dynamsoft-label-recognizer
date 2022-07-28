@@ -22,7 +22,6 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             if (config != null && config.hasKey("license")) {
                 license = config.getString("license");
             }
-            Log.d("DLR","init");
             initDLR(license);
         }
         WritableNativeArray array = new WritableNativeArray();
@@ -36,23 +35,15 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             top = scanRegion.getInt("top") / 100.0 * bm.getHeight();
             double width = scanRegion.getInt("width") / 100.0 * bm.getWidth();
             double height = scanRegion.getInt("height") / 100.0 * bm.getHeight();
-            Log.d("DLR","left: "+left);
-            Log.d("DLR","top: "+top);
-            Log.d("DLR","width: "+width);
-            Log.d("DLR","height: "+height);
             bm = Bitmap.createBitmap(bm, (int) left, (int) top, (int) width, (int) height, null, false);
-            Log.d("DLR",bm.getWidth()+"x"+bm.getHeight());
         }
         try {
             DLRResult[] results = recognizer.recognizeByImage(bm,"");
             for (DLRResult result:results) {
                 for (DLRLineResult line:result.lineResults) {
-                    Log.d("DLR",line.text);
                     array.pushString(line.text);
                 }
             }
-
-            Log.d("DLR","length: "+results.length);
         } catch (LabelRecognizerException e) {
             e.printStackTrace();
         }
