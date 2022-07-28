@@ -17,11 +17,11 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
     public Object callback(ImageProxy image, Object[] params) {
         // code goes here
         ReadableNativeMap config = getConfig(params);
-        String license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
-        if (config != null && config.hasKey("license")) {
-          license = config.getString("license");
-        }
         if (recognizer == null) {
+            String license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
+            if (config != null && config.hasKey("license")) {
+                license = config.getString("license");
+            }
             Log.d("DLR","init");
             initDLR(license);
         }
