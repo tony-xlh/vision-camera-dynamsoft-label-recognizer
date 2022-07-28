@@ -28,6 +28,21 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         WritableNativeArray array = new WritableNativeArray();
         @SuppressLint("UnsafeOptInUsageError")
         Bitmap bm = BitmapUtils.getBitmap(image);
+        double left = 0;
+        double top = 0;
+        if (config != null && config.hasKey("scanRegion")) {
+            ReadableNativeMap scanRegion = config.getMap("scanRegion");
+            left = scanRegion.getInt("left") / 100.0 * bm.getWidth();
+            top = scanRegion.getInt("top") / 100.0 * bm.getHeight();
+            double width = scanRegion.getInt("width") / 100.0 * bm.getWidth();
+            double height = scanRegion.getInt("height") / 100.0 * bm.getHeight();
+            Log.d("DLR","left: "+left);
+            Log.d("DLR","top: "+top);
+            Log.d("DLR","width: "+width);
+            Log.d("DLR","height: "+height);
+            bm = Bitmap.createBitmap(bm, (int) left, (int) top, (int) width, (int) height, null, false);
+            Log.d("DLR",bm.getWidth()+"x"+bm.getHeight());
+        }
         try {
             DLRResult[] results = recognizer.recognizeByImage(bm,"");
             for (DLRResult result:results) {

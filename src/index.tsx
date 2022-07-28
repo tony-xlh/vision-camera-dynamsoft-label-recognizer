@@ -1,8 +1,16 @@
 import type { Frame } from 'react-native-vision-camera'
 
+export interface ScanRegion{
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
 export interface DLRConfig{
-  template?:string;
-  license?:string;
+  template?: string;
+  license?: string;
+  scanRegion?: ScanRegion;
 }
 
 export function recognize(frame: Frame,config: DLRConfig): [] {
