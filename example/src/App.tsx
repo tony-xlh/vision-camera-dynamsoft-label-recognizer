@@ -57,8 +57,8 @@ export default function App() {
     })();
     const width = Dimensions.get('window').width;
     const height = Dimensions.get('window').height;
-    setMaskWidth(width*0.8)
-    setMaskHeight(height*0.15)
+    setMaskWidth(width*0.95)
+    setMaskHeight(height*0.4)
   }, []);
 
  return (

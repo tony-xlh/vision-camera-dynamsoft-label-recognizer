@@ -1,18 +1,30 @@
 package com.visioncameradynamsoftlabelrecognizer;
 
 import android.annotation.SuppressLint;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.util.Log;
 import androidx.camera.core.ImageProxy;
 
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableNativeMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
 import com.dynamsoft.dlr.*;
 
-public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
+import java.io.InputStream;
 
+public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
     private LabelRecognizer recognizer = null;
+    private ReactApplicationContext context;
+    private String currentTemplateName = "";
+    private String currentTemplate = "";
+    private Boolean mrzModelLoaded = false;
+
+    public void setContext(ReactApplicationContext reactContext){
+        context = reactContext;
+    }
+
     @Override
     public Object callback(ImageProxy image, Object[] params) {
         // code goes here
@@ -24,20 +36,30 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             }
             initDLR(license);
         }
+
         String templateName = "";
-        if (config.hasKey("template")) {
-            String template = config.getString("template");
-            Log.d("DLR","template: "+template);
-            try {
-                recognizer.clearAppendedSettings();
-                recognizer.appendSettingsFromString(template);
-            } catch (LabelRecognizerException e) {
-                e.printStackTrace();
-            }
-        }
+
         if (config.hasKey("templateName")) {
             templateName = config.getString("templateName");
+            if (currentTemplateName.equals(templateName) == false && templateName.equals("locr")) {
+                loadMRZModel();
+            }
+            currentTemplateName = templateName;
         }
+
+        if (config.hasKey("template")) {
+            String template = config.getString("template");
+            if (currentTemplate.equals(template) == false) {
+                try {
+                    recognizer.clearAppendedSettings();
+                    recognizer.appendSettingsFromString(template);
+                } catch (LabelRecognizerException e) {
+                    e.printStackTrace();
+                }
+            }
+            currentTemplate = template;
+        }
+
 
         WritableNativeArray array = new WritableNativeArray();
         @SuppressLint("UnsafeOptInUsageError")
@@ -54,7 +76,6 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         }
         try {
             DLRResult[] results = recognizer.recognizeByImage(bm,templateName);
-            Log.d("DLR","using template: "+templateName);
             for (DLRResult result:results) {
                 for (DLRLineResult line:result.lineResults) {
                     array.pushString(line.text);
@@ -64,6 +85,33 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             e.printStackTrace();
         }
         return array;
+    }
+
+    private void loadMRZModel() {
+        if (mrzModelLoaded == false) {
+            try {
+                String[] fileNames = {"NumberUppercase","NumberUppercase_Assist_1lIJ","NumberUppercase_Assist_8B","NumberUppercase_Assist_8BHR","NumberUppercase_Assist_number","NumberUppercase_Assist_O0DQ","NumberUppercase_Assist_upcase"};
+                for(int i = 0;i<fileNames.length;i++) {
+                    AssetManager manager = context.getAssets();
+                    InputStream isPrototxt = manager.open("MRZ/"+fileNames[i]+".prototxt");
+                    byte[] prototxt = new byte[isPrototxt.available()];
+                    isPrototxt.read(prototxt);
+                    isPrototxt.close();
+                    InputStream isCharacterModel = manager.open("MRZ/"+fileNames[i]+".caffemodel");
+                    byte[] characterModel = new byte[isCharacterModel.available()];
+                    isCharacterModel.read(characterModel);
+                    isCharacterModel.close();
+                    InputStream isTxt = manager.open("MRZ/"+fileNames[i]+".txt");
+                    byte[] txt = new byte[isTxt.available()];
+                    isTxt.read(txt);
+                    isTxt.close();
+                    recognizer.appendCharacterModelBuffer(fileNames[i], prototxt, txt, characterModel);
+                }
+                mrzModelLoaded = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void initDLR(String license) {
