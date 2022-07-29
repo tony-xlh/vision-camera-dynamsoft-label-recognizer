@@ -42,6 +42,7 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         if (config.hasKey("templateName")) {
             templateName = config.getString("templateName");
             if (currentTemplateName.equals(templateName) == false && templateName.equals("locr")) {
+                Log.d("DLR","load mrz model");
                 loadMRZModel();
             }
             currentTemplateName = templateName;
@@ -53,6 +54,7 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
                 try {
                     recognizer.clearAppendedSettings();
                     recognizer.appendSettingsFromString(template);
+                    Log.d("DLR","append template: "+template);
                 } catch (LabelRecognizerException e) {
                     e.printStackTrace();
                 }
@@ -75,10 +77,13 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             bm = Bitmap.createBitmap(bm, (int) left, (int) top, (int) width, (int) height, null, false);
         }
         try {
+            Log.d("DLR","use template name: "+templateName);
             DLRResult[] results = recognizer.recognizeByImage(bm,templateName);
+            Log.d("DLR","result length: "+ results.length);
             for (DLRResult result:results) {
                 for (DLRLineResult line:result.lineResults) {
                     array.pushString(line.text);
+                    Log.d("DLR",line.text);
                 }
             }
         } catch (LabelRecognizerException e) {
@@ -107,6 +112,7 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
                     isTxt.close();
                     recognizer.appendCharacterModelBuffer(fileNames[i], prototxt, txt, characterModel);
                 }
+                Log.d("DLR","mrz model loaded");
                 mrzModelLoaded = true;
             } catch (Exception e) {
                 e.printStackTrace();
