@@ -65,7 +65,28 @@ export default function App() {
     const height = Dimensions.get('window').height;
     setMaskWidth(width*0.95)
     setMaskHeight(height*0.4)
+    
   }, []);
+
+  const format = React.useMemo(() => {
+    const desiredWidth = 1280;
+    const desiredHeight = 720;
+    if (device) {
+      for (let index = 0; index < device.formats.length; index++) {
+        const format = device.formats[index];
+        if (format) {
+          console.log("h: "+format.videoHeight);
+          console.log("w: "+format.videoWidth);
+          if (format.videoWidth == desiredWidth && format.videoHeight == desiredHeight){
+            console.log("select format: "+format);
+            return format;
+          }
+        }
+      };
+    }
+    return undefined;
+  }, [device?.formats])
+
 
   const getText = () => {
     let text = "";
@@ -84,8 +105,9 @@ export default function App() {
         style={StyleSheet.absoluteFill}
         device={device}
         isActive={true}
+        format={format}
         frameProcessor={frameProcessor}
-        frameProcessorFps={1}
+        frameProcessorFps={5}
         >
         </Camera>
         <BarcodeMask width={maskWidth} height={maskHeight} />
