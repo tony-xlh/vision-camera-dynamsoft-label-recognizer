@@ -12,7 +12,7 @@ npm install vision-camera-dynamsoft-label-recognizer
 
 make sure you correctly setup react-native-reanimated and add this to your `babel.config.js`
 
-```json
+```js
 [
   'react-native-reanimated/plugin',
   {
