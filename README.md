@@ -1,20 +1,99 @@
 # vision-camera-dynamsoft-label-recognizer
+
+
 React Native Vision Camera Frame Processor Plugin of Dynamsoft Label Recognizer
+
+
 ## Installation
 
 ```sh
 npm install vision-camera-dynamsoft-label-recognizer
 ```
 
+make sure you correctly setup react-native-reanimated and add this to your `babel.config.js`
+
+```json
+[
+  'react-native-reanimated/plugin',
+  {
+    globals: ['__recognize'],
+  },
+]
+```
+
 ## Usage
 
-```js
-import { multiply } from "vision-camera-dynamsoft-label-recognizer";
+```ts
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import { Camera, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
+import { recognize, DLRConfig } from 'vision-camera-dynamsoft-label-recognizer';
+import * as REA from 'react-native-reanimated';
 
-// ...
+export default function App() {
+  const [hasPermission, setHasPermission] = React.useState(false);
+  const devices = useCameraDevices();
+  const device = devices.back;
+  const frameProcessor = useFrameProcessor((frame) => {
+    'worklet'
+    const config:DLRConfig = {};
+    const results:string[] = recognize(frame,config);
+  }, [])
 
-const result = await multiply(3, 7);
+  React.useEffect(() => {
+    (async () => {
+      const status = await Camera.requestCameraPermission();
+      setHasPermission(status === 'authorized');
+    })();
+  }, []);
+
+  return (
+    device != null &&
+    hasPermission && (
+      <>
+        <Camera
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={true}
+          frameProcessor={frameProcessor}
+          frameProcessorFps={5}
+        />
+      </>
+    )
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 ```
+
+## Interfaces
+
+```ts
+export interface ScanRegion{
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
+export interface DLRConfig{
+  template?: string;
+  templateName?: string;
+  license?: string;
+  scanRegion?: ScanRegion;
+}
+```
+
+## Supported Platforms
+
+* Android
+* iOS (work in progress)
 
 ## Contributing
 
