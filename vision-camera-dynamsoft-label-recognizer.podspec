@@ -16,9 +16,9 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/xulihang/vision-camera-dynamsoft-label-recognizer.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
-
+  s.libraries = 'c++'
   s.dependency "React-Core"
-
+  s.dependency "DynamsoftLabelRecognizer", '= 2.0.0.1'
   # Don't install the dependencies when we run `pod install` in the old architecture.
   if ENV['RCT_NEW_ARCH_ENABLED'] == '1' then
     s.compiler_flags = folly_compiler_flags + " -DRCT_NEW_ARCH_ENABLED=1"
