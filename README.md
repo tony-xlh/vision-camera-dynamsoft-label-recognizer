@@ -1,7 +1,7 @@
 # vision-camera-dynamsoft-label-recognizer
 
 
-React Native Vision Camera Frame Processor Plugin of Dynamsoft Label Recognizer
+React Native Vision Camera Frame Processor Plugin of [Dynamsoft Label Recognizer](https://www.dynamsoft.com/label-recognition/overview/)
 
 
 ## Installation
