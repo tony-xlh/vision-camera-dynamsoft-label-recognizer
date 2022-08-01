@@ -29,8 +29,36 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
           print("Failed to create CGImage!")
           return nil
         }
+        
+        let image:UIImage;
+        let scanRegion = config?["scanRegion"] as? [String: Int]
+        if scanRegion != nil {
+            let imgWidth = Double(cgImage.width)
+            let imgHeight = Double(cgImage.height)
+            let left:Double = Double(scanRegion?["left"] ?? 0) / 100.0 * imgWidth
+            let top:Double = Double(scanRegion?["top"] ?? 0) / 100.0 * imgHeight
+            let width:Double = Double(scanRegion?["width"] ?? 100) / 100.0 * imgWidth
+            let height:Double = Double(scanRegion?["height"] ?? 100) / 100.0 * imgHeight
+
+            // The cropRect is the rect of the image to keep,
+            // in this case centered
+            let cropRect = CGRect(
+                x: left,
+                y: top,
+                width: width,
+                height: height
+            ).integral
+
+            let cropped = cgImage.cropping(
+                to: cropRect
+            )!
+            image = UIImage(cgImage: cropped)
+            print("use cropped image")
+        }else{
+            image = UIImage(cgImage: cgImage)
+        }
+        
         var returned_results: [Any] = []
-        let image = UIImage(cgImage: cgImage)
         var error : NSError? = NSError()
         let results = recognizer.recognizeByImage(image: image, templateName: "", error: &error)
         for result in results {
@@ -47,9 +75,9 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         recognizer = DynamsoftLabelRecognizer.init()
     }
 
-    static func getConfig(withArgs args: [Any]!) -> [String:String]! {
+    static func getConfig(withArgs args: [Any]!) -> [String:NSObject]! {
         if args.count>0 {
-            let config = args[0] as? [String: String]
+            let config = args[0] as? [String: NSObject]
             return config
         }
         return nil
