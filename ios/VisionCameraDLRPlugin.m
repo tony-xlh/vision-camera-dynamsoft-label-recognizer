@@ -1,8 +1,9 @@
 //
 //  VisionCameraDLRPlugin.m
-//  vision-camera-dynamsoft-label-recognizer
+//  VisionCameraDynamsoftLabelRecognizer
 //
-//  Created by xulihang on 2022/7/29.
+//  Created by xulihang on 2022/7/31.
+//  Copyright © 2022 Facebook. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
