@@ -76,9 +76,9 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         recognizer = DynamsoftLabelRecognizer.init()
     }
 
-    static func getConfig(withArgs args: [Any]!) -> [String:NSObject]! {
+    static func getConfig(withArgs args: [Any]!) -> [String:Any]! {
         if args.count>0 {
-            let config = args[0] as? [String: NSObject]
+            let config = args[0] as? [String: Any]
             return config
         }
         return nil
