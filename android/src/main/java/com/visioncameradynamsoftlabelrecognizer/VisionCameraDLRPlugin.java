@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.camera.core.ImageProxy;
 
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableNativeMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
@@ -17,9 +18,9 @@ import java.io.InputStream;
 public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
     private LabelRecognizer recognizer = null;
     private ReactApplicationContext context;
-    private String currentTemplateName = "";
     private String currentTemplate = "";
-    private Boolean mrzModelLoaded = false;
+    private String currentModelFolder = "";
+    private Boolean customModelLoaded = false;
 
     public void setContext(ReactApplicationContext reactContext){
         context = reactContext;
@@ -41,12 +42,18 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
 
         if (config.hasKey("templateName")) {
             templateName = config.getString("templateName");
-            if (currentTemplateName.equals(templateName) == false && templateName.equals("locr")) {
-                Log.d("DLR","load mrz model");
-                loadMRZModel();
-            }
-            currentTemplateName = templateName;
         }
+
+        if (config.hasKey("customModelConfig")) {
+            ReadableNativeMap customModelConfig = config.getMap("customModelConfig");
+            String modelFolder = customModelConfig.getString("customModelFolder");
+            ReadableArray modelFileNames = customModelConfig.getArray("modelFileNames");
+            if (modelFolder.equals(currentModelFolder) == false) {
+                loadCustomModel(modelFolder, modelFileNames);
+                currentModelFolder = modelFolder;
+            }
+        }
+
 
         if (config.hasKey("template")) {
             String template = config.getString("template");
@@ -92,28 +99,27 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         return array;
     }
 
-    private void loadMRZModel() {
-        if (mrzModelLoaded == false) {
+    private void loadCustomModel(String modelFolder, ReadableArray fileNames) {
+        if (customModelLoaded == false) {
             try {
-                String[] fileNames = {"NumberUppercase","NumberUppercase_Assist_1lIJ","NumberUppercase_Assist_8B","NumberUppercase_Assist_8BHR","NumberUppercase_Assist_number","NumberUppercase_Assist_O0DQ","NumberUppercase_Assist_upcase"};
-                for(int i = 0;i<fileNames.length;i++) {
+                for(int i = 0;i<fileNames.size();i++) {
                     AssetManager manager = context.getAssets();
-                    InputStream isPrototxt = manager.open("MRZ/"+fileNames[i]+".prototxt");
+                    InputStream isPrototxt = manager.open(modelFolder+"/"+fileNames.getString(i)+".prototxt");
                     byte[] prototxt = new byte[isPrototxt.available()];
                     isPrototxt.read(prototxt);
                     isPrototxt.close();
-                    InputStream isCharacterModel = manager.open("MRZ/"+fileNames[i]+".caffemodel");
+                    InputStream isCharacterModel = manager.open(modelFolder+"/"+fileNames.getString(i)+".caffemodel");
                     byte[] characterModel = new byte[isCharacterModel.available()];
                     isCharacterModel.read(characterModel);
                     isCharacterModel.close();
-                    InputStream isTxt = manager.open("MRZ/"+fileNames[i]+".txt");
+                    InputStream isTxt = manager.open(modelFolder+"/"+fileNames.getString(i)+".txt");
                     byte[] txt = new byte[isTxt.available()];
                     isTxt.read(txt);
                     isTxt.close();
-                    recognizer.appendCharacterModelBuffer(fileNames[i], prototxt, txt, characterModel);
+                    recognizer.appendCharacterModelBuffer(fileNames.getString(i), prototxt, txt, characterModel);
                 }
-                Log.d("DLR","mrz model loaded");
-                mrzModelLoaded = true;
+                Log.d("DLR","custom model loaded");
+                customModelLoaded = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
