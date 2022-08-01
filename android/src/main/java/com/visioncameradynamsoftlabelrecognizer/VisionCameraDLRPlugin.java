@@ -47,7 +47,7 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         if (config.hasKey("customModelConfig")) {
             ReadableNativeMap customModelConfig = config.getMap("customModelConfig");
             String modelFolder = customModelConfig.getString("customModelFolder");
-            ReadableArray modelFileNames = customModelConfig.getArray("modelFileNames");
+            ReadableArray modelFileNames = customModelConfig.getArray("customModelFileNames");
             if (modelFolder.equals(currentModelFolder) == false) {
                 loadCustomModel(modelFolder, modelFileNames);
                 currentModelFolder = modelFolder;
