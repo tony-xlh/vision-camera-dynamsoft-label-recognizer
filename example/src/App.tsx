@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform } from 'react-native';
 import { recognize, DLRConfig, ScanRegion, EnumPresetTemplate, EnumPresetTemplateName } from 'vision-camera-dynamsoft-label-recognizer';
 import { Camera, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
 import BarcodeMask from 'react-native-barcode-mask';
@@ -155,6 +155,14 @@ export default function App() {
   );
 }
 
+const monospaceFontFamily = () => {
+  if (Platform.OS === "ios") {
+    return "Courier New";
+  }else{
+    return "monospace";
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -210,6 +218,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "left",
     fontSize: 12,
-    fontFamily: "monospace"
+    fontFamily: monospaceFontFamily()
   }
 });
