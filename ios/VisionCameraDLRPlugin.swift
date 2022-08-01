@@ -17,7 +17,8 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
     public static func callback(_ frame: Frame!, withArgs args: [Any]!) -> Any! {
         let config = getConfig(withArgs: args)
         if recognizer == nil {
-            initDLR()
+            let license: String = config?["license"] as? String ?? "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
+            initDLR(license: license)
         }
         guard let imageBuffer = CMSampleBufferGetImageBuffer(frame.buffer) else {
             print("Failed to get CVPixelBuffer!")
@@ -70,8 +71,8 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         return returned_results
     }
     
-    static func initDLR() {
-        DynamsoftLabelRecognizer.initLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", verificationDelegate: self)
+    static func initDLR(license:String) {
+        DynamsoftLabelRecognizer.initLicense(license, verificationDelegate: self)
         recognizer = DynamsoftLabelRecognizer.init()
     }
 
