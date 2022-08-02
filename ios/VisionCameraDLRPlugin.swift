@@ -49,11 +49,18 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         let template = config?["template"] as? String ?? ""
         if (template != "") {
             if (currentTemplate != template) {
+                var clearErr : NSError? = NSError()
+                recognizer.clearAppendedSettings(error: &clearErr)
                 var err : NSError? = NSError()
-                recognizer.clearAppendedSettings(error: &err)
                 recognizer.appendSettingsFromString(content: template, error: &err)
                 print("template added")
                 print(template)
+                if err?.code != 0 {
+                    print("error")
+                    var errMsg:String? = ""
+                    errMsg = err!.userInfo[NSUnderlyingErrorKey] as? String
+                    print(errMsg ?? "")
+                }
                 currentTemplate = template;
             }
         }
@@ -92,6 +99,14 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         print("using template name")
         print(templateName)
         let results = recognizer.recognizeByImage(image: image, templateName: templateName, error: &error)
+        
+        
+        if error?.code != 0 {
+            var errorMsg:String? = ""
+            errorMsg = error!.userInfo[NSUnderlyingErrorKey] as? String
+            print(errorMsg ?? "")
+        }
+        
         for result in results {
             for line in result.lineResults! {
                 returned_results.append(line.text!)
@@ -114,6 +129,7 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
                 DynamsoftLabelRecognizer.appendCharacterModel(name: model, prototxtBuffer: datapro, txtBuffer: datatxt, characterModelBuffer: datacaf)
             }
             print("model loaded")
+            
             customModelLoaded = true
         }
         

@@ -109,7 +109,7 @@ export default function App() {
         isActive={true}
         format={format}
         frameProcessor={frameProcessor}
-        frameProcessorFps={5}
+        frameProcessorFps={1}
         >
         </Camera>
         <BarcodeMask width={maskWidth} height={maskHeight} />
