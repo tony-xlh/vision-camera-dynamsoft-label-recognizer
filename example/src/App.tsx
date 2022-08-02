@@ -71,8 +71,8 @@ export default function App() {
   }, []);
 
   const format = React.useMemo(() => {
-    const desiredWidth = 640;
-    const desiredHeight = 480;
+    const desiredWidth = 1280;
+    const desiredHeight = 720;
     if (device) {
       for (let index = 0; index < device.formats.length; index++) {
         const format = device.formats[index];
