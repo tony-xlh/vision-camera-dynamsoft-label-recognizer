@@ -116,19 +116,29 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         return returned_results
     }
     
-    static func loadCustomModel(modelFolder:String,modelFileNames: [String]){
+    static func loadCustomModel(modelFolder:String,modelFileNames: [String])   {
         if customModelLoaded == false {
             for model in modelFileNames {
-                let prototxt = Bundle.main.url(forResource: model, withExtension: "prototxt", subdirectory: modelFolder)
-                print(prototxt?.absoluteString ?? "not exist")
-                let datapro = try! Data.init(contentsOf: prototxt!)
+                
+                guard let prototxt = Bundle.main.url(
+                    forResource: model,
+                    withExtension: "prototxt",
+                    subdirectory: modelFolder
+                ) else {
+                    print("model not exist")
+                    //throw Error()
+                    return
+                }
+
+                let datapro = try! Data.init(contentsOf: prototxt)
                 let txt = Bundle.main.url(forResource: model, withExtension: "txt", subdirectory: modelFolder)
                 let datatxt = try! Data.init(contentsOf: txt!)
                 let caffemodel = Bundle.main.url(forResource: model, withExtension: "caffemodel", subdirectory: modelFolder)
                 let datacaf = try! Data.init(contentsOf: caffemodel!)
                 DynamsoftLabelRecognizer.appendCharacterModel(name: model, prototxtBuffer: datapro, txtBuffer: datatxt, characterModelBuffer: datacaf)
+                print("load model %@", model)
             }
-            print("model loaded")
+            
             
             customModelLoaded = true
         }
