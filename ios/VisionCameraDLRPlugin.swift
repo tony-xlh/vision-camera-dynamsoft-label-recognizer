@@ -13,6 +13,9 @@ import DynamsoftLabelRecognizer
 public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
     private static var recognizer:DynamsoftLabelRecognizer!
     private static let context = CIContext(options: nil)
+    private static var currentModelFolder = "";
+    private static var currentTemplate = "";
+    private static var customModelLoaded = false;
     @objc
     public static func callback(_ frame: Frame!, withArgs args: [Any]!) -> Any! {
         let config = getConfig(withArgs: args)
@@ -30,6 +33,31 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
           print("Failed to create CGImage!")
           return nil
         }
+        
+        let templateName = config?["templateName"] as? String ?? ""
+
+        if config!["customModelConfig"] != nil {
+            let customModelConfig = config?["customModelConfig"] as? [String:Any]
+            let modelFolder = customModelConfig!["customModelFolder"] as! String
+            let modelFileNames = customModelConfig!["customModelFileNames"] as! [String]
+            if modelFolder != currentModelFolder {
+                loadCustomModel(modelFolder: modelFolder, modelFileNames: modelFileNames)
+                currentModelFolder = modelFolder
+            }
+        }
+        
+        let template = config?["template"] as? String ?? ""
+        if (template != "") {
+            if (currentTemplate != template) {
+                var err : NSError? = NSError()
+                recognizer.clearAppendedSettings(error: &err)
+                recognizer.appendSettingsFromString(content: template, error: &err)
+                print("template added")
+                print(template)
+                currentTemplate = template;
+            }
+        }
+
         
         let image:UIImage;
         let scanRegion = config?["scanRegion"] as? [String: Int]
@@ -61,7 +89,9 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         
         var returned_results: [Any] = []
         var error : NSError? = NSError()
-        let results = recognizer.recognizeByImage(image: image, templateName: "", error: &error)
+        print("using template name")
+        print(templateName)
+        let results = recognizer.recognizeByImage(image: image, templateName: templateName, error: &error)
         for result in results {
             for line in result.lineResults! {
                 returned_results.append(line.text!)
@@ -69,6 +99,24 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         }
 
         return returned_results
+    }
+    
+    static func loadCustomModel(modelFolder:String,modelFileNames: [String]){
+        if customModelLoaded == false {
+            for model in modelFileNames {
+                let prototxt = Bundle.main.url(forResource: model, withExtension: "prototxt", subdirectory: modelFolder)
+                print(prototxt?.absoluteString ?? "not exist")
+                let datapro = try! Data.init(contentsOf: prototxt!)
+                let txt = Bundle.main.url(forResource: model, withExtension: "txt", subdirectory: modelFolder)
+                let datatxt = try! Data.init(contentsOf: txt!)
+                let caffemodel = Bundle.main.url(forResource: model, withExtension: "caffemodel", subdirectory: modelFolder)
+                let datacaf = try! Data.init(contentsOf: caffemodel!)
+                DynamsoftLabelRecognizer.appendCharacterModel(name: model, prototxtBuffer: datapro, txtBuffer: datatxt, characterModelBuffer: datacaf)
+            }
+            print("model loaded")
+            customModelLoaded = true
+        }
+        
     }
     
     static func initDLR(license:String) {
