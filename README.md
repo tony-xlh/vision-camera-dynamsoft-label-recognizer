@@ -56,7 +56,7 @@ export default function App() {
           device={device}
           isActive={true}
           frameProcessor={frameProcessor}
-          frameProcessorFps={5}
+          frameProcessorFps={"auto"}
         />
       </>
     )
@@ -87,13 +87,23 @@ export interface DLRConfig{
   templateName?: string;
   license?: string;
   scanRegion?: ScanRegion;
+  customModelConfig?: CustomModelConfig;
+}
+
+export interface CustomModelConfig {
+  customModelFolder: string;
+  customModelFileNames: string[];
 }
 ```
+
+You can use a custom model like a model for MRZ passport reading using the `CustomModelConfig` prop.
+
+You need to put the model folder in the `assets` folder for Android or the root for iOS.
 
 ## Supported Platforms
 
 * Android
-* iOS (work in progress)
+* iOS
 
 ## Contributing
 
