@@ -126,7 +126,6 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
                     subdirectory: modelFolder
                 ) else {
                     print("model not exist")
-                    //throw Error()
                     return
                 }
 
