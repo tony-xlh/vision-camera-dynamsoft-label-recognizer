@@ -12,16 +12,16 @@ import DynamsoftLabelRecognizer
 @objc(VisionCameraDLRPlugin)
 public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
     private static var recognizer:DynamsoftLabelRecognizer!
+    private static var manager:LabelRecognizerManager!
     private static let context = CIContext(options: nil)
-    private static var currentModelFolder = "";
-    private static var currentTemplate = "";
-    private static var customModelLoaded = false;
+
     @objc
     public static func callback(_ frame: Frame!, withArgs args: [Any]!) -> Any! {
         let config = getConfig(withArgs: args)
-        if recognizer == nil {
+        if manager == nil {
             let license: String = config?["license"] as? String ?? "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
-            initDLR(license: license)
+            manager = LabelRecognizerManager(license: license)
+            recognizer = manager.getRecognizer();
         }
         guard let imageBuffer = CMSampleBufferGetImageBuffer(frame.buffer) else {
             print("Failed to get CVPixelBuffer!")
@@ -40,29 +40,12 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
             let customModelConfig = config?["customModelConfig"] as? [String:Any]
             let modelFolder = customModelConfig!["customModelFolder"] as! String
             let modelFileNames = customModelConfig!["customModelFileNames"] as! [String]
-            if modelFolder != currentModelFolder {
-                loadCustomModel(modelFolder: modelFolder, modelFileNames: modelFileNames)
-                currentModelFolder = modelFolder
-            }
+            manager.useCustomModel(modelFolder: modelFolder, modelFileNames: modelFileNames)
         }
         
         let template = config?["template"] as? String ?? ""
         if (template != "") {
-            if (currentTemplate != template) {
-                var clearErr : NSError? = NSError()
-                recognizer.clearAppendedSettings(error: &clearErr)
-                var err : NSError? = NSError()
-                recognizer.appendSettingsFromString(content: template, error: &err)
-                print("template added")
-                print(template)
-                if err?.code != 0 {
-                    print("error")
-                    var errMsg:String? = ""
-                    errMsg = err!.userInfo[NSUnderlyingErrorKey] as? String
-                    print(errMsg ?? "")
-                }
-                currentTemplate = template;
-            }
+            manager.updateTemplate(template: template)
         }
 
         
@@ -114,39 +97,6 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         }
 
         return returned_results
-    }
-    
-    static func loadCustomModel(modelFolder:String,modelFileNames: [String])   {
-        if customModelLoaded == false {
-            for model in modelFileNames {
-                
-                guard let prototxt = Bundle.main.url(
-                    forResource: model,
-                    withExtension: "prototxt",
-                    subdirectory: modelFolder
-                ) else {
-                    print("model not exist")
-                    return
-                }
-
-                let datapro = try! Data.init(contentsOf: prototxt)
-                let txt = Bundle.main.url(forResource: model, withExtension: "txt", subdirectory: modelFolder)
-                let datatxt = try! Data.init(contentsOf: txt!)
-                let caffemodel = Bundle.main.url(forResource: model, withExtension: "caffemodel", subdirectory: modelFolder)
-                let datacaf = try! Data.init(contentsOf: caffemodel!)
-                DynamsoftLabelRecognizer.appendCharacterModel(name: model, prototxtBuffer: datapro, txtBuffer: datatxt, characterModelBuffer: datacaf)
-                print("load model %@", model)
-            }
-            
-            
-            customModelLoaded = true
-        }
-        
-    }
-    
-    static func initDLR(license:String) {
-        DynamsoftLabelRecognizer.initLicense(license, verificationDelegate: self)
-        recognizer = DynamsoftLabelRecognizer.init()
     }
 
     static func getConfig(withArgs args: [Any]!) -> [String:Any]! {

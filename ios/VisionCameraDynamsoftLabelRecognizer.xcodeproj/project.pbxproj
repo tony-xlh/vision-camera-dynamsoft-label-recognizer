@@ -20,6 +20,9 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libVisionCameraDynamsoftLabelRecognizer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVisionCameraDynamsoftLabelRecognizer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE92A23D289A6810005BBF87 /* VisionCameraDynamsoftLabelRecognizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VisionCameraDynamsoftLabelRecognizer.m; sourceTree = "<group>"; };
+		BE92A23E289A6835005BBF87 /* VisionCameraDynamsoftLabelRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionCameraDynamsoftLabelRecognizer.swift; sourceTree = "<group>"; };
+		BE92A23F289A6863005BBF87 /* LabelRecognizerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelRecognizerManager.swift; sourceTree = "<group>"; };
 		BEA5628628979DD0000320D6 /* VisionCameraDLRPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VisionCameraDLRPlugin.m; sourceTree = "<group>"; };
 		BEA5628828979DFE000320D6 /* VisionCameraDLRPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionCameraDLRPlugin.swift; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* VisionCameraDynamsoftLabelRecognizer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VisionCameraDynamsoftLabelRecognizer-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -47,6 +50,9 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				BE92A23F289A6863005BBF87 /* LabelRecognizerManager.swift */,
+				BE92A23E289A6835005BBF87 /* VisionCameraDynamsoftLabelRecognizer.swift */,
+				BE92A23D289A6810005BBF87 /* VisionCameraDynamsoftLabelRecognizer.m */,
 				BEA5628828979DFE000320D6 /* VisionCameraDLRPlugin.swift */,
 				BEA5628628979DD0000320D6 /* VisionCameraDLRPlugin.m */,
 				F4FF95D5245B92E700C19C63 /* VisionCameraDynamsoftLabelRecognizer-Bridging-Header.h */,
