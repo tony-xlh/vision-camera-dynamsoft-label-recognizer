@@ -75,6 +75,7 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         }
         WritableNativeArray array = new WritableNativeArray();
         try {
+            //Bitmap img = BitmapFactory.decodeFile(path);
             DLRResult[] results = recognizer.recognizeByFile(path,templateName);
             for (DLRResult result:results) {
                 for (DLRLineResult line:result.lineResults) {

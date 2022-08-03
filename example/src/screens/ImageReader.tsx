@@ -1,7 +1,7 @@
 import React from "react";
 import { Platform, SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import {CameraOptions, ImageLibraryOptions, launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import { decodeBase64, DLRConfig } from "vision-camera-dynamsoft-label-recognizer";
+import { decodeBase64, decodeFile, DLRConfig } from "vision-camera-dynamsoft-label-recognizer";
 
 export default function ImageReaderScreen() {
   const [recognitionResults, setRecognitionResults] = React.useState([] as string[]);
@@ -29,7 +29,6 @@ export default function ImageReaderScreen() {
 
     if (response.assets) {
       let base64 = response.assets[0]?.base64;
-      let uri = response.assets[0]?.uri;
       if (base64) {
         let config:DLRConfig = {};
         config.license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAwMjI3NzYzLVRYbE5iMkpwYkdWUWNtOXFYMlJzY2ciLCJvcmdhbml6YXRpb25JRCI6IjEwMDIyNzc2MyJ9";
@@ -37,7 +36,6 @@ export default function ImageReaderScreen() {
         config.templateName = "locr";
         config.customModelConfig = {customModelFolder:"MRZ",customModelFileNames:["NumberUppercase","NumberUppercase_Assist_1lIJ","NumberUppercase_Assist_8B","NumberUppercase_Assist_8BHR","NumberUppercase_Assist_number","NumberUppercase_Assist_O0DQ","NumberUppercase_Assist_upcase"]};
         let results = await decodeBase64(base64,config)
-        //let results = await decodeBase64(base64,config)
         console.log(results);
         setRecognitionResults(results);
       }
