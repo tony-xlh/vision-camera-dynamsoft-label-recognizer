@@ -14,11 +14,13 @@ import com.dynamsoft.dlr.*;
 
 import java.io.InputStream;
 
-public class LabelRecognizerInitializer {
-
+public class LabelRecognizerManager {
+    private String currentTemplate = "";
+    private String currentModelFolder = "";
+    private Boolean customModelLoaded = false;
     private LabelRecognizer recognizer = null;
     private ReactApplicationContext mContext;
-    public LabelRecognizerInitializer(ReactApplicationContext context, String license){
+    public LabelRecognizerManager(ReactApplicationContext context, String license){
         mContext = context;
         initDLR(license);
     }
@@ -47,7 +49,7 @@ public class LabelRecognizerInitializer {
         if (customModelLoaded == false) {
             try {
                 for(int i = 0;i<fileNames.size();i++) {
-                    AssetManager manager = context.getAssets();
+                    AssetManager manager = mContext.getAssets();
                     InputStream isPrototxt = manager.open(modelFolder+"/"+fileNames.getString(i)+".prototxt");
                     byte[] prototxt = new byte[isPrototxt.available()];
                     isPrototxt.read(prototxt);
@@ -70,41 +72,23 @@ public class LabelRecognizerInitializer {
         }
     }
 
-    private void updateTemplate(String template){
-        if (config.hasKey("template")) {
-            String template = config.getString("template");
-            if (currentTemplate.equals(template) == false) {
-                try {
-                    recognizer.clearAppendedSettings();
-                    recognizer.appendSettingsFromString(template);
-                    Log.d("DLR","append template: "+template);
-                } catch (LabelRecognizerException e) {
-                    e.printStackTrace();
-                }
+    public void updateTemplate(String template){
+        if (currentTemplate.equals(template) == false) {
+            try {
+                recognizer.clearAppendedSettings();
+                recognizer.appendSettingsFromString(template);
+                Log.d("DLR","append template: "+template);
+            } catch (LabelRecognizerException e) {
+                e.printStackTrace();
             }
             currentTemplate = template;
         }
     }
 
-    private void useCustomModel(String templateName, String modelFolder, ReadableArray modelFileNames){
-        String templateName = "";
-
-        if (config.hasKey("templateName")) {
-            templateName = config.getString("templateName");
+    public void useCustomModel(String modelFolder, ReadableArray modelFileNames){
+        if (modelFolder.equals(currentModelFolder) == false) {
+            loadCustomModel(modelFolder, modelFileNames);
+            currentModelFolder = modelFolder;
         }
-
-        if (config.hasKey("customModelConfig")) {
-            ReadableNativeMap customModelConfig = config.getMap("customModelConfig");
-            String modelFolder = customModelConfig.getString("customModelFolder");
-            ReadableArray modelFileNames = customModelConfig.getArray("customModelFileNames");
-            if (modelFolder.equals(currentModelFolder) == false) {
-                loadCustomModel(modelFolder, modelFileNames);
-                currentModelFolder = modelFolder;
-            }
-        }
-
-
-
-
     }
 }
