@@ -16,6 +16,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.module.annotations.ReactModule;
@@ -45,9 +46,10 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
     }
 
     @ReactMethod
-    public void decodeBase64(String base64, ReadableNativeMap config, Promise promise) {
+    public void decodeBase64(String base64, ReadableMap config, Promise promise) {
+        Log.d("DLR",config.toString());
         if (recognizer == null) {
-            initDLR(config);
+            initDLR((ReadableNativeMap) config);
         }
         WritableNativeArray array = new WritableNativeArray();
         try {
@@ -66,9 +68,9 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
     }
 
     @ReactMethod
-    public void decodeFile(String path, ReadableNativeMap config, Promise promise) {
+    public void decodeFile(String path, ReadableMap config, Promise promise) {
         if (recognizer == null) {
-            initDLR(config);
+            initDLR((ReadableNativeMap) config);
         }
         WritableNativeArray array = new WritableNativeArray();
         try {
@@ -90,6 +92,8 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         String license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
         if (config != null && config.hasKey("license")) {
             license = config.getString("license");
+            Log.d("DLR","use license from config");
+            Log.d("DLR",license);
         }
         manager = new LabelRecognizerManager(mContext,license);
         updateSettings(config);
