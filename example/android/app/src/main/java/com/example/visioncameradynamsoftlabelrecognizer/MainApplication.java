@@ -2,6 +2,8 @@ package com.example.visioncameradynamsoftlabelrecognizer;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
@@ -29,7 +31,10 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
-          packages.add(new VisionCameraDynamsoftLabelRecognizerPackage()); // <- add
+          for (ReactPackage pack: packages) {
+              Log.d("DLR",pack.toString());
+          }
+          //packages.add(new VisionCameraDynamsoftLabelRecognizerPackage()); // <- add
           return packages;
         }
 
