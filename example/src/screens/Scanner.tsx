@@ -10,6 +10,7 @@ import Clipboard from '@react-native-community/clipboard';
 
 
 export default function ScannerScreen() {
+  const [isActive,setIsActive] = React.useState(true);
   const [modalVisible, setModalVisible] = React.useState(false);
   const modalVisibleShared = REA.useSharedValue(false);
   const [hasPermission, setHasPermission] = React.useState(false);
@@ -67,7 +68,10 @@ export default function ScannerScreen() {
     const height = Dimensions.get('window').height;
     setMaskWidth(width*0.95)
     setMaskHeight(height*0.4)
-
+    return ()=>{
+      console.log("unmounted");
+      setIsActive(false);
+    }
   }, []);
 
   const format = React.useMemo(() => {
@@ -106,7 +110,7 @@ export default function ScannerScreen() {
         <Camera
         style={StyleSheet.absoluteFill}
         device={device}
-        isActive={true}
+        isActive={isActive}
         format={format}
         frameProcessor={frameProcessor}
         frameProcessorFps={1}
