@@ -15,14 +15,14 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
     private var recognizer:DynamsoftLabelRecognizer!
     
     
-    @objc(withResolver:withRejecter:)
+    @objc(destroy:withRejecter:)
     func destroy(resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
         manager.destroy()
         manager = nil
         recognizer = nil
     }
     
-    @objc(base64:config:withResolver:withRejecter:)
+    @objc(decodeBase64:config:withResolver:withRejecter:)
     func decodeBase64(base64: String, config:[String:Any], resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
         //print(config)
         if manager == nil {
