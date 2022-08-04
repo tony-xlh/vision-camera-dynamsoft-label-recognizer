@@ -26,7 +26,7 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
         let image = convertStrToImage(base64)
         var returned_results: [Any] = []
         print("orientation")
-        print(image?.imageOrientation)
+        print(image?.imageOrientation.rawValue)
         if image != nil {
             print("use template name ", templateName)
             let results = recognizer.recognizeByImage(image: image!, templateName: templateName, error: &error)
