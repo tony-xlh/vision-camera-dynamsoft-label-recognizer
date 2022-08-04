@@ -13,14 +13,24 @@ class LabelRecognizerManager:NSObject, DLRLicenseVerificationDelegate {
     private var recognizer:DynamsoftLabelRecognizer!;
     private var currentModelFolder = "";
     private var currentTemplate = "";
+    private var mLicense = "";
     
     init(license:String){
         super.init()
+        mLicense = license
         initDLR(license: license)
     }
     
     public func getRecognizer() -> DynamsoftLabelRecognizer{
+        if recognizer == nil {
+            initDLR(license: mLicense)
+        }
         return recognizer
+    }
+    
+    public func destroy() {
+        recognizer.dispose()
+        recognizer = nil
     }
     
     private func initDLR(license:String) {
