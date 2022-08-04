@@ -15,12 +15,14 @@ export default function ImageReaderScreen() {
     if (target === "camera") {
       let options: CameraOptions = {
         mediaType: 'photo',
+        maxHeight: 500,
         includeBase64: true,
       }
       response = await launchCamera(options);
     }else{
       let options: ImageLibraryOptions = {
         mediaType: 'photo',
+        maxHeight: 500,
         includeBase64: true,
       }
       response = await launchImageLibrary(options);
