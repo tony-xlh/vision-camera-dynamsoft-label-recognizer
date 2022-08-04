@@ -319,7 +319,7 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.15.0):
+  - RNScreens (3.11.1):
     - React-Core
     - React-RCTImage
   - vision-camera-dynamsoft-label-recognizer (0.1.0):
@@ -495,7 +495,7 @@ SPEC CHECKSUMS:
   ReactCommon: 095366164a276d91ea704ce53cb03825c487a3f2
   RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNReanimated: 5c8c17e26787fd8984cd5accdc70fef2ca70aafd
-  RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
+  RNScreens: 4d83613b50b74ed277026375dc0810893b0c347f
   vision-camera-dynamsoft-label-recognizer: 362f1a801673633ec7b8f7f88c3bb6a450181ffe
   VisionCamera: 0545b4d3ed83299af898cec4ee2bf9a6ca98fc7a
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
