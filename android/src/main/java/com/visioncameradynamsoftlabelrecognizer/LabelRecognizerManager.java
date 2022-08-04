@@ -19,12 +19,17 @@ public class LabelRecognizerManager {
     private String currentModelFolder = "";
     private LabelRecognizer recognizer = null;
     private ReactApplicationContext mContext;
+    private String mLicense;
     public LabelRecognizerManager(ReactApplicationContext context, String license){
         mContext = context;
+        mLicense = license;
         initDLR(license);
     }
 
     public LabelRecognizer getRecognizer(){
+        if (recognizer == null) {
+            initDLR(mLicense);
+        }
         return recognizer;
     }
 
@@ -91,5 +96,10 @@ public class LabelRecognizerManager {
 
     public void eraseAllCharacterModels(){
         LabelRecognizer.eraseAllCharacterModels();
+    }
+
+    public void destroy(){
+        recognizer.destroy();
+        recognizer = null;
     }
 }

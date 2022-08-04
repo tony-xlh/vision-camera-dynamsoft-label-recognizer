@@ -20,6 +20,10 @@ export function decodeBase64(base64:string,config:DLRConfig): Promise<[]> {
   return VisionCameraDynamsoftLabelRecognizer.decodeBase64(base64,config);
 }
 
+export function destroy(): Promise<[]> {
+  return VisionCameraDynamsoftLabelRecognizer.destroy();
+}
+
 export interface ScanRegion{
   left: number;
   top: number;

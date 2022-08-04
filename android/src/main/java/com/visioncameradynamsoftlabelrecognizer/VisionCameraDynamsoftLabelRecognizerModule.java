@@ -46,6 +46,14 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
     }
 
     @ReactMethod
+    public void destroy(Promise promise) {
+        manager.destroy();
+        manager = null;
+        recognizer = null;
+        promise.resolve(true);
+    }
+
+    @ReactMethod
     public void decodeBase64(String base64, ReadableMap config, Promise promise) {
         Log.d("DLR",config.toString());
         if (recognizer == null) {
