@@ -67,7 +67,7 @@ export default function ScannerScreen() {
     const width = Dimensions.get('window').width;
     const height = Dimensions.get('window').height;
     setMaskWidth(width*0.95)
-    setMaskHeight(height*0.4)
+    setMaskHeight(height*0.1)
     return ()=>{
       console.log("unmounted");
       setIsActive(false);
