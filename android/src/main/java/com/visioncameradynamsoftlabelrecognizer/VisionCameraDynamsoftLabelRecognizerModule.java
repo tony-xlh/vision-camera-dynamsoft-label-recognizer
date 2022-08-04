@@ -47,9 +47,11 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
 
     @ReactMethod
     public void destroy(Promise promise) {
-        manager.destroy();
-        manager = null;
-        recognizer = null;
+        if (manager != null) {
+            manager.destroy();
+            manager = null;
+            recognizer = null;
+        }
         promise.resolve(true);
     }
 
