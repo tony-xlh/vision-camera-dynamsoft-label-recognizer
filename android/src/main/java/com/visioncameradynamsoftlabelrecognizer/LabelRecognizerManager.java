@@ -17,7 +17,6 @@ import java.io.InputStream;
 public class LabelRecognizerManager {
     private String currentTemplate = "";
     private String currentModelFolder = "";
-    private Boolean customModelLoaded = false;
     private LabelRecognizer recognizer = null;
     private ReactApplicationContext mContext;
     public LabelRecognizerManager(ReactApplicationContext context, String license){
@@ -46,29 +45,27 @@ public class LabelRecognizerManager {
     }
 
     private void loadCustomModel(String modelFolder, ReadableArray fileNames) {
-        if (customModelLoaded == false) {
-            try {
-                for(int i = 0;i<fileNames.size();i++) {
-                    AssetManager manager = mContext.getAssets();
-                    InputStream isPrototxt = manager.open(modelFolder+"/"+fileNames.getString(i)+".prototxt");
-                    byte[] prototxt = new byte[isPrototxt.available()];
-                    isPrototxt.read(prototxt);
-                    isPrototxt.close();
-                    InputStream isCharacterModel = manager.open(modelFolder+"/"+fileNames.getString(i)+".caffemodel");
-                    byte[] characterModel = new byte[isCharacterModel.available()];
-                    isCharacterModel.read(characterModel);
-                    isCharacterModel.close();
-                    InputStream isTxt = manager.open(modelFolder+"/"+fileNames.getString(i)+".txt");
-                    byte[] txt = new byte[isTxt.available()];
-                    isTxt.read(txt);
-                    isTxt.close();
-                    recognizer.appendCharacterModelBuffer(fileNames.getString(i), prototxt, txt, characterModel);
-                }
-                Log.d("DLR","custom model loaded");
-                customModelLoaded = true;
-            } catch (Exception e) {
-                e.printStackTrace();
+
+        try {
+            for(int i = 0;i<fileNames.size();i++) {
+                AssetManager manager = mContext.getAssets();
+                InputStream isPrototxt = manager.open(modelFolder+"/"+fileNames.getString(i)+".prototxt");
+                byte[] prototxt = new byte[isPrototxt.available()];
+                isPrototxt.read(prototxt);
+                isPrototxt.close();
+                InputStream isCharacterModel = manager.open(modelFolder+"/"+fileNames.getString(i)+".caffemodel");
+                byte[] characterModel = new byte[isCharacterModel.available()];
+                isCharacterModel.read(characterModel);
+                isCharacterModel.close();
+                InputStream isTxt = manager.open(modelFolder+"/"+fileNames.getString(i)+".txt");
+                byte[] txt = new byte[isTxt.available()];
+                isTxt.read(txt);
+                isTxt.close();
+                recognizer.appendCharacterModelBuffer(fileNames.getString(i), prototxt, txt, characterModel);
             }
+            Log.d("DLR","custom model loaded");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -90,5 +87,9 @@ public class LabelRecognizerManager {
             loadCustomModel(modelFolder, modelFileNames);
             currentModelFolder = modelFolder;
         }
+    }
+
+    public void eraseAllCharacterModels(){
+        LabelRecognizer.eraseAllCharacterModels();
     }
 }
