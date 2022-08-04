@@ -17,9 +17,11 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
     
     @objc(destroy:withRejecter:)
     func destroy(resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
-        manager.destroy()
-        manager = nil
-        recognizer = nil
+        if manager != nil {
+            manager.destroy()
+            manager = nil
+            recognizer = nil
+        }
     }
     
     @objc(decodeBase64:config:withResolver:withRejecter:)
