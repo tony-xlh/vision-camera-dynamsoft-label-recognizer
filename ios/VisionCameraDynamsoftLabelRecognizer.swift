@@ -15,7 +15,7 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
     private var recognizer:DynamsoftLabelRecognizer!
     @objc(decodeBase64:config:withResolver:withRejecter:)
     func decodeBase64(base64: String, config:[String:Any], resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
-        print(config)
+        //print(config)
         if manager == nil {
             let license: String = config["license"] as? String ?? "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
             initDLR(license: license)
@@ -25,16 +25,26 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
         var error : NSError? = NSError()
         let image = convertStrToImage(base64)
         var returned_results: [Any] = []
+        print("orientation")
+        print(image?.imageOrientation)
         if image != nil {
+            print("use template name ", templateName)
             let results = recognizer.recognizeByImage(image: image!, templateName: templateName, error: &error)
             for result in results {
                 for line in result.lineResults! {
                     returned_results.append(line.text!)
                 }
             }
+            if error?.code != 0 {
+                var errorMsg:String? = ""
+                errorMsg = error!.userInfo[NSUnderlyingErrorKey] as? String
+                print("error")
+                print(errorMsg ?? "")
+            }
+            resolve(returned_results)
+        }else{
+            resolve(returned_results)
         }
-       
-        resolve(returned_results)
     }
     
     func convertStrToImage(_ imageStr:String) ->UIImage?{
