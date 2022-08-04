@@ -16,10 +16,6 @@ const VisionCameraDynamsoftLabelRecognizer = NativeModules.VisionCameraDynamsoft
       }
     );
 
-export function decodeFile(fileUri:string,config:DLRConfig): Promise<[]> {
-  return VisionCameraDynamsoftLabelRecognizer.decodeFile(fileUri,config);
-}
-
 export function decodeBase64(base64:string,config:DLRConfig): Promise<[]> {
   return VisionCameraDynamsoftLabelRecognizer.decodeBase64(base64,config);
 }

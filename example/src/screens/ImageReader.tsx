@@ -1,7 +1,7 @@
 import React from "react";
 import { Platform, SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import {CameraOptions, ImageLibraryOptions, launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import { decodeBase64, decodeFile, DLRConfig } from "vision-camera-dynamsoft-label-recognizer";
+import { decodeBase64, DLRConfig } from "vision-camera-dynamsoft-label-recognizer";
 
 export default function ImageReaderScreen() {
   const [recognitionResults, setRecognitionResults] = React.useState([] as string[]);

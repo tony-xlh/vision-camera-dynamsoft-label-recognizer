@@ -68,28 +68,6 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         promise.resolve(array);
     }
 
-    @ReactMethod
-    public void decodeFile(String path, ReadableMap config, Promise promise) {
-        if (recognizer == null) {
-            initDLR((ReadableNativeMap) config);
-        }
-        WritableNativeArray array = new WritableNativeArray();
-        try {
-            //Bitmap img = BitmapFactory.decodeFile(path);
-            DLRResult[] results = recognizer.recognizeByFile(path,templateName);
-            for (DLRResult result:results) {
-                for (DLRLineResult line:result.lineResults) {
-                    array.pushString(line.text);
-                    Log.d("DLR",line.text);
-                }
-            }
-        } catch (LabelRecognizerException e) {
-            e.printStackTrace();
-        }
-
-        promise.resolve(array);
-    }
-
     private void initDLR(ReadableNativeMap config){
         String license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
         if (config != null && config.hasKey("license")) {
