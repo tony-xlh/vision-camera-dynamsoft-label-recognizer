@@ -3,6 +3,11 @@
 
 React Native Vision Camera Frame Processor Plugin of [Dynamsoft Label Recognizer](https://www.dynamsoft.com/label-recognition/overview/)
 
+Demo video:
+
+<video src="https://user-images.githubusercontent.com/5462205/182806964-bf2fc8d6-76e0-4cc8-a465-6ac70e6c81ab.mp4" data-canonical-src="https://user-images.githubusercontent.com/5462205/182806964-bf2fc8d6-76e0-4cc8-a465-6ac70e6c81ab.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px;">
+</video>
+
 
 ## Installation
 
