@@ -51,6 +51,7 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         if (recognizer == null) {
             initDLR((ReadableNativeMap) config);
         }
+        updateSettings((ReadableNativeMap) config);
         WritableNativeArray array = new WritableNativeArray();
         try {
             Bitmap bitmap = base642Bitmap(base64);
@@ -76,7 +77,6 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
             Log.d("DLR",license);
         }
         manager = new LabelRecognizerManager(mContext,license);
-        updateSettings(config);
         recognizer = manager.getRecognizer();
     }
 
