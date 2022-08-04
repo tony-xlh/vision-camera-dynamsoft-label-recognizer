@@ -9,6 +9,7 @@ export default function HomeScreen({route, navigation}) {
   const onPressed = (target:string) => {
     navigation.navigate(
       {
+        params: { useCase: selectedUseCase },
         name: target
       }
     );
