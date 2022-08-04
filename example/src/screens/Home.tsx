@@ -13,6 +13,7 @@ export default function HomeScreen({route, navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.info}>Ready to scan MRZ Passport</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => onPressed("Scanner")}
@@ -32,6 +33,9 @@ export default function HomeScreen({route, navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex:1,
+  },
+  info: {
+    margin: 8,
   },
   button: {
     alignItems: "center",
