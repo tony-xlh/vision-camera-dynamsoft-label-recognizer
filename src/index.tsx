@@ -1,7 +1,7 @@
 import type { Frame } from 'react-native-vision-camera'
 import { NativeModules, Platform } from 'react-native';
 import type { DLRResult } from './Definitions';
-
+export * from './Definitions';
 const LINKING_ERROR =
   `The package 'vision-camera-dynamsoft-label-recognizer' doesn't seem to be linked. Make sure: \n\n` +
   Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +

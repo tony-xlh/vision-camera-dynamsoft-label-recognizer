@@ -1,13 +1,12 @@
 import * as React from 'react';
 
 import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform } from 'react-native';
-import { recognize, DLRConfig, ScanRegion } from 'vision-camera-dynamsoft-label-recognizer';
+import { recognize, DLRConfig, ScanRegion, DLRCharacherResult, DLRLineResult, DLRResult } from 'vision-camera-dynamsoft-label-recognizer';
 import { Camera, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
 import BarcodeMask from 'react-native-barcode-mask';
 import * as REA from 'react-native-reanimated';
 import { Dimensions } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
-import type { DLRCharacherResult, DLRLineResult, DLRResult } from 'src/Definitions';
 
 
 const RecognizedCharacter =(props:{"char":DLRCharacherResult}) =>  {
