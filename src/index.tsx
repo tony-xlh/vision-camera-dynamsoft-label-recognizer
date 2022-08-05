@@ -1,5 +1,6 @@
 import type { Frame } from 'react-native-vision-camera'
 import { NativeModules, Platform } from 'react-native';
+import type { DLRResult } from './Definitions';
 
 const LINKING_ERROR =
   `The package 'vision-camera-dynamsoft-label-recognizer' doesn't seem to be linked. Make sure: \n\n` +
@@ -44,7 +45,7 @@ export interface CustomModelConfig {
   customModelFileNames: string[];
 }
 
-export function recognize(frame: Frame,config: DLRConfig): [] {
+export function recognize(frame: Frame,config: DLRConfig): DLRResult[] {
   'worklet'
   // @ts-ignore
   // eslint-disable-next-line no-undef

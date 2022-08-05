@@ -48,6 +48,7 @@ export default function ImageReaderScreen({route}) {
         }
         
         let results = await DLR.decodeBase64(base64,config)
+        
         console.log(results);
         setRecognitionResults(results);
       }

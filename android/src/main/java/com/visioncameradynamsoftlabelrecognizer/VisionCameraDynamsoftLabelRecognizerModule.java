@@ -70,6 +70,7 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
             for (DLRResult result:results) {
                 for (DLRLineResult line:result.lineResults) {
                     array.pushString(line.text);
+                    line.characterResults[0].characterHConfidence
                     Log.d("DLR",line.text);
                 }
             }

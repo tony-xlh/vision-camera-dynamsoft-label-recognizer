@@ -7,6 +7,7 @@ import BarcodeMask from 'react-native-barcode-mask';
 import * as REA from 'react-native-reanimated';
 import { Dimensions } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
+import type { DLRLineResult, DLRResult } from 'src/Definitions';
 
 
 export default function ScannerScreen({route}) {
@@ -21,7 +22,7 @@ export default function ScannerScreen({route}) {
   const [maskWidth,setMaskWidth] = React.useState(300);
   const useWindowWidthShared = REA.useSharedValue(Dimensions.get('window').width);
   const useWindowHeightShared = REA.useSharedValue(Dimensions.get('window').height);
-  const [recognitionResults, setRecognitionResults] = React.useState([] as string[]);
+  const [recognitionResults, setRecognitionResults] = React.useState([] as DLRLineResult[]);
   const frameProcessor = useFrameProcessor((frame) => {
     'worklet'
     if (modalVisibleShared.value === false) {
@@ -52,11 +53,22 @@ export default function ScannerScreen({route}) {
         config.templateName = "locr";
         config.customModelConfig = {customModelFolder:"MRZ",customModelFileNames:["NumberUppercase","NumberUppercase_Assist_1lIJ","NumberUppercase_Assist_8B","NumberUppercase_Assist_8BHR","NumberUppercase_Assist_number","NumberUppercase_Assist_O0DQ","NumberUppercase_Assist_upcase"]};
       }
-      let results:string[] = recognize(frame,config);
+      let results:DLRResult[] = recognize(frame,config);
+      let lineResults:DLRLineResult[] = [];
+      for (let index = 0; index < results.length; index++) {
+        const result = results[index];
+        const lines = result?.lineResults;
+        if (lines) {
+          lines.forEach(line => {
+            lineResults.push(line);
+          });
+        }
+      }
+
       console.log(results);
       if (modalVisibleShared.value === false) { //check is modal visible again since the recognizing process takes time
-        if (results.length === 2 || (useCase != 0 && results.length>0)) {
-          REA.runOnJS(setRecognitionResults)(results);
+        if (lineResults.length === 2 || (useCase != 0 && lineResults.length>0)) {
+          REA.runOnJS(setRecognitionResults)(lineResults);
           modalVisibleShared.value = true;
           REA.runOnJS(setModalVisible)(true);
         }  
@@ -136,7 +148,7 @@ export default function ScannerScreen({route}) {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {recognitionResults.map((result, idx) => (
-              <Text style={styles.modalText} key={idx}>{result}</Text>
+              <Text style={styles.modalText} key={idx}>{result.text}</Text>
             ))}
             <View style={styles.buttonView}>
                 <Pressable
