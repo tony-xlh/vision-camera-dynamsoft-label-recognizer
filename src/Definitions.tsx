@@ -1,5 +1,5 @@
 export interface DLRResult {
-  refereneceRegionName: string;
+  referenceRegionName: string;
   textAreaName: string;
   pageNumber: number;
   location: Quadrilateral;
