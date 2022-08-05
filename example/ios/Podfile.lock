@@ -322,7 +322,7 @@ PODS:
   - RNScreens (3.11.1):
     - React-Core
     - React-RCTImage
-  - vision-camera-dynamsoft-label-recognizer (0.1.0):
+  - vision-camera-dynamsoft-label-recognizer (0.1.3):
     - DynamsoftLabelRecognizer (= 2.0.0.1)
     - React-Core
   - VisionCamera (2.14.0):
@@ -496,7 +496,7 @@ SPEC CHECKSUMS:
   RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNReanimated: 5c8c17e26787fd8984cd5accdc70fef2ca70aafd
   RNScreens: 4d83613b50b74ed277026375dc0810893b0c347f
-  vision-camera-dynamsoft-label-recognizer: 362f1a801673633ec7b8f7f88c3bb6a450181ffe
+  vision-camera-dynamsoft-label-recognizer: ee343176cbd7b6a78193714968043e824566dada
   VisionCamera: 0545b4d3ed83299af898cec4ee2bf9a6ca98fc7a
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
 
