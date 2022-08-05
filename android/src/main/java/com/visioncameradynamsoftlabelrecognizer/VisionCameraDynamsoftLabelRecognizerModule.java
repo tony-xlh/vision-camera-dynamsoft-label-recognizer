@@ -68,10 +68,7 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
             DLRResult[] results = recognizer.recognizeByImage(bitmap,templateName);
             Log.d("DLR","use template name"+templateName);
             for (DLRResult result:results) {
-                for (DLRLineResult line:result.lineResults) {
-                    array.pushString(line.text);
-                    Log.d("DLR",line.text);
-                }
+                array.pushMap(Utils.getMapFromDLRResult(result));
             }
         } catch (LabelRecognizerException e) {
             e.printStackTrace();
