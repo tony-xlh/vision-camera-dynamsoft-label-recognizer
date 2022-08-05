@@ -5,10 +5,13 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import androidx.camera.core.ImageProxy;
 
+import com.dynamsoft.core.Point;
+import com.dynamsoft.core.Quadrilateral;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableNativeMap;
 import com.facebook.react.bridge.WritableNativeArray;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
 import com.dynamsoft.dlr.*;
 
@@ -71,10 +74,7 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             DLRResult[] results = recognizer.recognizeByImage(bm,templateName);
             Log.d("DLR","result length: "+ results.length);
             for (DLRResult result:results) {
-                for (DLRLineResult line:result.lineResults) {
-                    array.pushString(line.text);
-                    Log.d("DLR",line.text);
-                }
+                array.pushMap(Utils.getMapFromDLRResult(result));
             }
         } catch (LabelRecognizerException e) {
             e.printStackTrace();
