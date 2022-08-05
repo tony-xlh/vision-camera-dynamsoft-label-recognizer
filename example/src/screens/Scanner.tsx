@@ -7,7 +7,18 @@ import BarcodeMask from 'react-native-barcode-mask';
 import * as REA from 'react-native-reanimated';
 import { Dimensions } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
-import type { DLRLineResult, DLRResult } from 'src/Definitions';
+import type { DLRCharacherResult, DLRLineResult, DLRResult } from 'src/Definitions';
+
+
+const RecognizedCharacter =(props:{"char":DLRCharacherResult}) =>  {
+  console.log("char: "+props.char.characterH);
+  console.log("confidence: "+props.char.characterHConfidence);
+  if (props.char.characterHConfidence>50) {
+    return <Text style={[styles.modalText]}>{props.char.characterH}</Text>
+  }else{
+    return <Text style={[styles.modalText,styles.lowConfidenceText]}>{props.char.characterH}</Text>
+  }
+}
 
 
 export default function ScannerScreen({route}) {
@@ -114,7 +125,7 @@ export default function ScannerScreen({route}) {
   const getText = () => {
     let text = "";
     recognitionResults.forEach(result => {
-      text = text + result + "\n";
+      text = text + result.text + "\n";
     });
     return text.trim();
   }
@@ -148,7 +159,12 @@ export default function ScannerScreen({route}) {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {recognitionResults.map((result, idx) => (
-              <Text style={styles.modalText} key={idx}>{result.text}</Text>
+              <Text key={"line-"+idx}>
+                {result.characterResults.map((char, idx) => (
+                  <RecognizedCharacter key={"char-"+idx} char={char}/>
+                ))}  
+              </Text>
+              
             ))}
             <View style={styles.buttonView}>
                 <Pressable
@@ -242,5 +258,8 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontSize: 12,
     fontFamily: monospaceFontFamily()
+  },
+  lowConfidenceText:{
+    color:"red",
   }
 });
