@@ -54,10 +54,12 @@ export default function ScannerScreen({route}) {
       }
       let results:string[] = recognize(frame,config);
       console.log(results);
-      if (results.length === 2 || (useCase != 0 && results.length>0)) {
-        REA.runOnJS(setRecognitionResults)(results);
-        modalVisibleShared.value = true;
-        REA.runOnJS(setModalVisible)(true);
+      if (modalVisibleShared.value === false) { //check is modal visible again since the recognizing process takes time
+        if (results.length === 2 || (useCase != 0 && results.length>0)) {
+          REA.runOnJS(setRecognitionResults)(results);
+          modalVisibleShared.value = true;
+          REA.runOnJS(setModalVisible)(true);
+        }  
       }
     }
   }, [])
