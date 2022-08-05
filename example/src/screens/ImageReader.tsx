@@ -1,12 +1,12 @@
 import React from "react";
 import { Platform, SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import {CameraOptions, ImageLibraryOptions, launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import type { DLRConfig } from "vision-camera-dynamsoft-label-recognizer";
+import type { DLRConfig, DLRLineResult } from "vision-camera-dynamsoft-label-recognizer";
 import * as DLR from "vision-camera-dynamsoft-label-recognizer";
 
 export default function ImageReaderScreen({route}) {
   const useCase = route.params.useCase;
-  const [recognitionResults, setRecognitionResults] = React.useState([] as string[]);
+  const [recognitionResults, setRecognitionResults] = React.useState([] as DLRLineResult[]);
   const [recognizing, setRecognizing] = React.useState(false);
   React.useEffect(() => {
     return ()=>{
@@ -47,10 +47,17 @@ export default function ImageReaderScreen({route}) {
           config.customModelConfig = {customModelFolder:"MRZ",customModelFileNames:["NumberUppercase","NumberUppercase_Assist_1lIJ","NumberUppercase_Assist_8B","NumberUppercase_Assist_8BHR","NumberUppercase_Assist_number","NumberUppercase_Assist_O0DQ","NumberUppercase_Assist_upcase"]};
         }
         
-        let results = await DLR.decodeBase64(base64,config)
+        let results = await DLR.decodeBase64(base64,config);
+        let lineResults:DLRLineResult[] = [];
+
+        results.forEach(result => {
+          result.lineResults.forEach(lineResult => {
+            lineResults.push(lineResult)
+          });
+        });
         
         console.log(results);
-        setRecognitionResults(results);
+        setRecognitionResults(lineResults);
       }
     }
 
@@ -75,7 +82,7 @@ export default function ImageReaderScreen({route}) {
         <Text>Recognizing...</Text>
       }
       {recognitionResults.map((result, idx) => (
-        <Text style={styles.modalText} key={idx}>{result}</Text>
+        <Text style={styles.modalText} key={idx}>{result.text}</Text>
       ))}
     </SafeAreaView>
   );

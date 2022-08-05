@@ -10,8 +10,6 @@ import Clipboard from '@react-native-community/clipboard';
 
 
 const RecognizedCharacter =(props:{"char":DLRCharacherResult}) =>  {
-  console.log("char: "+props.char.characterH);
-  console.log("confidence: "+props.char.characterHConfidence);
   if (props.char.characterHConfidence>50) {
     return <Text style={[styles.modalText]}>{props.char.characterH}</Text>
   }else{
