@@ -34,7 +34,8 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
         updateSettings(config: config)
         let templateName = config["templateName"] as? String ?? ""
         var error : NSError? = NSError()
-        let image = convertStrToImage(base64)
+        let image = Utils.convertBase64ToImage(base64)
+        var scanResult:[String:Any] = [:]
         var returned_results: [Any] = []
         print("orientation")
         print(image?.imageOrientation.rawValue)
@@ -50,23 +51,10 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
                 print("error")
                 print(errorMsg ?? "")
             }
-            resolve(returned_results)
-        }else{
-            resolve(returned_results)
         }
+        scanResult["results"] = returned_results
+        resolve(scanResult)
     }
-    
-    func convertStrToImage(_ imageStr:String) ->UIImage?{
-        if let data: NSData = NSData(base64Encoded: imageStr, options:NSData.Base64DecodingOptions.ignoreUnknownCharacters)
-        {
-            if let image: UIImage = UIImage(data: data as Data)
-            {
-                return image
-            }
-        }
-        return nil
-    }
-
     
     private func updateSettings(config:[String:Any]){
 

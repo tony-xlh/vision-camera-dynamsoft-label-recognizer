@@ -77,6 +77,7 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
             image = UIImage(cgImage: cgImage)
         }
         
+        var scanResult: [String:Any] = [:]
         var returned_results: [Any] = []
         var error : NSError? = NSError()
         print("using template name")
@@ -94,6 +95,12 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
             returned_results.append(Utils.wrapDLRResult(result:result))
         }
 
+        scanResult["results"] = returned_results
+        let includeImageBase64 = config!["includeImageBase64"] as? Bool ?? false
+        if includeImageBase64 == true {
+            scanResult["imageBase64"] = Utils.getBase64FromImage(image)
+        }
+        
         return returned_results
     }
 
