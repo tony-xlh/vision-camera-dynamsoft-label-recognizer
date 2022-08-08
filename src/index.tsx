@@ -1,6 +1,6 @@
 import type { Frame } from 'react-native-vision-camera'
 import { NativeModules, Platform } from 'react-native';
-import type { DLRResult } from './Definitions';
+import type { ScanResult } from './Definitions';
 export * from './Definitions';
 const LINKING_ERROR =
   `The package 'vision-camera-dynamsoft-label-recognizer' doesn't seem to be linked. Make sure: \n\n` +
@@ -17,7 +17,7 @@ const VisionCameraDynamsoftLabelRecognizer = NativeModules.VisionCameraDynamsoft
       }
     );
 
-export function decodeBase64(base64:string,config:DLRConfig): Promise<DLRResult[]> {
+export function decodeBase64(base64:string,config:DLRConfig): Promise<ScanResult> {
   return VisionCameraDynamsoftLabelRecognizer.decodeBase64(base64,config);
 }
 
@@ -38,6 +38,7 @@ export interface DLRConfig{
   license?: string;
   scanRegion?: ScanRegion;
   customModelConfig?: CustomModelConfig;
+  includeBase64?: boolean;
 }
 
 export interface CustomModelConfig {
@@ -45,7 +46,7 @@ export interface CustomModelConfig {
   customModelFileNames: string[];
 }
 
-export function recognize(frame: Frame,config: DLRConfig): DLRResult[] {
+export function recognize(frame: Frame,config: DLRConfig): ScanResult {
   'worklet'
   // @ts-ignore
   // eslint-disable-next-line no-undef

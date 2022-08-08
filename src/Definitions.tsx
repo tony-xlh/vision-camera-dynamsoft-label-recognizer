@@ -1,3 +1,8 @@
+export interface ScanResult {
+  results: DLRResult[];
+  imageBase64?: string;
+}
+
 export interface DLRResult {
   referenceRegionName: string;
   textAreaName: string;
