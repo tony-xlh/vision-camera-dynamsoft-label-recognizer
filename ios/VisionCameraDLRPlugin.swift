@@ -91,9 +91,7 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         }
         
         for result in results {
-            for line in result.lineResults! {
-                returned_results.append(line.text!)
-            }
+            returned_results.append(Utils.wrapDLRResult(result:result))
         }
 
         return returned_results

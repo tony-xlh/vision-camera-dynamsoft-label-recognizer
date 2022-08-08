@@ -42,9 +42,7 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
             print("use template name ", templateName)
             let results = recognizer.recognizeByImage(image: image!, templateName: templateName, error: &error)
             for result in results {
-                for line in result.lineResults! {
-                    returned_results.append(line.text!)
-                }
+                returned_results.append(Utils.wrapDLRResult(result:result))
             }
             if error?.code != 0 {
                 var errorMsg:String? = ""
