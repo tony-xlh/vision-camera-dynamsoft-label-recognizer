@@ -3,6 +3,28 @@ export interface ScanResult {
   imageBase64?: string;
 }
 
+export interface ScanConfig{
+  template?: string;
+  templateName?: string;
+  license?: string;
+  scanRegion?: ScanRegion;
+  customModelConfig?: CustomModelConfig;
+  includeBase64?: boolean;
+}
+
+export interface ScanRegion{
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
+export interface CustomModelConfig {
+  customModelFolder: string;
+  customModelFileNames: string[];
+}
+
+
 export interface DLRResult {
   referenceRegionName: string;
   textAreaName: string;
@@ -37,25 +59,4 @@ export interface DLRCharacherResult {
   characterMConfidence: number;
   characterLConfidence: number;
   location: Quadrilateral;
-}
-
-export interface ScanRegion{
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
-
-export interface DLRConfig{
-  template?: string;
-  templateName?: string;
-  license?: string;
-  scanRegion?: ScanRegion;
-  customModelConfig?: CustomModelConfig;
-  includeBase64?: boolean;
-}
-
-export interface CustomModelConfig {
-  customModelFolder: string;
-  customModelFileNames: string[];
 }
