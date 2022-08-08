@@ -1,11 +1,10 @@
 import * as React from 'react';
 
-import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform, Image } from 'react-native';
+import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform, Image, Dimensions } from 'react-native';
 import { recognize, ScanConfig, ScanRegion, DLRCharacherResult, DLRLineResult, DLRResult } from 'vision-camera-dynamsoft-label-recognizer';
 import { Camera, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
-import BarcodeMask from 'react-native-barcode-mask';
 import * as REA from 'react-native-reanimated';
-import { Dimensions } from 'react-native';
+import { Svg, Rect } from 'react-native-svg';
 import Clipboard from '@react-native-community/clipboard';
 
 
@@ -17,6 +16,12 @@ const RecognizedCharacter =(props:{"char":DLRCharacherResult}) =>  {
   }
 }
 
+const scanRegion:ScanRegion = {
+  left: 10,
+  top: 40,
+  width: 80,
+  height: 10
+}
 
 export default function ScannerScreen({route}) {
   const useCase = route.params.useCase;
@@ -25,34 +30,24 @@ export default function ScannerScreen({route}) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const modalVisibleShared = REA.useSharedValue(false);
   const [hasPermission, setHasPermission] = React.useState(false);
+  const [frameWidth, setFrameWidth] = React.useState(1280);
+  const [frameHeight, setFrameHeight] = React.useState(720);
+
   const devices = useCameraDevices();
   const device = devices.back;
-  const [maskHeight,setMaskHeight] = React.useState(100);
-  const [maskWidth,setMaskWidth] = React.useState(300);
-  const useWindowWidthShared = REA.useSharedValue(Dimensions.get('window').width);
-  const useWindowHeightShared = REA.useSharedValue(Dimensions.get('window').height);
+
   const [recognitionResults, setRecognitionResults] = React.useState([] as DLRLineResult[]);
   const frameProcessor = useFrameProcessor((frame) => {
     'worklet'
     if (modalVisibleShared.value === false) {
+
+      REA.runOnJS(updateFrameSize)(frame.width, frame.height);
+
       let config:ScanConfig = {license:""};
-      const windowWidth = useWindowWidthShared.value;
-      const windowHeight = useWindowHeightShared.value;
-      const centerX = windowWidth/2;
-      const centerY = windowHeight/2;
-      const left = Math.ceil((centerX - maskWidth/2)/windowWidth*100);
-      const top = Math.ceil((centerY - maskHeight/2)/windowHeight*100);
-      const width = Math.ceil(maskWidth/windowWidth*100);
-      const height = Math.ceil(maskHeight/windowHeight*100);
+
       console.log("frame width:"+frame.width);
       console.log("frame height:"+frame.height);
-      let scanRegion:ScanRegion =
-      {
-        left: left,
-        top: top,
-        width: width,
-        height: height
-      };
+
 
       //config.license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
       config.license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAxMDc0MDY2LVRYbE5iMkpwYkdWUWNtOXFYMlJzY2ciLCJvcmdhbml6YXRpb25JRCI6IjEwMTA3NDA2NiJ9";
@@ -97,10 +92,6 @@ export default function ScannerScreen({route}) {
       const status = await Camera.requestCameraPermission();
       setHasPermission(status === 'authorized');
     })();
-    const width = Dimensions.get('window').width;
-    const height = Dimensions.get('window').height;
-    setMaskWidth(width*0.95)
-    setMaskHeight(height*0.1)
     return ()=>{
       console.log("unmounted");
       setIsActive(false);
@@ -126,7 +117,6 @@ export default function ScannerScreen({route}) {
     return undefined;
   }, [device?.formats])
 
-
   const getText = () => {
     let text = "";
     recognitionResults.forEach(result => {
@@ -148,6 +138,42 @@ export default function ScannerScreen({route}) {
     }
     return undefined
   }
+
+  const getViewBox = () => {
+    const frameSize = getFrameSize();
+    const viewBox = "0 0 "+frameSize.width+" "+frameSize.height;
+    return viewBox;
+  }
+
+  const updateFrameSize = (width:number, height:number) => {
+    if (width != frameWidth && height!= frameHeight) {
+      setFrameWidth(width);
+      setFrameHeight(height);
+    }
+  }
+
+  const getFrameSize = ():{width:number,height:number} => {
+    let width:number, height:number;
+    if (HasRotation()){
+      width = frameHeight;
+      height = frameWidth;
+    }else {
+      width = frameWidth;
+      height = frameHeight;
+    }
+    return {width:width,height:height};
+  }
+
+  const HasRotation = () => {
+    let value = false
+    if (Platform.OS === 'android') {
+      if (!(frameWidth>frameHeight && Dimensions.get('window').width>Dimensions.get('window').height)){
+        value = true;
+      }
+    }
+    return value;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {device != null &&
@@ -162,7 +188,16 @@ export default function ScannerScreen({route}) {
         frameProcessorFps={1}
         >
         </Camera>
-        <BarcodeMask width={maskWidth} height={maskHeight} />
+        <Svg style={StyleSheet.absoluteFill} viewBox={getViewBox()}>
+          <Rect 
+            x={scanRegion.left/100*getFrameSize().width}
+            y={scanRegion.top/100*getFrameSize().height}
+            width={scanRegion.width/100*getFrameSize().width}
+            height={scanRegion.height/100*getFrameSize().height}
+            strokeWidth="2"
+            stroke="red"
+          />
+        </Svg>
       </>)}
       <Modal
         animationType="slide"
