@@ -1,6 +1,6 @@
 import type { Frame } from 'react-native-vision-camera'
 import { NativeModules, Platform } from 'react-native';
-import type { ScanResult } from './Definitions';
+import type { DLRConfig, ScanResult } from './Definitions';
 export * from './Definitions';
 const LINKING_ERROR =
   `The package 'vision-camera-dynamsoft-label-recognizer' doesn't seem to be linked. Make sure: \n\n` +
@@ -23,27 +23,6 @@ export function decodeBase64(base64:string,config:DLRConfig): Promise<ScanResult
 
 export function destroy(): Promise<[]> {
   return VisionCameraDynamsoftLabelRecognizer.destroy();
-}
-
-export interface ScanRegion{
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
-
-export interface DLRConfig{
-  template?: string;
-  templateName?: string;
-  license?: string;
-  scanRegion?: ScanRegion;
-  customModelConfig?: CustomModelConfig;
-  includeBase64?: boolean;
-}
-
-export interface CustomModelConfig {
-  customModelFolder: string;
-  customModelFileNames: string[];
 }
 
 export function recognize(frame: Frame,config: DLRConfig): ScanResult {

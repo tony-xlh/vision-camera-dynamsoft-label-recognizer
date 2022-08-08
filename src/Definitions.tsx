@@ -38,3 +38,24 @@ export interface DLRCharacherResult {
   characterLConfidence: number;
   location: Quadrilateral;
 }
+
+export interface ScanRegion{
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
+export interface DLRConfig{
+  template?: string;
+  templateName?: string;
+  license?: string;
+  scanRegion?: ScanRegion;
+  customModelConfig?: CustomModelConfig;
+  includeBase64?: boolean;
+}
+
+export interface CustomModelConfig {
+  customModelFolder: string;
+  customModelFileNames: string[];
+}
