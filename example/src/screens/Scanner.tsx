@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform } from 'react-native';
-import { recognize, DLRConfig, ScanRegion, DLRCharacherResult, DLRLineResult, DLRResult } from 'vision-camera-dynamsoft-label-recognizer';
+import { recognize, ScanConfig, ScanRegion, DLRCharacherResult, DLRLineResult, DLRResult } from 'vision-camera-dynamsoft-label-recognizer';
 import { Camera, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
 import BarcodeMask from 'react-native-barcode-mask';
 import * as REA from 'react-native-reanimated';
@@ -34,7 +34,7 @@ export default function ScannerScreen({route}) {
   const frameProcessor = useFrameProcessor((frame) => {
     'worklet'
     if (modalVisibleShared.value === false) {
-      let config:DLRConfig = {license:""};
+      let config:ScanConfig = {license:""};
       const windowWidth = useWindowWidthShared.value;
       const windowHeight = useWindowHeightShared.value;
       const centerX = windowWidth/2;
@@ -61,7 +61,8 @@ export default function ScannerScreen({route}) {
         config.templateName = "locr";
         config.customModelConfig = {customModelFolder:"MRZ",customModelFileNames:["NumberUppercase","NumberUppercase_Assist_1lIJ","NumberUppercase_Assist_8B","NumberUppercase_Assist_8BHR","NumberUppercase_Assist_number","NumberUppercase_Assist_O0DQ","NumberUppercase_Assist_upcase"]};
       }
-      let results:DLRResult[] = recognize(frame,config);
+      let scanResult = recognize(frame,config);
+      let results:DLRResult[] = scanResult.results;
       let lineResults:DLRLineResult[] = [];
       for (let index = 0; index < results.length; index++) {
         const result = results[index];
