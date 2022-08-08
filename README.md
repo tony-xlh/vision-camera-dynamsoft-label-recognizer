@@ -41,7 +41,7 @@ make sure you correctly setup react-native-reanimated and add this to your `babe
        'worklet'
        const config:ScanConfig = {};
        config.license = "<license>" //apply for a 30-day trial license here: https://www.dynamsoft.com/customer/license/trialLicense/?product=dlr
-       const results = recognize(frame,config);
+       const result = recognize(frame,config);
      }, [])
 
      React.useEffect(() => {
@@ -84,7 +84,7 @@ make sure you correctly setup react-native-reanimated and add this to your `babe
    
    const config:ScanConfig = {};
    config.license = "<license>" //apply for a 30-day trial license here: https://www.dynamsoft.com/customer/license/trialLicense/?product=dlr
-   let results = await DLR.decodeBase64(base64,config);
+   const result = await DLR.decodeBase64(base64,config);
    ```
 
 ## Interfaces
