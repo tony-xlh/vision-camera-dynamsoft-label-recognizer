@@ -9,7 +9,7 @@ export interface ScanConfig{
   license?: string;
   scanRegion?: ScanRegion;
   customModelConfig?: CustomModelConfig;
-  includeBase64?: boolean;
+  includeImageBase64?: boolean;
 }
 
 export interface ScanRegion{
