@@ -78,7 +78,7 @@ export default function ScannerScreen({route}) {
     if (imageData) {
       return (
         <Image
-          style={styles.logo}
+          style={styles.srcImage}
           source={{
             uri: imageData,
           }}
@@ -256,6 +256,10 @@ const monospaceFontFamily = () => {
   }
 }
 
+const getWindowWidth = () => {
+  return Dimensions.get("window").width;
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -316,9 +320,9 @@ const styles = StyleSheet.create({
   lowConfidenceText:{
     color:"red",
   },
-  logo: {
-    width: 150,
+  srcImage: {
+    width: getWindowWidth()*0.7,
     height: 60,
-    resizeMode: "stretch"
+    resizeMode: "contain"
   },
 });
