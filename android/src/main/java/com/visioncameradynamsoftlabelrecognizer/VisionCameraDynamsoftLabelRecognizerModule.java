@@ -19,6 +19,7 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeMap;
 import com.facebook.react.bridge.WritableNativeArray;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.module.annotations.ReactModule;
 
 @ReactModule(name = VisionCameraDynamsoftLabelRecognizerModule.NAME)
@@ -39,12 +40,6 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         return NAME;
     }
 
-    private static Bitmap base642Bitmap(String base64) {
-        byte[] decode = Base64.decode(base64,Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(decode,0,decode.length);
-        return bitmap;
-    }
-
     @ReactMethod
     public void destroy(Promise promise) {
         if (manager != null) {
@@ -62,9 +57,10 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
             initDLR((ReadableNativeMap) config);
         }
         updateSettings((ReadableNativeMap) config);
+        WritableNativeMap scanResult = new WritableNativeMap();
         WritableNativeArray array = new WritableNativeArray();
+        Bitmap bitmap = Utils.base642Bitmap(base64);
         try {
-            Bitmap bitmap = base642Bitmap(base64);
             DLRResult[] results = recognizer.recognizeByImage(bitmap,templateName);
             Log.d("DLR","use template name"+templateName);
             for (DLRResult result:results) {
@@ -73,7 +69,8 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         } catch (LabelRecognizerException e) {
             e.printStackTrace();
         }
-        promise.resolve(array);
+        scanResult.putArray("results",array);
+        promise.resolve(scanResult);
     }
 
     private void initDLR(ReadableNativeMap config){

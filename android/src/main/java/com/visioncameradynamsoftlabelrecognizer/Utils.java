@@ -1,5 +1,9 @@
 package com.visioncameradynamsoftlabelrecognizer;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 import com.dynamsoft.core.Point;
 import com.dynamsoft.core.Quadrilateral;
 import com.dynamsoft.dlr.DLRCharacterResult;
@@ -8,7 +12,22 @@ import com.dynamsoft.dlr.DLRResult;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 
+import java.io.ByteArrayOutputStream;
+
 public class Utils {
+
+    public static Bitmap base642Bitmap(String base64) {
+        byte[] decode = Base64.decode(base64,Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(decode,0,decode.length);
+        return bitmap;
+    }
+
+    public static String bitmap2Base64(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+    }
+
     public static WritableNativeMap getMapFromDLRResult(DLRResult result){
         WritableNativeMap map = new WritableNativeMap();
         map.putString("referenceRegionName",result.refereneceRegionName);

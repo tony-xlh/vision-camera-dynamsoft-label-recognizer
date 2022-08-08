@@ -55,7 +55,7 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             String template = config.getString("template");
             manager.updateTemplate(template);
         }
-
+        WritableNativeMap scanResult = new WritableNativeMap();
         WritableNativeArray array = new WritableNativeArray();
         @SuppressLint("UnsafeOptInUsageError")
         Bitmap bm = BitmapUtils.getBitmap(image);
@@ -72,14 +72,19 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         try {
             Log.d("DLR","use template name: "+templateName);
             DLRResult[] results = recognizer.recognizeByImage(bm,templateName);
-            Log.d("DLR","result length: "+ results.length);
             for (DLRResult result:results) {
                 array.pushMap(Utils.getMapFromDLRResult(result));
             }
         } catch (LabelRecognizerException e) {
             e.printStackTrace();
         }
-        return array;
+        scanResult.putArray("results",array);
+        if (config != null && config.hasKey("includeImageBase64")) {
+            if (config.getBoolean("includeImageBase64") == true) {
+                scanResult.putString("imageBase64",Utils.bitmap2Base64(bm));
+            }
+        }
+        return scanResult;
     }
 
     private ReadableNativeMap getConfig(Object[] params){
