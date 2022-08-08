@@ -101,7 +101,7 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
             scanResult["imageBase64"] = Utils.getBase64FromImage(image)
         }
         
-        return returned_results
+        return scanResult
     }
 
     static func getConfig(withArgs args: [Any]!) -> [String:Any]! {
