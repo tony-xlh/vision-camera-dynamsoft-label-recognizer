@@ -4,7 +4,7 @@ import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform
 import { recognize, ScanConfig, ScanRegion, DLRCharacherResult, DLRLineResult, DLRResult } from 'vision-camera-dynamsoft-label-recognizer';
 import { Camera, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
 import * as REA from 'react-native-reanimated';
-import { Svg, Image, Rect } from 'react-native-svg';
+import { Svg, Image, Rect, Circle } from 'react-native-svg';
 import Clipboard from '@react-native-community/clipboard';
 
 
@@ -81,10 +81,30 @@ export default function ScannerScreen({route}) {
           <Image
             href={{uri:imageData}}
           />
+          {charactersSVG(0,0)}
         </Svg>
       );
     }
-    return undefined;
+    return null;
+  }
+
+  const charactersSVG = (offsetX:number,offsetY:number) => {
+    let characters:React.ReactElement[] = [];
+    recognitionResults.forEach(lineResult => {
+      lineResult.characterResults.forEach(characterResult => {
+        characters.push(<Circle 
+          cx={characterResult.location.points[0]!.x+offsetX} 
+          cy={characterResult.location.points[3]!.y+offsetY+4} 
+          r="1" stroke="blue" fill="blue"/>);
+      });
+    });
+
+    if (characters.length > 0) {
+      return characters;
+    }else{
+      return null
+    }
+    
   }
 
   const getViewBox = () => {
@@ -104,6 +124,16 @@ export default function ScannerScreen({route}) {
       setFrameWidth(width);
       setFrameHeight(height);
     }
+  }
+
+  const getOffsetX = () => {
+    const frameSize = getFrameSize();
+    return scanRegion.left/100*frameSize.width;
+  }
+
+  const getOffsetY = () => {
+    const frameSize = getFrameSize();
+    return scanRegion.top/100*frameSize.height;
   }
 
   const getFrameSize = ():{width:number,height:number} => {
@@ -193,7 +223,7 @@ export default function ScannerScreen({route}) {
         frameProcessorFps={1}
         >
         </Camera>
-        <Svg style={StyleSheet.absoluteFill} viewBox={getViewBox()}>
+        <Svg preserveAspectRatio='xMidYMid slice' style={StyleSheet.absoluteFill} viewBox={getViewBox()}>
           <Rect 
             x={scanRegion.left/100*getFrameSize().width}
             y={scanRegion.top/100*getFrameSize().height}
@@ -202,6 +232,7 @@ export default function ScannerScreen({route}) {
             strokeWidth="2"
             stroke="red"
           />
+          {charactersSVG(getOffsetX(),getOffsetY())}
         </Svg>
       </>)}
       <Modal
@@ -212,6 +243,7 @@ export default function ScannerScreen({route}) {
           Alert.alert("Modal has been closed.");
           modalVisibleShared.value = !modalVisible;
           setModalVisible(!modalVisible);
+          setRecognitionResults([]);
         }}
       >
         <View style={styles.centeredView}>
@@ -240,6 +272,7 @@ export default function ScannerScreen({route}) {
                   onPress={() => {
                     modalVisibleShared.value = !modalVisible;
                     setModalVisible(!modalVisible)
+                    setRecognitionResults([]);
                   }}
                 >
                   <Text style={styles.textStyle}>Rescan</Text>
