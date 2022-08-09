@@ -79,7 +79,6 @@ class LabelRecognizerManager:NSObject, DLRLicenseVerificationDelegate {
     public func useCustomModel(modelFolder:String,modelFileNames: [String])   {
         if (modelFolder != currentModelFolder) {
             currentModelFolder = modelFolder
-            DynamsoftLabelRecognizer.eraseAllCharacterModels()
             for model in modelFileNames {
                 
                 guard let prototxt = Bundle.main.url(
