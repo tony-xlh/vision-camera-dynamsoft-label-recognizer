@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform, Image, Dimensions } from 'react-native';
+import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform, Dimensions } from 'react-native';
 import { recognize, ScanConfig, ScanRegion, DLRCharacherResult, DLRLineResult, DLRResult } from 'vision-camera-dynamsoft-label-recognizer';
 import { Camera, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
 import * as REA from 'react-native-reanimated';
-import { Svg, Rect } from 'react-native-svg';
+import { Svg, Image, Rect } from 'react-native-svg';
 import Clipboard from '@react-native-community/clipboard';
 
 
@@ -77,20 +77,25 @@ export default function ScannerScreen({route}) {
   const renderImage = () =>{
     if (imageData) {
       return (
-        <Image
-          style={styles.srcImage}
-          source={{
-            uri: imageData,
-          }}
-        />
-      )
+        <Svg style={styles.srcImage} viewBox={getViewBoxForCroppedImage()}>
+          <Image
+            href={{uri:imageData}}
+          />
+        </Svg>
+      );
     }
-    return undefined
+    return undefined;
   }
 
   const getViewBox = () => {
     const frameSize = getFrameSize();
     const viewBox = "0 0 "+frameSize.width+" "+frameSize.height;
+    return viewBox;
+  }
+
+  const getViewBoxForCroppedImage = () => {
+    const frameSize = getFrameSize();
+    const viewBox = "0 0 "+(frameSize.width*scanRegion.width/100)+" "+(frameSize.height*scanRegion.height/100);
     return viewBox;
   }
 
