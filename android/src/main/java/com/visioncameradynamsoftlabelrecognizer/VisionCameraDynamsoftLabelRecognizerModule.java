@@ -98,8 +98,6 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
             String modelFolder = customModelConfig.getString("customModelFolder");
             ReadableArray modelFileNames = customModelConfig.getArray("customModelFileNames");
             manager.useCustomModel(modelFolder,modelFileNames);
-        }else{
-            manager.eraseAllCharacterModels();
         }
 
         if (config.hasKey("template")) {
