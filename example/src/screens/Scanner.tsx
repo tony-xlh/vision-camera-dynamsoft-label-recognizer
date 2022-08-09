@@ -81,21 +81,24 @@ export default function ScannerScreen({route}) {
           <Image
             href={{uri:imageData}}
           />
-          {charactersSVG(0,0)}
+          {charactersSVG("char",0,0)}
         </Svg>
       );
     }
     return null;
   }
 
-  const charactersSVG = (offsetX:number,offsetY:number) => {
+  const charactersSVG = (prefix:string,offsetX:number,offsetY:number) => {
     let characters:React.ReactElement[] = [];
+    let idx = 0;
     recognitionResults.forEach(lineResult => {
       lineResult.characterResults.forEach(characterResult => {
         characters.push(<Circle 
+          key={prefix+idx}
           cx={characterResult.location.points[0]!.x+offsetX} 
           cy={characterResult.location.points[3]!.y+offsetY+4} 
           r="1" stroke="blue" fill="blue"/>);
+        idx = idx + 1;
       });
     });
 
@@ -232,7 +235,7 @@ export default function ScannerScreen({route}) {
             strokeWidth="2"
             stroke="red"
           />
-          {charactersSVG(getOffsetX(),getOffsetY())}
+          {charactersSVG("char-cropped",getOffsetX(),getOffsetY())}
         </Svg>
       </>)}
       <Modal
