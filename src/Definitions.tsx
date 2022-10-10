@@ -5,7 +5,6 @@ export interface ScanResult {
 
 export interface ScanConfig{
   template?: string;
-  templateName?: string;
   license?: string;
   scanRegion?: ScanRegion;
   customModelConfig?: CustomModelConfig;

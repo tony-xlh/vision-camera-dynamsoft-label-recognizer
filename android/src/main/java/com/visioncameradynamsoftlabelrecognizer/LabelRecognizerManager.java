@@ -3,14 +3,13 @@ package com.visioncameradynamsoftlabelrecognizer;
 import android.content.res.AssetManager;
 import android.util.Log;
 
-import com.dynamsoft.dlr.DLRLicenseVerificationListener;
+import com.dynamsoft.core.CoreException;
+import com.dynamsoft.core.LicenseManager;
+import com.dynamsoft.core.LicenseVerificationListener;
 import com.dynamsoft.dlr.LabelRecognizer;
 import com.dynamsoft.dlr.LabelRecognizerException;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.ReadableNativeMap;
-
-import com.dynamsoft.dlr.*;
 
 import java.io.InputStream;
 
@@ -34,9 +33,9 @@ public class LabelRecognizerManager {
     }
 
     private void initDLR(String license) {
-        LabelRecognizer.initLicense(license, new DLRLicenseVerificationListener() {
+        LicenseManager.initLicense(license, mContext, new LicenseVerificationListener() {
             @Override
-            public void DLRLicenseVerificationCallback(boolean isSuccess, Exception error) {
+            public void licenseVerificationCallback(boolean isSuccess, CoreException error) {
                 if(!isSuccess){
                     error.printStackTrace();
                 }
@@ -50,7 +49,6 @@ public class LabelRecognizerManager {
     }
 
     private void loadCustomModel(String modelFolder, ReadableArray fileNames) {
-
         try {
             for(int i = 0;i<fileNames.size();i++) {
                 AssetManager manager = mContext.getAssets();
@@ -77,9 +75,8 @@ public class LabelRecognizerManager {
     public void updateTemplate(String template){
         if (currentTemplate.equals(template) == false) {
             try {
-                recognizer.clearAppendedSettings();
-                recognizer.appendSettingsFromString(template);
-                Log.d("DLR","append template: "+template);
+                recognizer.initRuntimeSettings(template);
+                Log.d("DLR","set template: "+template);
             } catch (LabelRecognizerException e) {
                 e.printStackTrace();
             }
@@ -94,12 +91,7 @@ public class LabelRecognizerManager {
         }
     }
 
-    public void eraseAllCharacterModels(){
-        LabelRecognizer.eraseAllCharacterModels();
-    }
-
     public void destroy(){
-        recognizer.destroy();
         recognizer = null;
     }
 }

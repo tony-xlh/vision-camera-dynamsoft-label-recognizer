@@ -25,7 +25,6 @@ import com.facebook.react.module.annotations.ReactModule;
 @ReactModule(name = VisionCameraDynamsoftLabelRecognizerModule.NAME)
 public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBaseJavaModule {
     public static final String NAME = "VisionCameraDynamsoftLabelRecognizer";
-    private String templateName = "";
     private LabelRecognizer recognizer = null;
     private LabelRecognizerManager manager = null;
     private ReactApplicationContext mContext;
@@ -61,8 +60,7 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         WritableNativeArray array = new WritableNativeArray();
         Bitmap bitmap = Utils.base642Bitmap(base64);
         try {
-            DLRResult[] results = recognizer.recognizeByImage(bitmap,templateName);
-            Log.d("DLR","use template name"+templateName);
+            DLRResult[] results = recognizer.recognizeImage(bitmap);
             for (DLRResult result:results) {
                 array.pushMap(Utils.getMapFromDLRResult(result));
             }
@@ -87,11 +85,6 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
     private void updateSettings(ReadableNativeMap config){
         Log.d("DLR","update settings");
         Log.d("DLR",config.toString());
-        if (config.hasKey("templateName")) {
-            templateName = config.getString("templateName");
-        }else{
-            templateName = "";
-        }
 
         if (config.hasKey("customModelConfig")) {
             ReadableNativeMap customModelConfig = config.getMap("customModelConfig");

@@ -124,10 +124,7 @@ repositories {
 rootProject.allprojects {
   repositories {
     maven {
-      url "https://download2.dynamsoft.com/maven/dc/aar"
-    }
-    maven {
-      url "https://download2.dynamsoft.com/maven/dlr/aar"
+      url "https://download2.dynamsoft.com/maven/aar"
     }
   }
 }
@@ -139,8 +136,7 @@ dependencies {
   // From node_modules
   implementation project(path: ':react-native-vision-camera')
   // DLR
-  implementation 'com.dynamsoft:dynamsoftcore:1.0.0@aar'
-  implementation 'com.dynamsoft:dynamsoftlabelrecognizer:2.0.0@aar'
+  implementation 'com.dynamsoft:dynamsoftlabelrecognizer:2.2.20'
 }
 
 if (isNewArchitectureEnabled()) {

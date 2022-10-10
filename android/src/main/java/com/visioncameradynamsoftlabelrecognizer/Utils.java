@@ -2,9 +2,9 @@ package com.visioncameradynamsoftlabelrecognizer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.util.Base64;
 
-import com.dynamsoft.core.Point;
 import com.dynamsoft.core.Quadrilateral;
 import com.dynamsoft.dlr.DLRCharacterResult;
 import com.dynamsoft.dlr.DLRLineResult;
@@ -18,8 +18,7 @@ public class Utils {
 
     public static Bitmap base642Bitmap(String base64) {
         byte[] decode = Base64.decode(base64,Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(decode,0,decode.length);
-        return bitmap;
+        return BitmapFactory.decodeByteArray(decode,0,decode.length);
     }
 
     public static String bitmap2Base64(Bitmap bitmap) {
@@ -30,7 +29,7 @@ public class Utils {
 
     public static WritableNativeMap getMapFromDLRResult(DLRResult result){
         WritableNativeMap map = new WritableNativeMap();
-        map.putString("referenceRegionName",result.refereneceRegionName);
+        map.putString("referenceRegionName",result.referenceRegionName);
         map.putString("textAreaName",result.textAreaName);
         map.putInt("confidence",result.confidence);
         map.putInt("pageNumber",result.pageNumber);

@@ -2,11 +2,8 @@ package com.visioncameradynamsoftlabelrecognizer;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.util.Log;
 import androidx.camera.core.ImageProxy;
 
-import com.dynamsoft.core.Point;
-import com.dynamsoft.core.Quadrilateral;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableNativeMap;
@@ -38,12 +35,6 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             recognizer = manager.getRecognizer();
         }
 
-        String templateName = "";
-
-        if (config.hasKey("templateName")) {
-            templateName = config.getString("templateName");
-        }
-
         if (config.hasKey("customModelConfig")) {
             ReadableNativeMap customModelConfig = config.getMap("customModelConfig");
             String modelFolder = customModelConfig.getString("customModelFolder");
@@ -59,19 +50,17 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         WritableNativeArray array = new WritableNativeArray();
         @SuppressLint("UnsafeOptInUsageError")
         Bitmap bm = BitmapUtils.getBitmap(image);
-        double left = 0;
-        double top = 0;
+
         if (config != null && config.hasKey("scanRegion")) {
             ReadableNativeMap scanRegion = config.getMap("scanRegion");
-            left = scanRegion.getInt("left") / 100.0 * bm.getWidth();
-            top = scanRegion.getInt("top") / 100.0 * bm.getHeight();
+            double left = scanRegion.getInt("left") / 100.0 * bm.getWidth();
+            double top = scanRegion.getInt("top") / 100.0 * bm.getHeight();
             double width = scanRegion.getInt("width") / 100.0 * bm.getWidth();
             double height = scanRegion.getInt("height") / 100.0 * bm.getHeight();
             bm = Bitmap.createBitmap(bm, (int) left, (int) top, (int) width, (int) height, null, false);
         }
         try {
-            Log.d("DLR","use template name: "+templateName);
-            DLRResult[] results = recognizer.recognizeByImage(bm,templateName);
+            DLRResult[] results = recognizer.recognizeImage(bm);
             for (DLRResult result:results) {
                 array.pushMap(Utils.getMapFromDLRResult(result));
             }
