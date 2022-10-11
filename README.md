@@ -102,7 +102,6 @@ export interface ScanRegion{
 
 export interface ScanConfig{
   template?: string;
-  templateName?: string;
   license?: string;
   scanRegion?: ScanRegion;
   customModelConfig?: CustomModelConfig;
@@ -115,7 +114,7 @@ export interface CustomModelConfig {
 }
 ```
 
-You can use a custom model like a model for MRZ passport reading using the `CustomModelConfig` prop.
+You can use a custom model like a model for MRZ passport reading using the `CustomModelConfig` prop. You can find the MRZ model in the example.
 
 You need to put the model folder in the `assets` folder for Android or the root for iOS.
 
