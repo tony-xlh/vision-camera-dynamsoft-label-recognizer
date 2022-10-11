@@ -33,8 +33,6 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
           print("Failed to create CGImage!")
           return nil
         }
-        
-        let templateName = config?["templateName"] as? String ?? ""
 
         if config!["customModelConfig"] != nil {
             let customModelConfig = config?["customModelConfig"] as? [String:Any]
@@ -79,19 +77,10 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         
         var scanResult: [String:Any] = [:]
         var returned_results: [Any] = []
-        var error : NSError? = NSError()
-        print("using template name")
-        print(templateName)
-        let results = recognizer.recognizeByImage(image: image, templateName: templateName, error: &error)
+
+        let results = try? recognizer.recognizeImage(image)
         
-        
-        if error?.code != 0 {
-            var errorMsg:String? = ""
-            errorMsg = error!.userInfo[NSUnderlyingErrorKey] as? String
-            print(errorMsg ?? "")
-        }
-        
-        for result in results {
+        for result in results! {
             returned_results.append(Utils.wrapDLRResult(result:result))
         }
 

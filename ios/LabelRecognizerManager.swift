@@ -9,7 +9,8 @@
 import Foundation
 import DynamsoftLabelRecognizer
 
-class LabelRecognizerManager:NSObject, DLRLicenseVerificationDelegate {
+class LabelRecognizerManager:NSObject, LicenseVerificationListener {
+
     private var recognizer:DynamsoftLabelRecognizer!;
     private var currentModelFolder = "";
     private var currentTemplate = "";
@@ -29,16 +30,15 @@ class LabelRecognizerManager:NSObject, DLRLicenseVerificationDelegate {
     }
     
     public func destroy() {
-        recognizer.dispose()
         recognizer = nil
     }
     
     private func initDLR(license:String) {
-        DynamsoftLabelRecognizer.initLicense(license, verificationDelegate: self)
+        DynamsoftLicenseManager.initLicense(license,verificationDelegate:self)
         recognizer = DynamsoftLabelRecognizer.init()
     }
     
-    func dlrLicenseVerificationCallback(_ isSuccess: Bool, error: Error?) {
+    func licenseVerificationCallback(_ isSuccess: Bool, error: Error?) {
         var msg:String? = ""
         if(error != nil)
         {
@@ -59,18 +59,7 @@ class LabelRecognizerManager:NSObject, DLRLicenseVerificationDelegate {
     
     public func updateTemplate(template:String){
         if (currentTemplate != template) {
-            var clearErr : NSError? = NSError()
-            recognizer.clearAppendedSettings(error: &clearErr)
-            var err : NSError? = NSError()
-            recognizer.appendSettingsFromString(content: template, error: &err)
-            print("template added")
-            print(template)
-            if err?.code != 0 {
-                print("error")
-                var errMsg:String? = ""
-                errMsg = err!.userInfo[NSUnderlyingErrorKey] as? String
-                print(errMsg ?? "")
-            }
+            try! recognizer.initRuntimeSettings(template)
             currentTemplate = template;
         }
     }
@@ -95,7 +84,7 @@ class LabelRecognizerManager:NSObject, DLRLicenseVerificationDelegate {
                 let datatxt = try! Data.init(contentsOf: txt!)
                 let caffemodel = Bundle.main.url(forResource: model, withExtension: "caffemodel", subdirectory: modelFolder)
                 let datacaf = try! Data.init(contentsOf: caffemodel!)
-                DynamsoftLabelRecognizer.appendCharacterModel(name: model, prototxtBuffer: datapro, txtBuffer: datatxt, characterModelBuffer: datacaf)
+                DynamsoftLabelRecognizer.appendCharacterModel(model, prototxtBuffer: datapro, txtBuffer: datatxt, characterModelBuffer: datacaf)
                 print("load model %@", model)
             }
         }

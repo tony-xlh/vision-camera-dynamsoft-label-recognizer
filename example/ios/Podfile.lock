@@ -1,9 +1,9 @@
 PODS:
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
-  - DynamsoftCore (1.0.0.1)
-  - DynamsoftLabelRecognizer (2.0.0.1):
-    - DynamsoftCore (= 1.0.0.1)
+  - DynamsoftCore (2.0.1)
+  - DynamsoftLabelRecognizer (2.2.20):
+    - DynamsoftCore
   - FBLazyVector (0.68.2)
   - FBReactNativeSpec (0.68.2):
     - RCT-Folly (= 2021.06.28.00-v2)
@@ -324,8 +324,8 @@ PODS:
     - React-RCTImage
   - RNSVG (12.4.3):
     - React-Core
-  - vision-camera-dynamsoft-label-recognizer (0.1.3):
-    - DynamsoftLabelRecognizer (= 2.0.0.1)
+  - vision-camera-dynamsoft-label-recognizer (0.2.2):
+    - DynamsoftLabelRecognizer (= 2.2.20)
     - React-Core
   - VisionCamera (2.14.0):
     - React
@@ -465,8 +465,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
-  DynamsoftCore: aba09088f59b0c8a462e233b1836f7571b168621
-  DynamsoftLabelRecognizer: 031bd53d8dc3c380c41a20bd2e228b2fe227d5bc
+  DynamsoftCore: a39ffde3c0dc1cbc8279d92950abb0b69e86e999
+  DynamsoftLabelRecognizer: 50365d635771e449904ec091d49e9729cd2f03d9
   FBLazyVector: a7a655862f6b09625d11c772296b01cd5164b648
   FBReactNativeSpec: 81ce99032d5b586fddd6a38d450f8595f7e04be4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
@@ -502,7 +502,7 @@ SPEC CHECKSUMS:
   RNReanimated: 5c8c17e26787fd8984cd5accdc70fef2ca70aafd
   RNScreens: 4d83613b50b74ed277026375dc0810893b0c347f
   RNSVG: f3b60aeeaa81960e2e0536c3a9eef50b667ef3a9
-  vision-camera-dynamsoft-label-recognizer: ee343176cbd7b6a78193714968043e824566dada
+  vision-camera-dynamsoft-label-recognizer: 02ca1bea50cbd1616326cb95c8a7fa9e4826b807
   VisionCamera: 0545b4d3ed83299af898cec4ee2bf9a6ca98fc7a
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
 

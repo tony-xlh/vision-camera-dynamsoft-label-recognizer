@@ -32,24 +32,15 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
             initDLR(license: license)
         }
         updateSettings(config: config)
-        let templateName = config["templateName"] as? String ?? ""
-        var error : NSError? = NSError()
         let image = Utils.convertBase64ToImage(base64)
         var scanResult:[String:Any] = [:]
         var returned_results: [Any] = []
         print("orientation")
         print(image?.imageOrientation.rawValue)
         if image != nil {
-            print("use template name ", templateName)
-            let results = recognizer.recognizeByImage(image: image!, templateName: templateName, error: &error)
-            for result in results {
+            let results = try? recognizer.recognizeImage(image!)
+            for result in results! {
                 returned_results.append(Utils.wrapDLRResult(result:result))
-            }
-            if error?.code != 0 {
-                var errorMsg:String? = ""
-                errorMsg = error!.userInfo[NSUnderlyingErrorKey] as? String
-                print("error")
-                print(errorMsg ?? "")
             }
         }
         scanResult["results"] = returned_results
@@ -57,7 +48,6 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
     }
     
     private func updateSettings(config:[String:Any]){
-
         if config["customModelConfig"] != nil {
             let customModelConfig = config["customModelConfig"] as? [String:Any]
             let modelFolder = customModelConfig!["customModelFolder"] as! String

@@ -35,7 +35,7 @@ class Utils {
         var dict: [String: Any] = [:]
         dict["confidence"] = result.confidence
         dict["pageNumber"] = result.pageNumber
-        dict["referenceRegionName"] = result.refereneceRegionName
+        dict["referenceRegionName"] = result.referenceRegionName
         dict["textAreaName"] = result.textAreaName
         dict["location"] = wrapLocation(location:result.location)
         
