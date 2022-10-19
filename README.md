@@ -168,6 +168,26 @@ export interface DLRCharacherResult {
 * Android
 * iOS
 
+## Detailed Installation Guide
+
+Let's create a new react native project and use the plugin.
+
+1. Create a new project: `npx react-native init MyTestApp`
+2. Install required packages: `npm install vision-camera-dynamsoft-label-recognizer react-native-reanimated react-native-vision-camera`. Update relevant files following the [react-native-reanimated installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/). You can use jsc instead of hermes
+3. Update the `babel.config.js` file
+4. Add camera permission for both Android and iOS
+5. Update `App.tsx` to use the camera and the plugin
+6. For Android, register the plugin in `MainApplication.java` following the [guide](https://mrousavy.com/react-native-vision-camera/docs/guides/frame-processors-plugins-android)
+7. Run the project: `npx react-native run-andoid/run-ios`
+
+You can check out the [example](https://github.com/tony-xlh/vision-camera-dynamsoft-label-recognizer/tree/main/example) for more details.
+
+## Blogs on How the Plugin is Made
+
+* [Build a Label Recognition Frame Processor Plugin for React Native Vision Camera (Android)](https://www.dynamsoft.com/codepool/react-native-vision-camera-label-recognition-plugin-android.html)
+* [Build a Label Recognition Frame Processor Plugin for React Native Vision Camera (iOS)](https://www.dynamsoft.com/codepool/react-native-vision-camera-label-recognition-plugin-ios.html)
+* [Build a React Native MRZ Scanner using Vision Camera](https://www.dynamsoft.com/codepool/react-native-mrz-scanner-vision-camera.html)
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
