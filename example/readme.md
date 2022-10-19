@@ -9,11 +9,14 @@ Note:
 
 React Native Vision Camera has a bug of setting the camera resolution on Android. You have to apply this pr first: <https://github.com/mrousavy/react-native-vision-camera/pull/833>.
 
-How to run:
+How to run (suppose you are in the example folder):
 
 
 1. cd ..
 2. npm install
 3. cd example
 4. npm install
-5. npx react-native run-android # or npx react-native run-ios
+5. cd ios
+6. pod install
+7. cd ..
+8. npx react-native run-android # or npx react-native run-ios
