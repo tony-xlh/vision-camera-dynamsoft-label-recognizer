@@ -39,8 +39,10 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
         print(image?.imageOrientation.rawValue)
         if image != nil {
             let results = try? recognizer.recognizeImage(image!)
-            for result in results! {
-                returned_results.append(Utils.wrapDLRResult(result:result))
+            if results != nil {
+                for result in results! {
+                    returned_results.append(Utils.wrapDLRResult(result:result))
+                }
             }
         }
         scanResult["results"] = returned_results
