@@ -22,6 +22,12 @@ make sure you correctly setup react-native-reanimated and add this to your `babe
 ]
 ```
 
+## Proguard Rules for Android
+
+```
+-keep class androidx.camera.core.** {*;}
+```
+
 ## Usage
 
 1. Live scanning using React Native Vision Camera.
