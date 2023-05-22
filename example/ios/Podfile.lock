@@ -327,7 +327,7 @@ PODS:
   - vision-camera-dynamsoft-label-recognizer (0.3.3):
     - DynamsoftLabelRecognizer (= 2.2.20)
     - React-Core
-  - VisionCamera (2.14.0):
+  - VisionCamera (2.15.4):
     - React
     - React-callinvoker
     - React-Core
@@ -503,7 +503,7 @@ SPEC CHECKSUMS:
   RNScreens: 4d83613b50b74ed277026375dc0810893b0c347f
   RNSVG: f3b60aeeaa81960e2e0536c3a9eef50b667ef3a9
   vision-camera-dynamsoft-label-recognizer: 0cd968ce5bf906c944a44344379695b7cea6e91e
-  VisionCamera: 0545b4d3ed83299af898cec4ee2bf9a6ca98fc7a
+  VisionCamera: 7047698c711b2ebeb74c32f64fa364eb4ad237fc
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
 
 PODFILE CHECKSUM: 78c45e7eb4da177e69bdc2a2d913a4df9db19db2
