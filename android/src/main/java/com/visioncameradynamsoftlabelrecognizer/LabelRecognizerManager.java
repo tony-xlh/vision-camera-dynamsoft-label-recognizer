@@ -54,7 +54,7 @@ public class LabelRecognizerManager {
             byte[] txt = new byte[isTxt.available()];
             isTxt.read(txt);
             isTxt.close();
-            recognizer.appendCharacterModelBuffer(fileNames.getString(i), prototxt, txt, characterModel);
+            LabelRecognizer.appendCharacterModelBuffer(fileNames.getString(i), prototxt, txt, characterModel);
         }
         Log.d("DLR","custom model loaded");
     }
@@ -67,14 +67,14 @@ public class LabelRecognizerManager {
         }
     }
 
+    public void resetRuntimeSettings() throws LabelRecognizerException {
+        recognizer.resetRuntimeSettings();
+    }
+
     public void useCustomModel(String modelFolder, ReadableArray modelFileNames) throws IOException {
         if (modelFolder.equals(currentModelFolder) == false) {
             loadCustomModel(modelFolder, modelFileNames);
             currentModelFolder = modelFolder;
         }
-    }
-
-    public void destroy(){
-        recognizer = null;
     }
 }

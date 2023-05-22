@@ -107,4 +107,15 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         }
     }
 
+    @ReactMethod
+    public void resetRuntimeSettings(Promise promise){
+        try {
+            manager.resetRuntimeSettings();
+            promise.resolve(true);
+        } catch (LabelRecognizerException e) {
+            e.printStackTrace();
+            promise.reject(e.getMessage(),e);
+        }
+    }
+
 }

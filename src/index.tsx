@@ -25,6 +25,10 @@ export function updateTemplate(template:string): Promise<boolean> {
   return VisionCameraDynamsoftLabelRecognizer.updateTemplate(template);
 }
 
+export function resetRuntimeSettings(): Promise<boolean> {
+  return VisionCameraDynamsoftLabelRecognizer.resetRuntimeSettings();
+}
+
 export function useCustomModel(config:CustomModelConfig): Promise<boolean> {
   return VisionCameraDynamsoftLabelRecognizer.useCustomModel(config);
 }
