@@ -9,36 +9,49 @@
 import DynamsoftLabelRecognizer
 
 @objc(VisionCameraDynamsoftLabelRecognizer)
-class VisionCameraDynamsoftLabelRecognizer: NSObject {
+class VisionCameraDynamsoftLabelRecognizer: NSObject, LicenseVerificationListener {
 
-    private var manager:LabelRecognizerManager!
-    private var recognizer:DynamsoftLabelRecognizer!
-    
-    
-    @objc(destroy:withRejecter:)
-    func destroy(resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
-        if manager != nil {
-            manager.destroy()
-            manager = nil
-            recognizer = nil
-        }
+    static var recognizer:DynamsoftLabelRecognizer = DynamsoftLabelRecognizer();
+    static var currentModelFolder = "";
+    static var currentTemplate = "";
+    var licenseResolveBlock:RCTPromiseResolveBlock!;
+    var licenseRejectBlock:RCTPromiseRejectBlock!;
+    @objc(initLicense:withResolver:withRejecter:)
+    func initLicense(license: String, resolve:@escaping RCTPromiseResolveBlock,reject:@escaping RCTPromiseRejectBlock) -> Void {
+        licenseResolveBlock = resolve
+        licenseRejectBlock = reject
+        DynamsoftLicenseManager.initLicense(license,verificationDelegate:self)
+        
     }
     
-    @objc(decodeBase64:config:withResolver:withRejecter:)
-    func decodeBase64(base64: String, config:[String:Any], resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
-        //print(config)
-        if manager == nil {
-            let license: String = config["license"] as? String ?? "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
-            initDLR(license: license)
+    func licenseVerificationCallback(_ isSuccess: Bool, error: Error?) {
+        var msg:String? = ""
+        if(error != nil)
+        {
+            let err = error as NSError?
+            if err?.code == -1009 {
+                msg = "Dynamsoft Label Recognizer is unable to connect to the public Internet to acquire a license. Please connect your device to the Internet or contact support@dynamsoft.com to acquire an offline license."
+            }else{
+                msg = err!.userInfo[NSUnderlyingErrorKey] as? String
+                if(msg == nil)
+                {
+                    msg = err?.localizedDescription
+                }
+            }
+            print(msg ?? "")
         }
-        updateSettings(config: config)
+        licenseResolveBlock(isSuccess)
+    }
+    
+    @objc(decodeBase64:withResolver:withRejecter:)
+    func decodeBase64(base64: String, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
         let image = Utils.convertBase64ToImage(base64)
         var scanResult:[String:Any] = [:]
         var returned_results: [Any] = []
         print("orientation")
         print(image?.imageOrientation.rawValue)
         if image != nil {
-            let results = try? recognizer.recognizeImage(image!)
+            let results = try? VisionCameraDynamsoftLabelRecognizer.recognizer.recognizeImage(image!)
             if results != nil {
                 for result in results! {
                     returned_results.append(Utils.wrapDLRResult(result:result))
@@ -49,22 +62,55 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject {
         resolve(scanResult)
     }
     
-    private func updateSettings(config:[String:Any]){
-        if config["customModelConfig"] != nil {
-            let customModelConfig = config["customModelConfig"] as? [String:Any]
-            let modelFolder = customModelConfig!["customModelFolder"] as! String
-            let modelFileNames = customModelConfig!["customModelFileNames"] as! [String]
-            manager.useCustomModel(modelFolder: modelFolder, modelFileNames: modelFileNames)
+    @objc(updateTemplate:withResolver:withRejecter:)
+    func updateTemplate(template: String, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
+        if (template != "" && VisionCameraDynamsoftLabelRecognizer.currentTemplate != template) {
+            do {
+                try VisionCameraDynamsoftLabelRecognizer.recognizer.initRuntimeSettings(template)
+            } catch  {
+                reject("error","invalid template",error)
+            }
+            VisionCameraDynamsoftLabelRecognizer.currentTemplate = template;
         }
-        
-        let template = config["template"] as? String ?? ""
-        if (template != "") {
-            manager.updateTemplate(template: template)
+        resolve(true)
+    }
+    
+    @objc(withResolver:withRejecter:)
+    func resetRuntimeSettings(resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
+        do {
+            try VisionCameraDynamsoftLabelRecognizer.recognizer.resetRuntimeSettings()
+        } catch  {
+            reject("error","failed to reset runtime settings",error)
         }
     }
     
-    private func initDLR(license:String){
-        manager = LabelRecognizerManager(license: license)
-        recognizer = manager.getRecognizer();
+    @objc(useCustomModel:withResolver:withRejecter:)
+    func useCustomModel(customModelConfig:[String:Any], resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
+        let modelFolder = customModelConfig["customModelFolder"] as! String
+        let modelFileNames = customModelConfig["customModelFileNames"] as! [String]
+        if (modelFolder != VisionCameraDynamsoftLabelRecognizer.currentModelFolder) {
+            VisionCameraDynamsoftLabelRecognizer.currentModelFolder = modelFolder
+            for model in modelFileNames {
+                
+                guard let prototxt = Bundle.main.url(
+                    forResource: model,
+                    withExtension: "prototxt",
+                    subdirectory: modelFolder
+                ) else {
+                    print("model not exist")
+                    reject("error","model not exist", nil)
+                    return
+                }
+
+                let datapro = try! Data.init(contentsOf: prototxt)
+                let txt = Bundle.main.url(forResource: model, withExtension: "txt", subdirectory: modelFolder)
+                let datatxt = try! Data.init(contentsOf: txt!)
+                let caffemodel = Bundle.main.url(forResource: model, withExtension: "caffemodel", subdirectory: modelFolder)
+                let datacaf = try! Data.init(contentsOf: caffemodel!)
+                DynamsoftLabelRecognizer.appendCharacterModel(model, prototxtBuffer: datapro, txtBuffer: datatxt, characterModelBuffer: datacaf)
+                print("load model %@", model)
+            }
+        }
+        resolve(true)
     }
 }

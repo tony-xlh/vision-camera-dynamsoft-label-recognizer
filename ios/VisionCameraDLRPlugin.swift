@@ -11,18 +11,12 @@ import DynamsoftLabelRecognizer
 
 @objc(VisionCameraDLRPlugin)
 public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
-    private static var recognizer:DynamsoftLabelRecognizer!
-    private static var manager:LabelRecognizerManager!
     private static let context = CIContext(options: nil)
 
     @objc
     public static func callback(_ frame: Frame!, withArgs args: [Any]!) -> Any! {
         let config = getConfig(withArgs: args)
-        if manager == nil {
-            let license: String = config?["license"] as? String ?? "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
-            manager = LabelRecognizerManager(license: license)
-            recognizer = manager.getRecognizer();
-        }
+
         guard let imageBuffer = CMSampleBufferGetImageBuffer(frame.buffer) else {
             print("Failed to get CVPixelBuffer!")
             return nil
@@ -33,19 +27,6 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
           print("Failed to create CGImage!")
           return nil
         }
-
-        if config!["customModelConfig"] != nil {
-            let customModelConfig = config?["customModelConfig"] as? [String:Any]
-            let modelFolder = customModelConfig!["customModelFolder"] as! String
-            let modelFileNames = customModelConfig!["customModelFileNames"] as! [String]
-            manager.useCustomModel(modelFolder: modelFolder, modelFileNames: modelFileNames)
-        }
-        
-        let template = config?["template"] as? String ?? ""
-        if (template != "") {
-            manager.updateTemplate(template: template)
-        }
-
         
         let image:UIImage;
         let scanRegion = config?["scanRegion"] as? [String: Int]
@@ -78,7 +59,7 @@ public class VisionCameraDLRPlugin: NSObject, FrameProcessorPluginBase {
         var scanResult: [String:Any] = [:]
         var returned_results: [Any] = []
 
-        let results = try? recognizer.recognizeImage(image)
+        let results = try? VisionCameraDynamsoftLabelRecognizer.recognizer.recognizeImage(image)
         
         if results != nil {
             for result in results! {
