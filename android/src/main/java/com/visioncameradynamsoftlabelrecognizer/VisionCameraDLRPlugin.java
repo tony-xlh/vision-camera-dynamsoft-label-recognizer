@@ -27,25 +27,10 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         // code goes here
         ReadableNativeMap config = getConfig(params);
         if (manager == null) {
-            String license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
-            if (config != null && config.hasKey("license")) {
-                license = config.getString("license");
-            }
-            manager = new LabelRecognizerManager(context,license);
+            manager = new LabelRecognizerManager(context);
             recognizer = manager.getRecognizer();
         }
 
-        if (config.hasKey("customModelConfig")) {
-            ReadableNativeMap customModelConfig = config.getMap("customModelConfig");
-            String modelFolder = customModelConfig.getString("customModelFolder");
-            ReadableArray modelFileNames = customModelConfig.getArray("customModelFileNames");
-            manager.useCustomModel(modelFolder,modelFileNames);
-        }
-
-        if (config.hasKey("template")) {
-            String template = config.getString("template");
-            manager.updateTemplate(template);
-        }
         WritableNativeMap scanResult = new WritableNativeMap();
         WritableNativeArray array = new WritableNativeArray();
         @SuppressLint("UnsafeOptInUsageError")

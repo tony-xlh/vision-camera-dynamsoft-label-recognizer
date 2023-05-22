@@ -7,6 +7,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.dynamsoft.core.CoreException;
+import com.dynamsoft.core.LicenseManager;
+import com.dynamsoft.core.LicenseVerificationListener;
 import com.dynamsoft.dlr.DLRLineResult;
 import com.dynamsoft.dlr.DLRResult;
 import com.dynamsoft.dlr.LabelRecognizer;
@@ -22,6 +25,8 @@ import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.module.annotations.ReactModule;
 
+import java.io.IOException;
+
 @ReactModule(name = VisionCameraDynamsoftLabelRecognizerModule.NAME)
 public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBaseJavaModule {
     public static final String NAME = "VisionCameraDynamsoftLabelRecognizer";
@@ -31,6 +36,7 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
     public VisionCameraDynamsoftLabelRecognizerModule(ReactApplicationContext reactContext) {
         super(reactContext);
         mContext = reactContext;
+        initDLR();
     }
 
     @Override
@@ -40,22 +46,7 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
     }
 
     @ReactMethod
-    public void destroy(Promise promise) {
-        if (manager != null) {
-            manager.destroy();
-            manager = null;
-            recognizer = null;
-        }
-        promise.resolve(true);
-    }
-
-    @ReactMethod
-    public void decodeBase64(String base64, ReadableMap config, Promise promise) {
-        Log.d("DLR",config.toString());
-        if (recognizer == null) {
-            initDLR((ReadableNativeMap) config);
-        }
-        updateSettings((ReadableNativeMap) config);
+    public void decodeBase64(String base64, Promise promise) {
         WritableNativeMap scanResult = new WritableNativeMap();
         WritableNativeArray array = new WritableNativeArray();
         Bitmap bitmap = Utils.base642Bitmap(base64);
@@ -71,31 +62,48 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         promise.resolve(scanResult);
     }
 
-    private void initDLR(ReadableNativeMap config){
-        String license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
-        if (config != null && config.hasKey("license")) {
-            license = config.getString("license");
-            Log.d("DLR","use license from config");
-            Log.d("DLR",license);
-        }
-        manager = new LabelRecognizerManager(mContext,license);
+    @ReactMethod
+    private void initLicense(String license, Promise promise){
+        LicenseManager.initLicense(license, mContext, new LicenseVerificationListener() {
+            @Override
+            public void licenseVerificationCallback(boolean isSuccess, CoreException error) {
+                if(!isSuccess){
+                    error.printStackTrace();
+                    promise.resolve(false);
+                }else{
+                    promise.resolve(true);
+                }
+            }
+        });
+    }
+
+    private void initDLR(){
+        manager = new LabelRecognizerManager(mContext);
         recognizer = manager.getRecognizer();
     }
 
-    private void updateSettings(ReadableNativeMap config){
-        Log.d("DLR","update settings");
-        Log.d("DLR",config.toString());
-
-        if (config.hasKey("customModelConfig")) {
-            ReadableNativeMap customModelConfig = config.getMap("customModelConfig");
-            String modelFolder = customModelConfig.getString("customModelFolder");
-            ReadableArray modelFileNames = customModelConfig.getArray("customModelFileNames");
+    @ReactMethod
+    public void useCustomModel(ReadableMap customModelConfig, Promise promise) {
+        String modelFolder = customModelConfig.getString("customModelFolder");
+        ReadableArray modelFileNames = customModelConfig.getArray("customModelFileNames");
+        try {
             manager.useCustomModel(modelFolder,modelFileNames);
+            promise.resolve(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+            promise.reject(e.getMessage(),e);
         }
+    }
 
-        if (config.hasKey("template")) {
-            String template = config.getString("template");
+    @ReactMethod
+    public void updateTemplate(String template, Promise promise){
+        Log.d("DLR","update template");
+        try {
             manager.updateTemplate(template);
+            promise.resolve(true);
+        } catch (LabelRecognizerException e) {
+            e.printStackTrace();
+            promise.reject(e.getMessage(),e);
         }
     }
 

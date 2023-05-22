@@ -4,10 +4,7 @@ export interface ScanResult {
 }
 
 export interface ScanConfig{
-  template?: string;
-  license?: string;
   scanRegion?: ScanRegion;
-  customModelConfig?: CustomModelConfig;
   includeImageBase64?: boolean;
 }
 
@@ -22,7 +19,6 @@ export interface CustomModelConfig {
   customModelFolder: string;
   customModelFileNames: string[];
 }
-
 
 export interface DLRResult {
   referenceRegionName: string;
