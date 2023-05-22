@@ -22,7 +22,7 @@
     "react-native-screens": "^3.11.1",
     "react-native-select-dropdown": "^2.0.4",
     "react-native-svg": "^12.4.3",
-    "react-native-vision-camera": "^2.14.0"
+    "react-native-vision-camera": "^2.15.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
