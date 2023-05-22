@@ -15,9 +15,7 @@ import com.dynamsoft.dlr.*;
 public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
 
     private ReactApplicationContext context;
-
-    private LabelRecognizer recognizer = null;
-    private LabelRecognizerManager manager = null;
+    private VisionCameraDynamsoftLabelRecognizerModule mModule;
     public void setContext(ReactApplicationContext reactContext){
         context = reactContext;
     }
@@ -26,11 +24,6 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
     public Object callback(ImageProxy image, Object[] params) {
         // code goes here
         ReadableNativeMap config = getConfig(params);
-        if (manager == null) {
-            manager = new LabelRecognizerManager(context);
-            recognizer = manager.getRecognizer();
-        }
-
         WritableNativeMap scanResult = new WritableNativeMap();
         WritableNativeArray array = new WritableNativeArray();
         @SuppressLint("UnsafeOptInUsageError")
@@ -45,7 +38,7 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             bm = Bitmap.createBitmap(bm, (int) left, (int) top, (int) width, (int) height, null, false);
         }
         try {
-            DLRResult[] results = recognizer.recognizeImage(bm);
+            DLRResult[] results = mModule.getRecognizer().recognizeImage(bm);
             for (DLRResult result:results) {
                 array.pushMap(Utils.getMapFromDLRResult(result));
             }
@@ -71,7 +64,8 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         return null;
     }
 
-    VisionCameraDLRPlugin() {
+    VisionCameraDLRPlugin(VisionCameraDynamsoftLabelRecognizerModule module) {
         super("recognize");
+        mModule = module;
     }
 }

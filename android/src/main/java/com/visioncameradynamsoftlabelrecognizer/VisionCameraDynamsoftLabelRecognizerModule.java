@@ -45,6 +45,10 @@ public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBase
         return NAME;
     }
 
+    public LabelRecognizer getRecognizer() {
+        return recognizer;
+    }
+
     @ReactMethod
     public void decodeBase64(String base64, Promise promise) {
         WritableNativeMap scanResult = new WritableNativeMap();

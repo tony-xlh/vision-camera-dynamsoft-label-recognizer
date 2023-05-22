@@ -68,6 +68,7 @@ public class LabelRecognizerManager {
     }
 
     public void resetRuntimeSettings() throws LabelRecognizerException {
+        currentTemplate = "";
         recognizer.resetRuntimeSettings();
     }
 
