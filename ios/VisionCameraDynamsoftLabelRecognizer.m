@@ -18,7 +18,7 @@ RCT_EXTERN_METHOD(updateTemplate:(NSString *)template
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(useCustomModel:customModelConfig:(NSDictionary *)customModelConfig
+RCT_EXTERN_METHOD(useCustomModel:(NSDictionary *)customModelConfig
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 

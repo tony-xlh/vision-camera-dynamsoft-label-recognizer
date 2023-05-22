@@ -18,6 +18,7 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject, LicenseVerificationListene
     var licenseRejectBlock:RCTPromiseRejectBlock!;
     @objc(initLicense:withResolver:withRejecter:)
     func initLicense(license: String, resolve:@escaping RCTPromiseResolveBlock,reject:@escaping RCTPromiseRejectBlock) -> Void {
+        print("init license")
         licenseResolveBlock = resolve
         licenseRejectBlock = reject
         DynamsoftLicenseManager.initLicense(license,verificationDelegate:self)
@@ -75,7 +76,7 @@ class VisionCameraDynamsoftLabelRecognizer: NSObject, LicenseVerificationListene
         resolve(true)
     }
     
-    @objc(withResolver:withRejecter:)
+    @objc(resetRuntimeSettings:withRejecter:)
     func resetRuntimeSettings(resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
         do {
             try VisionCameraDynamsoftLabelRecognizer.recognizer.resetRuntimeSettings()
