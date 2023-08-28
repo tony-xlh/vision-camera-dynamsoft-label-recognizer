@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.libraries = 'c++'
   s.dependency "React-Core"
+  s.dependency "DynamsoftCore", "= 2.0.1"
   s.dependency "DynamsoftLabelRecognizer", '= 2.2.20'
   # Don't install the dependencies when we run `pod install` in the old architecture.
   if ENV['RCT_NEW_ARCH_ENABLED'] == '1' then
