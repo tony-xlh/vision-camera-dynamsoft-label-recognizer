@@ -5,11 +5,7 @@ React Native Vision Camera Frame Processor Plugin of [Dynamsoft Label Recognizer
 
 [Demo video](https://user-images.githubusercontent.com/5462205/204175763-ea23321d-8ae1-40ea-b9ce-209bbe6405bb.mp4)
 
-This version of the plugin works for the following combination:
-
-* vision camera v2
-* react-native-reanimated v2
-* react native <= 0.71
+Please note that this version of the plugin works for Vision Camera v2.
 
 ## Installation
 
