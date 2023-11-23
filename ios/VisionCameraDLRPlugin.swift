@@ -12,8 +12,6 @@ import DynamsoftLabelRecognizer
 @objc(VisionCameraDLRPlugin)
 public class VisionCameraDLRPlugin: FrameProcessorPlugin {
     public override func callback(_ frame: Frame, withArguments arguments: [AnyHashable: Any]?) -> Any? {
-        let config = getConfig(withArgs: args)
-
         guard let imageBuffer = CMSampleBufferGetImageBuffer(frame.buffer) else {
             print("Failed to get CVPixelBuffer!")
             return nil
@@ -26,7 +24,7 @@ public class VisionCameraDLRPlugin: FrameProcessorPlugin {
         }
         
         let image:UIImage;
-        let scanRegion = config?["scanRegion"] as? [String: Int]
+        let scanRegion = arguments?["scanRegion"] as? [String: Int]
         if scanRegion != nil {
             let imgWidth = Double(cgImage.width)
             let imgHeight = Double(cgImage.height)
@@ -66,20 +64,11 @@ public class VisionCameraDLRPlugin: FrameProcessorPlugin {
 
 
         scanResult["results"] = returned_results
-        let includeImageBase64 = config!["includeImageBase64"] as? Bool ?? false
+        let includeImageBase64 = arguments!["includeImageBase64"] as? Bool ?? false
         if includeImageBase64 == true {
             scanResult["imageBase64"] = Utils.getBase64FromImage(image)
         }
         
         return scanResult
     }
-
-    static func getConfig(withArgs args: [Any]!) -> [String:Any]! {
-        if args.count>0 {
-            let config = args[0] as? [String: Any]
-            return config
-        }
-        return nil
-    }
-
 }
