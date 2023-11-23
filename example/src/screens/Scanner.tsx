@@ -29,6 +29,7 @@ export default function ScannerScreen({route}) {
   const [isActive,setIsActive] = React.useState(true);
   const [modalVisible, setModalVisible] = React.useState(false);
   const modalVisibleShared = useSharedValue(false);
+  const mounted = useSharedValue(false);
   const [hasPermission, setHasPermission] = React.useState(false);
   const [frameWidth, setFrameWidth] = React.useState(1280);
   const [frameHeight, setFrameHeight] = React.useState(720);
@@ -54,9 +55,11 @@ export default function ScannerScreen({route}) {
       }else{
         await DLR.resetRuntimeSettings();
       }
+      mounted.value = true;
     })();
     return ()=>{
       console.log("unmounted");
+      mounted.value = false;
       setIsActive(false);
     }
   }, []);
@@ -163,7 +166,7 @@ export default function ScannerScreen({route}) {
 
   const frameProcessor = useFrameProcessor((frame) => {
     'worklet'
-    if (modalVisibleShared.value === false) {
+    if (modalVisibleShared.value === false && mounted.value) {
 
       updateFrameSizeJS(frame.width, frame.height);
 
