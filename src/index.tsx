@@ -66,7 +66,12 @@ export function recognize(frame: Frame,config: ScanConfig): ScanResult {
       record["includeImageBase64"] = config.includeImageBase64;
     }
     if (config.scanRegion) {
-      record["scanRegion"] = config.scanRegion;
+      let scanRegionRecord:Record<string,any> = {};
+      scanRegionRecord["left"] = config.scanRegion.left;
+      scanRegionRecord["top"] = config.scanRegion.top;
+      scanRegionRecord["width"] = config.scanRegion.width;
+      scanRegionRecord["height"] = config.scanRegion.height;
+      record["scanRegion"] = scanRegionRecord;
     }
     return plugin.call(frame,record) as any;
   }else{
