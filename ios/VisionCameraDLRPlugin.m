@@ -1,8 +1,8 @@
 //
-//  DetectionFrameProcessorPlugin.m
+//  VisionCameraDLRPlugin.m
 //  VisionCameraDynamsoftLabelRecognizer
 //
-//  Created by xulihang on 2022/11/6.
+//  Created by xulihang on 2022/7/31.
 //  Copyright © 2022 Facebook. All rights reserved.
 //
 
@@ -12,16 +12,16 @@
 #import <VisionCamera/Frame.h>
 #import "VisionCameraDynamsoftLabelRecognizer-Swift.h"
 
-@interface DetectionFrameProcessorPlugin (FrameProcessorPluginLoader)
+@interface VisionCameraDLRPlugin (FrameProcessorPluginLoader)
 @end
 
-@implementation DetectionFrameProcessorPlugin (FrameProcessorPluginLoader)
+@implementation VisionCameraDLRPlugin (FrameProcessorPluginLoader)
 
 + (void)load
 {
-  [FrameProcessorPluginRegistry addFrameProcessorPlugin:@"detect"
+  [FrameProcessorPluginRegistry addFrameProcessorPlugin:@"recognize"
                                         withInitializer:^FrameProcessorPlugin* (NSDictionary* options) {
-    return [[DetectionFrameProcessorPlugin alloc] init];
+    return [[VisionCameraDLRPlugin alloc] init];
   }];
 }
 

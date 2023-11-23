@@ -2,7 +2,7 @@
 //  VisionCameraDynamsoftLabelRecognizer.h
 //  VisionCameraDynamsoftLabelRecognizer
 //
-//  Created by 徐力航 on 2023/11/22.
+//  Created by xuilhang on 2023/11/23.
 //  Copyright © 2023 Facebook. All rights reserved.
 //
 

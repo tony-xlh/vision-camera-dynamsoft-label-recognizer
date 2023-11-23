@@ -3,12 +3,8 @@ PODS:
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - DynamsoftCore (2.0.2)
-  - DynamsoftLabelRecognizer (1.0.30):
-    - DynamsoftCore (>= 2.0.0)
-    - DynamsoftImageProcessing
-    - DynamsoftIntermediateResult
-  - DynamsoftImageProcessing (1.0.30)
-  - DynamsoftIntermediateResult (1.0.30)
+  - DynamsoftLabelRecognizer (2.2.20):
+    - DynamsoftCore
   - FBLazyVector (0.72.5)
   - FBReactNativeSpec (0.72.5):
     - RCT-Folly (= 2021.07.22.00)
@@ -506,11 +502,9 @@ PODS:
     - React-callinvoker
     - React-Core
     - react-native-worklets-core
-  - VisionCameraDynamsoftLabelRecognizer (1.0.3):
+  - VisionCameraDynamsoftLabelRecognizer (1.0.0):
     - DynamsoftCore (= 2.0.2)
-    - DynamsoftLabelRecognizer (= 1.0.30)
-    - DynamsoftImageProcessing (= 1.0.30)
-    - DynamsoftIntermediateResult (= 1.0.30)
+    - DynamsoftLabelRecognizer (= 2.2.20)
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -591,8 +585,6 @@ SPEC REPOS:
     - CocoaAsyncSocket
     - DynamsoftCore
     - DynamsoftLabelRecognizer
-    - DynamsoftImageProcessing
-    - DynamsoftIntermediateResult
     - Flipper
     - Flipper-Boost-iOSX
     - Flipper-DoubleConversion
@@ -703,9 +695,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   DynamsoftCore: 80c01db1e40dd019d50b9c07bff50c73fcb06d03
-  DynamsoftLabelRecognizer: c316039c6209200d068231ff676da81af75e7778
-  DynamsoftImageProcessing: ffed5d46c90d8857f3e65194947b8447a10629b3
-  DynamsoftIntermediateResult: b611948b62c0c48e2a5d247bcc1ec31a03b670ff
+  DynamsoftLabelRecognizer: 50365d635771e449904ec091d49e9729cd2f03d9
   FBLazyVector: 71803c074f6325f10b5ec891c443b6bbabef0ca7
   FBReactNativeSpec: 448e08a759d29a96e15725ae532445bf4343567c
   Flipper: 6edb735e6c3e332975d1b17956bcc584eccf5818
@@ -758,10 +748,10 @@ SPEC CHECKSUMS:
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   VisionCamera: ce927c396e1057199dd01bf412ba3777d900e166
-  VisionCameraDynamsoftLabelRecognizer: 384d76756bbc105155afb56be3ec1def4f909989
+  VisionCameraDynamsoftLabelRecognizer: 910fb8677f664afec404a73fdc666128ca4745ce
   Yoga: 86fed2e4d425ee4c6eab3813ba1791101ee153c6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: b95ea2c415e9fcc44f83fb346e35b14f6879dfb1
+PODFILE CHECKSUM: f4ed5ec5bcef8eecfb68b63346444d34e3ab44a3
 
 COCOAPODS: 1.14.2
