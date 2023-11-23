@@ -15,9 +15,8 @@ Pod::Spec.new do |s|
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
+  s.libraries = 'c++'
   s.dependency "React-Core"
   s.dependency "DynamsoftCore", "= 2.0.2"
-  s.dependency "DynamsoftImageProcessing", "= 1.0.30"
-  s.dependency "DynamsoftIntermediateResult", "= 1.0.30"
-  s.dependency "DynamsoftLabelRecognizer", "= 1.0.30"
+  s.dependency "DynamsoftLabelRecognizer", '= 2.2.20'
 end
