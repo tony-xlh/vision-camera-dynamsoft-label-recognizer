@@ -14,6 +14,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8EC72FA82AD0A33E00CA81BA /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC72FA72AD0A33E00CA81BA /* File.swift */; };
 		9A086967B649E8CAB74D03D0 /* libPods-VisionCameraDynamsoftLabelRecognizerExample-VisionCameraDynamsoftLabelRecognizerExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9065D6E90973BCC63B35C5 /* libPods-VisionCameraDynamsoftLabelRecognizerExample-VisionCameraDynamsoftLabelRecognizerExampleTests.a */; };
+		BEAE8DC22B0EF705009B936F /* MRZ in Resources */ = {isa = PBXBuildFile; fileRef = BEAE8DC12B0EF705009B936F /* MRZ */; };
 		F7E37EFC697024C71BDF5398 /* libPods-VisionCameraDynamsoftLabelRecognizerExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAAE9AF5DA379865E203D8F /* libPods-VisionCameraDynamsoftLabelRecognizerExample.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		8EC72FA62AD0A33E00CA81BA /* VisionCameraDynamsoftLabelRecognizerExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VisionCameraDynamsoftLabelRecognizerExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		8EC72FA72AD0A33E00CA81BA /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = File.swift; path = VisionCameraDynamsoftLabelRecognizerExample/File.swift; sourceTree = "<group>"; };
 		B27E0D6321DD6D421A3E813C /* Pods-VisionCameraDynamsoftLabelRecognizerExample-VisionCameraDynamsoftLabelRecognizerExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisionCameraDynamsoftLabelRecognizerExample-VisionCameraDynamsoftLabelRecognizerExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-VisionCameraDynamsoftLabelRecognizerExample-VisionCameraDynamsoftLabelRecognizerExampleTests/Pods-VisionCameraDynamsoftLabelRecognizerExample-VisionCameraDynamsoftLabelRecognizerExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BEAE8DC12B0EF705009B936F /* MRZ */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MRZ; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F9EF9CBEF8AD1F434BCAEC3D /* Pods-VisionCameraDynamsoftLabelRecognizerExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisionCameraDynamsoftLabelRecognizerExample.debug.xcconfig"; path = "Target Support Files/Pods-VisionCameraDynamsoftLabelRecognizerExample/Pods-VisionCameraDynamsoftLabelRecognizerExample.debug.xcconfig"; sourceTree = "<group>"; };
 		FA9065D6E90973BCC63B35C5 /* libPods-VisionCameraDynamsoftLabelRecognizerExample-VisionCameraDynamsoftLabelRecognizerExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VisionCameraDynamsoftLabelRecognizerExample-VisionCameraDynamsoftLabelRecognizerExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +91,7 @@
 		13B07FAE1A68108700A75B9A /* VisionCameraDynamsoftLabelRecognizerExample */ = {
 			isa = PBXGroup;
 			children = (
+				BEAE8DC12B0EF705009B936F /* MRZ */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -216,7 +219,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VisionCameraDynamsoftDocumentNormalizerExample" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VisionCameraDynamsoftLabelRecognizerExample" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -247,6 +250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEAE8DC22B0EF705009B936F /* MRZ in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -612,10 +616,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -685,10 +686,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -716,7 +714,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VisionCameraDynamsoftDocumentNormalizerExample" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "VisionCameraDynamsoftLabelRecognizerExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
