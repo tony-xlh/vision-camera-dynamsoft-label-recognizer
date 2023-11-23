@@ -11,14 +11,19 @@
     "reverse": "adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
+    "@react-native-community/clipboard": "^1.5.1",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/native-stack": "^6.5.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
     "react-native-vision-camera": "^3.6.4",
     "react-native-worklets-core": "^0.2.4",
-    "react-native-share": "^8.0.0",
-    "react-native-simple-radio-button": "^2.7.4",
+    "react-native-image-picker": "^7.0.2",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.11.1",
+    "react-native-select-dropdown": "^2.0.4",
     "react-native-svg": "^13.4.0",
-    "vision-camera-dynamsoft-document-normalizer": "../"
+    "vision-camera-dynamsoft-label-recognizer": "../"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
