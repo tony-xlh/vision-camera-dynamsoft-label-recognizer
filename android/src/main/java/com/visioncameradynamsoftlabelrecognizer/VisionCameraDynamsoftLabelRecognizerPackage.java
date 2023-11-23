@@ -6,6 +6,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
 import com.mrousavy.camera.frameprocessor.FrameProcessorPluginRegistry;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class VisionCameraDynamsoftLabelRecognizerPackage implements ReactPackage {
     static {
-        FrameProcessorPluginRegistry.addFrameProcessorPlugin("detect", options -> new VisionCameraDetectionPlugin());
+        FrameProcessorPluginRegistry.addFrameProcessorPlugin("recognize", options -> new VisionCameraDLRPlugin());
     }
     @NonNull
     @Override

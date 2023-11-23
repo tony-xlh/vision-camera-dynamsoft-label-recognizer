@@ -36,10 +36,6 @@ import com.mrousavy.camera.frameprocessor.Frame;
 import com.mrousavy.camera.types.Orientation;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /** Utils functions for bitmap conversions. */
@@ -230,25 +226,4 @@ public class BitmapUtils {
         return BitmapFactory.decodeByteArray(decode,0,decode.length);
     }
 
-    public static String bitmap2Base64(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
-    }
-
-    public static String saveImage(Bitmap bmp, File dir, String fileName) {
-        File file = new File(dir, fileName);
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-            return file.getAbsolutePath();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
 }

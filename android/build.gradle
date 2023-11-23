@@ -140,5 +140,6 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   implementation project(':react-native-vision-camera')
-  implementation 'com.dynamsoft:dynamsoftlabelrecognizer:1.0.30'
+  // DLR
+  implementation 'com.dynamsoft:dynamsoftlabelrecognizer:2.2.20'
 }
