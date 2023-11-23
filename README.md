@@ -1,11 +1,9 @@
 
-# vision-camera-dynamsoft-document-normalizer
+# vision-camera-dynamsoft-label-recognizer
 
-A React Native Vision Camera frame processor plugin for [Dynamsoft Document Normalizer](https://www.dynamsoft.com/document-normalizer/docs/).
+React Native Vision Camera Frame Processor Plugin of [Dynamsoft Label Recognizer](https://www.dynamsoft.com/label-recognition/overview/)
 
-It can detect document boundaries and run perspective transformation to get a normalized image.
-
-[Demo video](https://user-images.githubusercontent.com/5462205/200720562-a7b91e06-cf6c-4235-a8cd-ef200012a42a.MP4)
+[Demo video](https://user-images.githubusercontent.com/5462205/204175763-ea23321d-8ae1-40ea-b9ce-209bbe6405bb.mp4)
 
 ## Versions
 
@@ -16,7 +14,7 @@ For vision-camera v3, use versions >= 1.0.0.
 ## Installation
 
 ```sh
-yarn add vision-camera-dynamsoft-document-normalizer
+yarn add vision-camera-dynamsoft-label-recognizer
 cd ios && pod install
 ```
 
@@ -32,31 +30,25 @@ module.exports = {
 
 ## Usage
 
-1. Scan documents with vision camera.
+1. Scan text with vision camera.
    
    ```js
-   import { detect } from 'vision-camera-dynamsoft-document-normalizer';
+   import { recognize } from 'vision-camera-dynamsoft-label-recognizer';
  
    // ...
    const frameProcessor = useFrameProcessor((frame) => {
      'worklet';
-     const detectionResults = detect(frame);
+     const scanResult = recognize(frame);
    }, []);
    ```
    
-2. Scan documents from a file.
+2. Scan text from base64-encoded static images.
 
    ```ts
-   let detectionResults = await detectFile(photoPath);
+   const scanResult = await decodeBase64(base64);
    ```
 
-3. Normalize a document image with the detection result.
-
-   ```ts
-   let normalizedImageResult = await normalizeFile(photoPath, detectionResult.location,{saveNormalizationResultAsFile:true});
-   ```
-
-4. License initialization ([apply for a trial license](https://www.dynamsoft.com/customer/license/trialLicense/?product=ddn)).
+3. License initialization ([apply for a trial license](https://www.dynamsoft.com/customer/license/trialLicense/?product=dlr)).
 
    ```ts
    await initLicense("your license");
