@@ -53,7 +53,6 @@ module.exports = {
    ```ts
    await initLicense("your license");
    ```
-   ```
 
 ## Interfaces
 
