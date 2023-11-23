@@ -223,6 +223,7 @@ export default function ScannerScreen({route}) {
             height={scanRegion.height/100*getFrameSize().height}
             strokeWidth="2"
             stroke="red"
+            fillOpacity={0.0}
           />
           {charactersSVG("char-cropped",getOffsetX(),getOffsetY())}
         </Svg>
@@ -241,13 +242,12 @@ export default function ScannerScreen({route}) {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {renderImage()}
-            {recognitionResults.map((result, idx) => (
-              <Text key={"line-"+idx}>
-                {result.characterResults.map((char, idx) => (
-                  <RecognizedCharacter key={"char-"+idx} char={char}/>
+            {recognitionResults.map((result) => (
+              <Text key={"line-"+result.location.points[0].x}>
+                {result.characterResults.map((char) => (
+                  <RecognizedCharacter key={"rchar-"+char.location.points[0].x} char={char}/>
                 ))}  
               </Text>
-              
             ))}
             <View style={styles.buttonView}>
                 <Pressable
