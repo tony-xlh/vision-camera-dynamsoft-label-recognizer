@@ -33,10 +33,10 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
             Bitmap bm = BitmapUtils.getBitmap(frame);
             if (arguments != null && arguments.containsKey("scanRegion")) {
                 Map<String,Object> scanRegion = (Map<String, Object>) arguments.get("scanRegion");
-                double left = ((int) scanRegion.get("left")) / 100.0 * bm.getWidth();
-                double top = ((int) scanRegion.get("top")) / 100.0 * bm.getHeight();
-                double width = ((int) scanRegion.get("width")) / 100.0 * bm.getWidth();
-                double height = ((int) scanRegion.get("height")) / 100.0 * bm.getHeight();
+                double left = ((double) scanRegion.get("left")) / 100.0 * bm.getWidth();
+                double top = ((double) scanRegion.get("top")) / 100.0 * bm.getHeight();
+                double width = ((double) scanRegion.get("width")) / 100.0 * bm.getWidth();
+                double height = ((double) scanRegion.get("height")) / 100.0 * bm.getHeight();
                 bm = Bitmap.createBitmap(bm, (int) left, (int) top, (int) width, (int) height, null, false);
             }
 

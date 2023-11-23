@@ -184,7 +184,7 @@ export default function ScannerScreen({route}) {
       console.log("frame height:"+frame.height);
       config.scanRegion = scanRegion;
       config.includeImageBase64 = true;
-      let scanResult = recognize(frame,{});
+      let scanResult = recognize(frame,config);
 
       let results:DLRResult[] = scanResult.results;
       let lineResults:DLRLineResult[] = [];
