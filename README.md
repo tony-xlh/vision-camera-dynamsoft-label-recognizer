@@ -53,6 +53,80 @@ module.exports = {
    ```ts
    await initLicense("your license");
    ```
+   ```
+
+## Interfaces
+
+Scanning configuration:
+
+```ts
+//the value is in percentage
+export interface ScanRegion{
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
+export interface ScanConfig{
+  scanRegion?: ScanRegion;
+  includeImageBase64?: boolean;
+}
+
+export interface CustomModelConfig {
+  customModelFolder: string;
+  customModelFileNames: string[];
+}
+```
+
+You can use a custom model like a model for MRZ passport reading using the `CustomModelConfig` prop and update the template. You can find the MRZ model and template in the example.
+
+You need to put the model folder in the `assets` folder for Android or the root for iOS.
+
+About the result:
+
+```ts
+export interface ScanResult {
+  results: DLRResult[];
+  imageBase64?: string;
+}
+
+export interface DLRResult {
+  referenceRegionName: string;
+  textAreaName: string;
+  pageNumber: number;
+  location: Quadrilateral;
+  lineResults: DLRLineResult[];
+}
+
+export interface Quadrilateral{
+  points:Point[];
+}
+
+export interface Point {
+  x:number;
+  y:number;
+}
+
+export interface DLRLineResult {
+  text: string;
+  confidence: number;
+  characterModelName: string;
+  characterResults: DLRCharacherResult[];
+  lineSpecificationName: string;
+  location: Quadrilateral;
+}
+
+export interface DLRCharacherResult {
+  characterH: string;
+  characterM: string;
+  characterL: string;
+  characterHConfidence: number;
+  characterMConfidence: number;
+  characterLConfidence: number;
+  location: Quadrilateral;
+}
+```
 
 ## Supported Platforms
 
