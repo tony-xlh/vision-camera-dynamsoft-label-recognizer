@@ -1,4 +1,4 @@
-package com.visioncameradynamsoftdocumentnormalizer;
+package com.visioncameradynamsoftlabelrecognizer;
 
 import androidx.annotation.NonNull;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class VisionCameraDynamsoftDocumentNormalizerPackage implements ReactPackage {
+public class VisionCameraDynamsoftLabelRecognizerPackage implements ReactPackage {
     static {
         FrameProcessorPluginRegistry.addFrameProcessorPlugin("detect", options -> new VisionCameraDetectionPlugin());
     }
@@ -20,7 +20,7 @@ public class VisionCameraDynamsoftDocumentNormalizerPackage implements ReactPack
     @Override
     public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        VisionCameraDynamsoftDocumentNormalizerModule module = new VisionCameraDynamsoftDocumentNormalizerModule(reactContext);
+        VisionCameraDynamsoftLabelRecognizerModule module = new VisionCameraDynamsoftLabelRecognizerModule(reactContext);
         modules.add(module);
         return modules;
     }

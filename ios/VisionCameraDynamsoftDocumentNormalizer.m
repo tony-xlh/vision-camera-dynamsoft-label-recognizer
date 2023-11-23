@@ -1,6 +1,6 @@
 #import <React/RCTBridgeModule.h>
 
-@interface RCT_EXTERN_MODULE(VisionCameraDynamsoftDocumentNormalizer, NSObject)
+@interface RCT_EXTERN_MODULE(VisionCameraDynamsoftLabelRecognizer, NSObject)
 
 RCT_EXTERN_METHOD(initLicense:(NSString)license
                  withResolver:(RCTPromiseResolveBlock)resolve

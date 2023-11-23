@@ -1,6 +1,6 @@
 //
 //  DetectionFrameProcessorPlugin.m
-//  VisionCameraDynamsoftDocumentNormalizer
+//  VisionCameraDynamsoftLabelRecognizer
 //
 //  Created by xulihang on 2022/11/6.
 //  Copyright © 2022 Facebook. All rights reserved.
@@ -10,7 +10,7 @@
 #import <VisionCamera/FrameProcessorPlugin.h>
 #import <VisionCamera/FrameProcessorPluginRegistry.h>
 #import <VisionCamera/Frame.h>
-#import "VisionCameraDynamsoftDocumentNormalizer-Swift.h"
+#import "VisionCameraDynamsoftLabelRecognizer-Swift.h"
 
 @interface DetectionFrameProcessorPlugin (FrameProcessorPluginLoader)
 @end

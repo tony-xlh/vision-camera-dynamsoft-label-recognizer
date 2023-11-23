@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F4FF95D7245B92E800C19C63 /* VisionCameraDynamsoftDocumentNormalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* VisionCameraDynamsoftDocumentNormalizer.swift */; };
+		F4FF95D7245B92E800C19C63 /* VisionCameraDynamsoftLabelRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* VisionCameraDynamsoftLabelRecognizer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,15 +23,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		134814201AA4EA6300B7C361 /* libVisionCameraDynamsoftDocumentNormalizer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVisionCameraDynamsoftDocumentNormalizer.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3E7B5891CC2AC0600A0062D /* VisionCameraDynamsoftDocumentNormalizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisionCameraDynamsoftDocumentNormalizer.m; sourceTree = "<group>"; };
-		BE7FE4F62B0DE506008B2EC7 /* VisionCameraDynamsoftDocumentNormalizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VisionCameraDynamsoftDocumentNormalizer.h; sourceTree = "<group>"; };
+		134814201AA4EA6300B7C361 /* libVisionCameraDynamsoftLabelRecognizer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVisionCameraDynamsoftLabelRecognizer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3E7B5891CC2AC0600A0062D /* VisionCameraDynamsoftLabelRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisionCameraDynamsoftLabelRecognizer.m; sourceTree = "<group>"; };
+		BE7FE4F62B0DE506008B2EC7 /* VisionCameraDynamsoftLabelRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VisionCameraDynamsoftLabelRecognizer.h; sourceTree = "<group>"; };
 		BEE0A5102918E50000A062CB /* DetectionFrameProcessorPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetectionFrameProcessorPlugin.m; sourceTree = "<group>"; };
 		BEE6C1CA29150A6800F35AAA /* DetectionFrameProcessorPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionFrameProcessorPlugin.swift; sourceTree = "<group>"; };
 		BEE6C1CC29150A9500F35AAA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		BEE6C1CD29150AA300F35AAA /* BitmapUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmapUtils.swift; sourceTree = "<group>"; };
-		F4FF95D5245B92E700C19C63 /* VisionCameraDynamsoftDocumentNormalizer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VisionCameraDynamsoftDocumentNormalizer-Bridging-Header.h"; sourceTree = "<group>"; };
-		F4FF95D6245B92E800C19C63 /* VisionCameraDynamsoftDocumentNormalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionCameraDynamsoftDocumentNormalizer.swift; sourceTree = "<group>"; };
+		F4FF95D5245B92E700C19C63 /* VisionCameraDynamsoftLabelRecognizer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VisionCameraDynamsoftLabelRecognizer-Bridging-Header.h"; sourceTree = "<group>"; };
+		F4FF95D6245B92E800C19C63 /* VisionCameraDynamsoftLabelRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionCameraDynamsoftLabelRecognizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +48,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libVisionCameraDynamsoftDocumentNormalizer.a */,
+				134814201AA4EA6300B7C361 /* libVisionCameraDynamsoftLabelRecognizer.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,14 +56,14 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				BE7FE4F62B0DE506008B2EC7 /* VisionCameraDynamsoftDocumentNormalizer.h */,
+				BE7FE4F62B0DE506008B2EC7 /* VisionCameraDynamsoftLabelRecognizer.h */,
 				BEE0A5102918E50000A062CB /* DetectionFrameProcessorPlugin.m */,
 				BEE6C1CD29150AA300F35AAA /* BitmapUtils.swift */,
 				BEE6C1CC29150A9500F35AAA /* Utils.swift */,
 				BEE6C1CA29150A6800F35AAA /* DetectionFrameProcessorPlugin.swift */,
-				F4FF95D6245B92E800C19C63 /* VisionCameraDynamsoftDocumentNormalizer.swift */,
-				B3E7B5891CC2AC0600A0062D /* VisionCameraDynamsoftDocumentNormalizer.m */,
-				F4FF95D5245B92E700C19C63 /* VisionCameraDynamsoftDocumentNormalizer-Bridging-Header.h */,
+				F4FF95D6245B92E800C19C63 /* VisionCameraDynamsoftLabelRecognizer.swift */,
+				B3E7B5891CC2AC0600A0062D /* VisionCameraDynamsoftLabelRecognizer.m */,
+				F4FF95D5245B92E700C19C63 /* VisionCameraDynamsoftLabelRecognizer-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,9 +71,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B511DA1A9E6C8500147676 /* VisionCameraDynamsoftDocumentNormalizer */ = {
+		58B511DA1A9E6C8500147676 /* VisionCameraDynamsoftLabelRecognizer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "VisionCameraDynamsoftDocumentNormalizer" */;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "VisionCameraDynamsoftLabelRecognizer" */;
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
@@ -83,9 +83,9 @@
 			);
 			dependencies = (
 			);
-			name = VisionCameraDynamsoftDocumentNormalizer;
+			name = VisionCameraDynamsoftLabelRecognizer;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libVisionCameraDynamsoftDocumentNormalizer.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libVisionCameraDynamsoftLabelRecognizer.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -102,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "VisionCameraDynamsoftDocumentNormalizer" */;
+			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "VisionCameraDynamsoftLabelRecognizer" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -115,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B511DA1A9E6C8500147676 /* VisionCameraDynamsoftDocumentNormalizer */,
+				58B511DA1A9E6C8500147676 /* VisionCameraDynamsoftLabelRecognizer */,
 			);
 		};
 /* End PBXProject section */
@@ -125,7 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4FF95D7245B92E800C19C63 /* VisionCameraDynamsoftDocumentNormalizer.swift in Sources */,
+				F4FF95D7245B92E800C19C63 /* VisionCameraDynamsoftLabelRecognizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,9 +238,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = VisionCameraDynamsoftDocumentNormalizer;
+				PRODUCT_NAME = VisionCameraDynamsoftLabelRecognizer;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "VisionCameraDynamsoftDocumentNormalizer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "VisionCameraDynamsoftLabelRecognizer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -257,9 +257,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = VisionCameraDynamsoftDocumentNormalizer;
+				PRODUCT_NAME = VisionCameraDynamsoftLabelRecognizer;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "VisionCameraDynamsoftDocumentNormalizer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "VisionCameraDynamsoftLabelRecognizer-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -267,7 +267,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "VisionCameraDynamsoftDocumentNormalizer" */ = {
+		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "VisionCameraDynamsoftLabelRecognizer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511ED1A9E6C8500147676 /* Debug */,
@@ -276,7 +276,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "VisionCameraDynamsoftDocumentNormalizer" */ = {
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "VisionCameraDynamsoftLabelRecognizer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,

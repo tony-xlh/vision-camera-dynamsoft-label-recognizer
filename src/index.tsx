@@ -8,7 +8,7 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
-const VisionCameraDynamsoftDocumentNormalizer = NativeModules.VisionCameraDynamsoftDocumentNormalizer  ? NativeModules.VisionCameraDynamsoftDocumentNormalizer  : new Proxy(
+const VisionCameraDynamsoftLabelRecognizer = NativeModules.VisionCameraDynamsoftLabelRecognizer  ? NativeModules.VisionCameraDynamsoftLabelRecognizer  : new Proxy(
       {},
       {
         get() {
@@ -21,35 +21,35 @@ const VisionCameraDynamsoftDocumentNormalizer = NativeModules.VisionCameraDynams
  * Init the license of Dynamsoft Document Normalizer
  */
 export function initLicense(license:string): Promise<boolean> {
-  return VisionCameraDynamsoftDocumentNormalizer.initLicense(license);
+  return VisionCameraDynamsoftLabelRecognizer.initLicense(license);
 }
 
 /**
  * Init the runtime settings from a JSON template
  */
 export function initRuntimeSettingsFromString(template:string): Promise<boolean> {
-  return VisionCameraDynamsoftDocumentNormalizer.initRuntimeSettingsFromString(template);
+  return VisionCameraDynamsoftLabelRecognizer.initRuntimeSettingsFromString(template);
 }
 
 /**
  * Detect documents in an image file
  */
 export function detectFile(url:string): Promise<DetectedQuadResult[]> {
-  return VisionCameraDynamsoftDocumentNormalizer.detectFile(url);
+  return VisionCameraDynamsoftLabelRecognizer.detectFile(url);
 }
 
 /**
  * Normalize an image file
  */
 export function normalizeFile(url:string, quad:Quadrilateral, config: NormalizationConfig): Promise<NormalizedImageResult> {
-  return VisionCameraDynamsoftDocumentNormalizer.normalizeFile(url, quad, config);
+  return VisionCameraDynamsoftLabelRecognizer.normalizeFile(url, quad, config);
 }
 
 /**
  * Rotate an image file. Android only.
  */
  export function rotateFile(url:string, degrees:number): Promise<NormalizedImageResult> {
-  return VisionCameraDynamsoftDocumentNormalizer.rotateFile(url, degrees);
+  return VisionCameraDynamsoftLabelRecognizer.rotateFile(url, degrees);
 }
 
 /**

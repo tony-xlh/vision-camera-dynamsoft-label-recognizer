@@ -1,6 +1,6 @@
 //
 //  DetectionFrameProcessorPlugin.swift
-//  VisionCameraDynamsoftDocumentNormalizer
+//  VisionCameraDynamsoftLabelRecognizer
 //
 //  Created by xulihang on 2022/11/4.
 //  Copyright © 2022 Facebook. All rights reserved.
@@ -25,7 +25,7 @@ public class DetectionFrameProcessorPlugin: FrameProcessorPlugin {
         var returned_results: [Any] = []
         let image = UIImage(cgImage: cgImage)
         
-        let results = try? VisionCameraDynamsoftDocumentNormalizer.ddn.detectQuadFromImage(image)
+        let results = try? VisionCameraDynamsoftLabelRecognizer.ddn.detectQuadFromImage(image)
         if results != nil {
             for result in results! {
                 returned_results.append(Utils.wrapDetectionResult(result:result))

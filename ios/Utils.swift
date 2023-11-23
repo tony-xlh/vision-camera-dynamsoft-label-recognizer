@@ -1,13 +1,13 @@
 //
 //  Utils.swift
-//  VisionCameraDynamsoftDocumentNormalizer
+//  VisionCameraDynamsoftLabelRecognizer
 //
 //  Created by xulihang on 2022/11/4.
 //  Copyright © 2022 Facebook. All rights reserved.
 //
 
 import Foundation
-import DynamsoftDocumentNormalizer
+import DynamsoftLabelRecognizer
 
 class Utils {
     

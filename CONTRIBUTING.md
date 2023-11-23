@@ -51,9 +51,9 @@ Remember to add tests for your change if possible. Run the unit tests by:
 yarn test
 ```
 
-To edit the Objective-C files, open `example/ios/VisionCameraDynamsoftDocumentNormalizerExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > VisionCameraDynamsoftDocumentNormalizer`.
+To edit the Objective-C files, open `example/ios/VisionCameraDynamsoftLabelRecognizerExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > VisionCameraDynamsoftLabelRecognizer`.
 
-To edit the Kotlin files, open `example/android` in Android studio and find the source files at `visioncameradynamsoftdocumentnormalizer` under `Android`.
+To edit the Kotlin files, open `example/android` in Android studio and find the source files at `visioncameradynamsoftlabelrecognizer` under `Android`.
 
 ### Commit message convention
 

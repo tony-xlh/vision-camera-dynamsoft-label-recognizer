@@ -1,4 +1,4 @@
-package com.visioncameradynamsoftdocumentnormalizer;
+package com.visioncameradynamsoftlabelrecognizer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,8 +15,8 @@ import com.dynamsoft.core.LicenseManager;
 import com.dynamsoft.core.LicenseVerificationListener;
 import com.dynamsoft.core.Quadrilateral;
 import com.dynamsoft.ddn.DetectedQuadResult;
-import com.dynamsoft.ddn.DocumentNormalizer;
-import com.dynamsoft.ddn.DocumentNormalizerException;
+import com.dynamsoft.ddn.LabelRecognizer;
+import com.dynamsoft.ddn.LabelRecognizerException;
 import com.dynamsoft.ddn.NormalizedImageResult;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -31,12 +31,12 @@ import com.facebook.react.module.annotations.ReactModule;
 import java.io.File;
 import java.io.FileOutputStream;
 
-@ReactModule(name = VisionCameraDynamsoftDocumentNormalizerModule.NAME)
-public class VisionCameraDynamsoftDocumentNormalizerModule extends ReactContextBaseJavaModule {
-    public static final String NAME = "VisionCameraDynamsoftDocumentNormalizer";
+@ReactModule(name = VisionCameraDynamsoftLabelRecognizerModule.NAME)
+public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBaseJavaModule {
+    public static final String NAME = "VisionCameraDynamsoftLabelRecognizer";
     private Context mContext;
-    public static DocumentNormalizer ddn;
-    public VisionCameraDynamsoftDocumentNormalizerModule(ReactApplicationContext reactContext) {
+    public static LabelRecognizer ddn;
+    public VisionCameraDynamsoftLabelRecognizerModule(ReactApplicationContext reactContext) {
         super(reactContext);
         mContext = reactContext;
         initDDN();
@@ -44,8 +44,8 @@ public class VisionCameraDynamsoftDocumentNormalizerModule extends ReactContextB
 
     private void initDDN(){
         try {
-            ddn = new DocumentNormalizer();
-        } catch (DocumentNormalizerException e) {
+            ddn = new LabelRecognizer();
+        } catch (LabelRecognizerException e) {
             e.printStackTrace();
         }
     }
@@ -53,7 +53,7 @@ public class VisionCameraDynamsoftDocumentNormalizerModule extends ReactContextB
     public Context getContext(){
         return mContext;
     }
-    public DocumentNormalizer getDDN(){
+    public LabelRecognizer getDDN(){
         return ddn;
     }
 
@@ -84,7 +84,7 @@ public class VisionCameraDynamsoftDocumentNormalizerModule extends ReactContextB
         try {
             ddn.initRuntimeSettingsFromString(template);
             promise.resolve(true);
-        } catch (DocumentNormalizerException e) {
+        } catch (LabelRecognizerException e) {
             e.printStackTrace();
             promise.reject("DDN",e.getMessage());
         }
@@ -169,8 +169,8 @@ public class VisionCameraDynamsoftDocumentNormalizerModule extends ReactContextB
             }
         } catch (Exception e) {
             e.printStackTrace();
-            if (e instanceof DocumentNormalizerException) {
-                Log.d("DDN","Error code: "+((DocumentNormalizerException) e).getErrorCode());
+            if (e instanceof LabelRecognizerException) {
+                Log.d("DDN","Error code: "+((LabelRecognizerException) e).getErrorCode());
             }
             promise.reject("DDN",e.getMessage());
             return;

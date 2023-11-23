@@ -1,4 +1,4 @@
-package com.visioncameradynamsoftdocumentnormalizer;
+package com.visioncameradynamsoftlabelrecognizer;
 
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.dynamsoft.ddn.DetectedQuadResult;
-import com.dynamsoft.ddn.DocumentNormalizer;
+import com.dynamsoft.ddn.LabelRecognizer;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.mrousavy.camera.frameprocessor.Frame;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 public class VisionCameraDetectionPlugin extends FrameProcessorPlugin {
-    private DocumentNormalizer ddn = VisionCameraDynamsoftDocumentNormalizerModule.ddn;
+    private LabelRecognizer ddn = VisionCameraDynamsoftLabelRecognizerModule.ddn;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable

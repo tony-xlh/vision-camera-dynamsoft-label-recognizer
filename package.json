@@ -14,7 +14,7 @@
     "android",
     "ios",
     "cpp",
-    "VisionCameraDynamsoftDocumentNormalizer.podspec",
+    "VisionCameraDynamsoftLabelRecognizer.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",

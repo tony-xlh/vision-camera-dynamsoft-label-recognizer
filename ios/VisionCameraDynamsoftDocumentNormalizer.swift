@@ -1,14 +1,14 @@
-import DynamsoftDocumentNormalizer
+import DynamsoftLabelRecognizer
 
-@objc(VisionCameraDynamsoftDocumentNormalizer)
-class VisionCameraDynamsoftDocumentNormalizer: NSObject,LicenseVerificationListener  {
-    static var ddn:DynamsoftDocumentNormalizer = DynamsoftDocumentNormalizer()
+@objc(VisionCameraDynamsoftLabelRecognizer)
+class VisionCameraDynamsoftLabelRecognizer: NSObject,LicenseVerificationListener  {
+    static var ddn:DynamsoftLabelRecognizer = DynamsoftLabelRecognizer()
     var licenseResolveBlock:RCTPromiseResolveBlock!;
     var licenseRejectBlock:RCTPromiseRejectBlock!;
     @objc(initRuntimeSettingsFromString:withResolver:withRejecter:)
     func initRuntimeSettingsFromString(template:String, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
         do {
-            try VisionCameraDynamsoftDocumentNormalizer.ddn.initRuntimeSettingsFromString(template)
+            try VisionCameraDynamsoftLabelRecognizer.ddn.initRuntimeSettingsFromString(template)
             resolve(true)
         }catch {
             print("Unexpected error: \(error).")
@@ -25,7 +25,7 @@ class VisionCameraDynamsoftDocumentNormalizer: NSObject,LicenseVerificationListe
         var image = UIImage(contentsOfFile: imageURL.path)!
         image = BitmapUtils.normalizedImage(image)
         
-        let results = try? VisionCameraDynamsoftDocumentNormalizer.ddn.detectQuadFromImage(image)
+        let results = try? VisionCameraDynamsoftLabelRecognizer.ddn.detectQuadFromImage(image)
         
         if results != nil {
             for result in results! {
@@ -82,7 +82,7 @@ class VisionCameraDynamsoftDocumentNormalizer: NSObject,LicenseVerificationListe
             data.height = image.cgImage!.height
             data.format = pixelFormat
             
-            let normalizedImageResult = try VisionCameraDynamsoftDocumentNormalizer.ddn.normalizeBuffer(data, quad: quadrilateral)
+            let normalizedImageResult = try VisionCameraDynamsoftLabelRecognizer.ddn.normalizeBuffer(data, quad: quadrilateral)
             //print("normalized image width: ")
             //print(normalizedImageResult.image.width)
             

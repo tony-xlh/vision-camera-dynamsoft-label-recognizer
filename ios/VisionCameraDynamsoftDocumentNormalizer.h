@@ -1,13 +1,13 @@
 //
-//  VisionCameraDynamsoftDocumentNormalizer.h
-//  VisionCameraDynamsoftDocumentNormalizer
+//  VisionCameraDynamsoftLabelRecognizer.h
+//  VisionCameraDynamsoftLabelRecognizer
 //
 //  Created by 徐力航 on 2023/11/22.
 //  Copyright © 2023 Facebook. All rights reserved.
 //
 
-#ifndef VisionCameraDynamsoftDocumentNormalizer_h
-#define VisionCameraDynamsoftDocumentNormalizer_h
+#ifndef VisionCameraDynamsoftLabelRecognizer_h
+#define VisionCameraDynamsoftLabelRecognizer_h
 
 
-#endif /* VisionCameraDynamsoftDocumentNormalizer_h */
+#endif /* VisionCameraDynamsoftLabelRecognizer_h */

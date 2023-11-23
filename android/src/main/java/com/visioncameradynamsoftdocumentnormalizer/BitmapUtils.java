@@ -1,4 +1,4 @@
-package com.visioncameradynamsoftdocumentnormalizer;
+package com.visioncameradynamsoftlabelrecognizer;
 
 /*
  * Copyright 2020 Google LLC. All rights reserved.

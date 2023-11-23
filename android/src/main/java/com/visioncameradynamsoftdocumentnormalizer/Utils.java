@@ -1,4 +1,4 @@
-package com.visioncameradynamsoftdocumentnormalizer;
+package com.visioncameradynamsoftlabelrecognizer;
 
 import android.graphics.Point;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.visioncameradynamsoftdocumentnormalizerexample;
+package com.visioncameradynamsoftlabelrecognizerexample;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

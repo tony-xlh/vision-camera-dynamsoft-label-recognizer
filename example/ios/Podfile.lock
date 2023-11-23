@@ -3,7 +3,7 @@ PODS:
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - DynamsoftCore (2.0.2)
-  - DynamsoftDocumentNormalizer (1.0.30):
+  - DynamsoftLabelRecognizer (1.0.30):
     - DynamsoftCore (>= 2.0.0)
     - DynamsoftImageProcessing
     - DynamsoftIntermediateResult
@@ -506,9 +506,9 @@ PODS:
     - React-callinvoker
     - React-Core
     - react-native-worklets-core
-  - VisionCameraDynamsoftDocumentNormalizer (1.0.3):
+  - VisionCameraDynamsoftLabelRecognizer (1.0.3):
     - DynamsoftCore (= 2.0.2)
-    - DynamsoftDocumentNormalizer (= 1.0.30)
+    - DynamsoftLabelRecognizer (= 1.0.30)
     - DynamsoftImageProcessing (= 1.0.30)
     - DynamsoftIntermediateResult (= 1.0.30)
     - React-Core
@@ -583,14 +583,14 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
-  - VisionCameraDynamsoftDocumentNormalizer (from `../node_modules/vision-camera-dynamsoft-document-normalizer`)
+  - VisionCameraDynamsoftLabelRecognizer (from `../node_modules/vision-camera-dynamsoft-document-normalizer`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - CocoaAsyncSocket
     - DynamsoftCore
-    - DynamsoftDocumentNormalizer
+    - DynamsoftLabelRecognizer
     - DynamsoftImageProcessing
     - DynamsoftIntermediateResult
     - Flipper
@@ -693,7 +693,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   VisionCamera:
     :path: "../node_modules/react-native-vision-camera"
-  VisionCameraDynamsoftDocumentNormalizer:
+  VisionCameraDynamsoftLabelRecognizer:
     :path: "../node_modules/vision-camera-dynamsoft-document-normalizer"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
@@ -703,7 +703,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   DynamsoftCore: 80c01db1e40dd019d50b9c07bff50c73fcb06d03
-  DynamsoftDocumentNormalizer: c316039c6209200d068231ff676da81af75e7778
+  DynamsoftLabelRecognizer: c316039c6209200d068231ff676da81af75e7778
   DynamsoftImageProcessing: ffed5d46c90d8857f3e65194947b8447a10629b3
   DynamsoftIntermediateResult: b611948b62c0c48e2a5d247bcc1ec31a03b670ff
   FBLazyVector: 71803c074f6325f10b5ec891c443b6bbabef0ca7
@@ -758,7 +758,7 @@ SPEC CHECKSUMS:
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   VisionCamera: ce927c396e1057199dd01bf412ba3777d900e166
-  VisionCameraDynamsoftDocumentNormalizer: 384d76756bbc105155afb56be3ec1def4f909989
+  VisionCameraDynamsoftLabelRecognizer: 384d76756bbc105155afb56be3ec1def4f909989
   Yoga: 86fed2e4d425ee4c6eab3813ba1791101ee153c6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

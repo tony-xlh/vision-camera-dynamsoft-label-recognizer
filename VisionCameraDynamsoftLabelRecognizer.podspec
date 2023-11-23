@@ -3,7 +3,7 @@ require "json"
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
 Pod::Spec.new do |s|
-  s.name         = "VisionCameraDynamsoftDocumentNormalizer"
+  s.name         = "VisionCameraDynamsoftLabelRecognizer"
   s.version      = package["version"]
   s.summary      = package["description"]
   s.homepage     = package["homepage"]
@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.dependency "DynamsoftCore", "= 2.0.2"
   s.dependency "DynamsoftImageProcessing", "= 1.0.30"
   s.dependency "DynamsoftIntermediateResult", "= 1.0.30"
-  s.dependency "DynamsoftDocumentNormalizer", "= 1.0.30"
+  s.dependency "DynamsoftLabelRecognizer", "= 1.0.30"
 end
