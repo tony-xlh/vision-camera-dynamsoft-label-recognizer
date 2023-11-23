@@ -1,9 +1,9 @@
+import { VisionCameraProxy, type Frame } from 'react-native-vision-camera'
 import { NativeModules, Platform } from 'react-native';
-import {VisionCameraProxy,  Frame} from 'react-native-vision-camera';
-
-
+import type { CustomModelConfig, ScanConfig, ScanResult } from './Definitions';
+export * from './Definitions';
 const LINKING_ERROR =
-  `The package 'vision-camera-dynamsoft-document-normalizer' doesn't seem to be linked. Make sure: \n\n` +
+  `The package 'vision-camera-dynamsoft-label-recognizer' doesn't seem to be linked. Make sure: \n\n` +
   Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
@@ -18,86 +18,58 @@ const VisionCameraDynamsoftLabelRecognizer = NativeModules.VisionCameraDynamsoft
     );
 
 /**
- * Init the license of Dynamsoft Document Normalizer
+ * Initialize the license of Dynamsoft Label Recognizer
  */
 export function initLicense(license:string): Promise<boolean> {
   return VisionCameraDynamsoftLabelRecognizer.initLicense(license);
 }
 
 /**
- * Init the runtime settings from a JSON template
+ * Update the runtime settings with a template
  */
-export function initRuntimeSettingsFromString(template:string): Promise<boolean> {
-  return VisionCameraDynamsoftLabelRecognizer.initRuntimeSettingsFromString(template);
+export function updateTemplate(template:string): Promise<boolean> {
+  return VisionCameraDynamsoftLabelRecognizer.updateTemplate(template);
 }
 
 /**
- * Detect documents in an image file
+ * Reset the runtime settings
  */
-export function detectFile(url:string): Promise<DetectedQuadResult[]> {
-  return VisionCameraDynamsoftLabelRecognizer.detectFile(url);
+export function resetRuntimeSettings(): Promise<boolean> {
+  return VisionCameraDynamsoftLabelRecognizer.resetRuntimeSettings();
 }
 
 /**
- * Normalize an image file
+ * Use a custom model
  */
-export function normalizeFile(url:string, quad:Quadrilateral, config: NormalizationConfig): Promise<NormalizedImageResult> {
-  return VisionCameraDynamsoftLabelRecognizer.normalizeFile(url, quad, config);
+export function useCustomModel(config:CustomModelConfig): Promise<boolean> {
+  return VisionCameraDynamsoftLabelRecognizer.useCustomModel(config);
 }
 
 /**
- * Rotate an image file. Android only.
+ * Recognize text from base64
  */
- export function rotateFile(url:string, degrees:number): Promise<NormalizedImageResult> {
-  return VisionCameraDynamsoftLabelRecognizer.rotateFile(url, degrees);
+export function decodeBase64(base64:string): Promise<ScanResult> {
+  return VisionCameraDynamsoftLabelRecognizer.decodeBase64(base64);
 }
+
+const plugin = VisionCameraProxy.initFrameProcessorPlugin('recognize')
 
 /**
- * Config of whether to save the normalized as a file and base64.
+ * Recognize text from the camera preview
  */
-export interface NormalizationConfig{
-  saveNormalizationResultAsFile?: boolean;
-  includeNormalizationResultAsBase64?: boolean;
-}
-
-/**
- * Normalization result containing the image path or base64
- */
-export interface NormalizedImageResult {
-  imageURL?: string;
-  imageBase64?: string;
-}
-
-export interface DetectedQuadResult {
-  location: Quadrilateral;
-  confidenceAsDocumentBoundary: number;
-}
-
-export interface Point {
-  x:number;
-  y:number;
-}
-
-export interface Quadrilateral {
-  points: [Point, Point, Point, Point];
-}
-
-export interface Rect {
-  left:number;
-  right:number;
-  top:number;
-  bottom:number;
-  width:number;
-  height:number;
-}
-
-const plugin = VisionCameraProxy.initFrameProcessorPlugin('detect')
-
-/**
- * Detect documents from the camera preview
- */
-export function detect(frame: Frame): DetectedQuadResult[] {
+export function recognize(frame: Frame,config: ScanConfig): ScanResult {
   'worklet'
-  if (plugin == null) throw new Error('Failed to load Frame Processor Plugin "decode"!')
-  return plugin.call(frame) as any;
+  if (plugin == null) throw new Error('Failed to load Frame Processor Plugin "recognize"!')
+  if (config) {
+    let record:Record<string,any> = {};
+    if (config.includeImageBase64 != undefined && config.includeImageBase64 != null) {
+      record["includeImageBase64"] = config.includeImageBase64;
+    }
+    if (config.scanRegion) {
+      record["scanRegion"] = config.scanRegion;
+    }
+    return plugin.call(frame,record) as any;
+  }else{
+    return plugin.call(frame) as any;
+  }
 }
