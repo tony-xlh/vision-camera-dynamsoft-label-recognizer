@@ -30,7 +30,7 @@ import java.io.IOException;
 @ReactModule(name = VisionCameraDynamsoftLabelRecognizerModule.NAME)
 public class VisionCameraDynamsoftLabelRecognizerModule extends ReactContextBaseJavaModule {
     public static final String NAME = "VisionCameraDynamsoftLabelRecognizer";
-    private LabelRecognizer recognizer = null;
+    public static LabelRecognizer recognizer = null;
     private LabelRecognizerManager manager = null;
     private ReactApplicationContext mContext;
     public VisionCameraDynamsoftLabelRecognizerModule(ReactApplicationContext reactContext) {

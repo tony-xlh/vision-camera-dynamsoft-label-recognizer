@@ -184,7 +184,7 @@ export default function ScannerScreen({route}) {
       console.log("frame height:"+frame.height);
       config.scanRegion = scanRegion;
       config.includeImageBase64 = true;
-      let scanResult = recognize(frame,config);
+      let scanResult = recognize(frame,{});
 
       let results:DLRResult[] = scanResult.results;
       let lineResults:DLRLineResult[] = [];
@@ -224,6 +224,7 @@ export default function ScannerScreen({route}) {
         device={device}
         isActive={isActive}
         frameProcessor={frameProcessor}
+        pixelFormat='yuv'
         >
         </Camera>
         <Svg preserveAspectRatio='xMidYMid slice' style={StyleSheet.absoluteFill} viewBox={getViewBox()}>
