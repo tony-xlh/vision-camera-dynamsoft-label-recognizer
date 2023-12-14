@@ -200,7 +200,7 @@ export default function ScannerScreen({route}) {
 
       console.log(results);
       if (modalVisibleShared.value === false) { //check is modal visible again since the recognizing process takes time
-        if (lineResults.length === 2 || (useCase != 0 && lineResults.length>0)) {
+        if (lineResults.length >= 2 || (useCase != 0 && lineResults.length>0)) {
           if (scanResult.imageBase64) {
             console.log("has image: ");
             setImageDataJS("data:image/jpeg;base64,"+scanResult.imageBase64);
