@@ -3,7 +3,7 @@ import * as React from 'react';
 import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform, Dimensions } from 'react-native';
 import { recognize, ScanConfig, ScanRegion, DLRCharacherResult, DLRLineResult, DLRResult } from 'vision-camera-dynamsoft-label-recognizer';
 import * as DLR from 'vision-camera-dynamsoft-label-recognizer';
-import { Camera, useCameraDevice, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
+import { Camera, useCameraDevice, useCameraDevices, useCameraFormat, useFrameProcessor } from 'react-native-vision-camera';
 import { Svg, Image, Rect, Circle } from 'react-native-svg';
 import Clipboard from '@react-native-community/clipboard';
 import { Worklets, useSharedValue } from 'react-native-worklets-core';
@@ -35,7 +35,10 @@ export default function ScannerScreen({route}) {
   const [frameHeight, setFrameHeight] = React.useState(720);
   const [recognitionResults, setRecognitionResults] = React.useState([] as DLRLineResult[]);
   const device = useCameraDevice("back");
-  
+  const format = useCameraFormat(device, [
+    { videoResolution: { width: 1920, height: 1080 } },
+    { fps: 30 }
+  ])
   React.useEffect(() => {
     (async () => {
       console.log("mounted");
@@ -224,6 +227,7 @@ export default function ScannerScreen({route}) {
         device={device}
         isActive={isActive}
         frameProcessor={frameProcessor}
+        format={format}
         pixelFormat='yuv'
         >
         </Camera>
