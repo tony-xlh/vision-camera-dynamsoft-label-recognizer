@@ -15,7 +15,7 @@ import java.util.List;
 
 public class VisionCameraDynamsoftLabelRecognizerPackage implements ReactPackage {
     static {
-        FrameProcessorPluginRegistry.addFrameProcessorPlugin("recognize", options -> new VisionCameraDLRPlugin());
+        FrameProcessorPluginRegistry.addFrameProcessorPlugin("recognize", VisionCameraDLRPlugin::new);
     }
     @NonNull
     @Override

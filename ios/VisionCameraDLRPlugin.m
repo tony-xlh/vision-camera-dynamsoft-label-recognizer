@@ -19,10 +19,10 @@
 
 + (void)load
 {
-  [FrameProcessorPluginRegistry addFrameProcessorPlugin:@"recognize"
-                                        withInitializer:^FrameProcessorPlugin* (NSDictionary* options) {
-    return [[VisionCameraDLRPlugin alloc] init];
-  }];
+    [FrameProcessorPluginRegistry addFrameProcessorPlugin:@"recognize"
+                                        withInitializer:^FrameProcessorPlugin* (VisionCameraProxyHolder* proxy, NSDictionary* options) {
+        return [[VisionCameraDLRPlugin alloc] initWithProxy:proxy withOptions:options];
+    }];
 }
 
 @end

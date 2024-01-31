@@ -11,6 +11,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.mrousavy.camera.frameprocessor.Frame;
 import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
 import com.dynamsoft.dlr.*;
+import com.mrousavy.camera.frameprocessor.VisionCameraProxy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,8 +59,6 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         return scanResult;
     }
 
+    VisionCameraDLRPlugin(@NonNull VisionCameraProxy proxy, @Nullable Map<String, Object> options) {super();}
 
-    VisionCameraDLRPlugin() {
-        super(null);
-    }
 }

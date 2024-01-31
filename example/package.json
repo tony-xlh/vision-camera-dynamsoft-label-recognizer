@@ -16,7 +16,7 @@
     "@react-navigation/native-stack": "^6.5.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
-    "react-native-vision-camera": "^3.6.4",
+    "react-native-vision-camera": "^3.8.2",
     "react-native-worklets-core": "^0.2.4",
     "react-native-image-picker": "^7.0.2",
     "react-native-safe-area-context": "^3.3.2",
