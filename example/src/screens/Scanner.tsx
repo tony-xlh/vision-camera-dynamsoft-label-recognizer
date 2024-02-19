@@ -3,7 +3,7 @@ import * as React from 'react';
 import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform, Dimensions } from 'react-native';
 import { recognize, ScanConfig, ScanRegion, DLRCharacherResult, DLRLineResult, DLRResult } from 'vision-camera-dynamsoft-label-recognizer';
 import * as DLR from 'vision-camera-dynamsoft-label-recognizer';
-import { Camera, runAsync, useCameraDevice, useCameraDevices, useCameraFormat, useFrameProcessor } from 'react-native-vision-camera';
+import { Camera, runAsync, runAtTargetFps, useCameraDevice, useCameraDevices, useCameraFormat, useFrameProcessor } from 'react-native-vision-camera';
 import { Svg, Image, Rect, Circle } from 'react-native-svg';
 import Clipboard from '@react-native-community/clipboard';
 import { Worklets, useSharedValue } from 'react-native-worklets-core';
@@ -179,7 +179,7 @@ export default function ScannerScreen({route}) {
   const frameProcessor = useFrameProcessor((frame) => {
     'worklet'
     if (modalVisibleShared.value === false && mounted.value) {
-      runAsync(frame, () => {
+      runAtTargetFps(1, () => {
         'worklet'
         updateFrameSizeJS(frame.width, frame.height);
 

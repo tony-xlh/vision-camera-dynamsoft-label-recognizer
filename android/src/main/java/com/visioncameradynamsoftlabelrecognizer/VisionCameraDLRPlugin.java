@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.mrousavy.camera.core.FrameInvalidError;
 import com.mrousavy.camera.frameprocessor.Frame;
 import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
 import com.dynamsoft.dlr.*;
@@ -51,7 +52,7 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
                     scanResult.put("imageBase64",Utils.bitmap2Base64(bm));
                 }
             }
-        } catch (LabelRecognizerException e) {
+        } catch (LabelRecognizerException | FrameInvalidError e) {
             e.printStackTrace();
             Log.d("DLR",e.getMessage());
         }
