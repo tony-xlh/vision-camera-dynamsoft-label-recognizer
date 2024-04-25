@@ -9,10 +9,10 @@ import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.mrousavy.camera.core.FrameInvalidError;
-import com.mrousavy.camera.frameprocessor.Frame;
-import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
+import com.mrousavy.camera.frameprocessors.Frame;
+import com.mrousavy.camera.frameprocessors.FrameProcessorPlugin;
 import com.dynamsoft.dlr.*;
-import com.mrousavy.camera.frameprocessor.VisionCameraProxy;
+import com.mrousavy.camera.frameprocessors.VisionCameraProxy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

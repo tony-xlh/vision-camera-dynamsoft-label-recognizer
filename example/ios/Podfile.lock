@@ -382,7 +382,7 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
-  - react-native-worklets-core (0.2.4):
+  - react-native-worklets-core (1.1.1):
     - React
     - React-callinvoker
     - React-Core
@@ -504,12 +504,19 @@ PODS:
   - RNSVG (13.14.0):
     - React-Core
   - SocketRocket (0.6.1)
-  - VisionCamera (3.9.0):
+  - VisionCamera (4.0.1):
+    - VisionCamera/Core (= 4.0.1)
+    - VisionCamera/FrameProcessors (= 4.0.1)
+    - VisionCamera/React (= 4.0.1)
+  - VisionCamera/Core (4.0.1)
+  - VisionCamera/FrameProcessors (4.0.1):
     - React
     - React-callinvoker
-    - React-Core
     - react-native-worklets-core
-  - VisionCameraDynamsoftLabelRecognizer (1.1.0):
+  - VisionCamera/React (4.0.1):
+    - React-Core
+    - VisionCamera/FrameProcessors
+  - VisionCameraDynamsoftLabelRecognizer (1.2.0):
     - DynamsoftCore (= 2.0.2)
     - DynamsoftLabelRecognizer (= 2.2.20)
     - React-Core
@@ -744,7 +751,7 @@ SPEC CHECKSUMS:
   React-logger: 2e4aee3e11b3ec4fa6cfd8004610bbb3b8d6cca4
   react-native-image-picker: 2381c008bbb09e72395a2d043c147b11bd1523d9
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
-  react-native-worklets-core: b4094f51cb2bc649e297206425cb8956f4945e3e
+  react-native-worklets-core: ff2156b19b8f4a979fa0db52659e39a755b1454b
   React-NativeModulesApple: 797bc6078d566eef3fb3f74127e6e1d2e945a15f
   React-perflogger: cd8886513f68e1c135a1e79d20575c6489641597
   React-RCTActionSheet: 726d2615ca62a77ce3e2c13d87f65379cdc73498
@@ -766,11 +773,11 @@ SPEC CHECKSUMS:
   RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  VisionCamera: 72ec2908dff5de402074d0cfd41932cd33c1fe65
-  VisionCameraDynamsoftLabelRecognizer: d3bef65e18f7fa15d0e7f9e9037fb2f24b6fd6cf
+  VisionCamera: 8e00df84a76cf26ca70ecd3b6ed05dc0d3b60beb
+  VisionCameraDynamsoftLabelRecognizer: e5c8c681137b1604b6aa2d23bbaeec1a7f3b1a2d
   Yoga: 86fed2e4d425ee4c6eab3813ba1791101ee153c6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: f4ed5ec5bcef8eecfb68b63346444d34e3ab44a3
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.15.2

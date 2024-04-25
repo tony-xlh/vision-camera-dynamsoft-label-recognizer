@@ -171,10 +171,10 @@ export default function ScannerScreen({route}) {
     return value;
   }
 
-  const updateFrameSizeJS = Worklets.createRunInJsFn(updateFrameSize);
-  const setImageDataJS = Worklets.createRunInJsFn(setImageData);
-  const setRecognitionResultsJS = Worklets.createRunInJsFn(setRecognitionResults);
-  const setModalVisibleJS = Worklets.createRunInJsFn(setModalVisible);
+  const updateFrameSizeJS = Worklets.createRunOnJS(updateFrameSize);
+  const setImageDataJS = Worklets.createRunOnJS(setImageData);
+  const setRecognitionResultsJS = Worklets.createRunOnJS(setRecognitionResults);
+  const setModalVisibleJS = Worklets.createRunOnJS(setModalVisible);
 
   const frameProcessor = useFrameProcessor((frame) => {
     'worklet'
