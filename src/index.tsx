@@ -52,7 +52,7 @@ export function decodeBase64(base64:string): Promise<ScanResult> {
   return VisionCameraDynamsoftLabelRecognizer.decodeBase64(base64);
 }
 
-const plugin = VisionCameraProxy.initFrameProcessorPlugin('recognize')
+const plugin = VisionCameraProxy.initFrameProcessorPlugin('recognize',{})
 
 /**
  * Recognize text from the camera preview
