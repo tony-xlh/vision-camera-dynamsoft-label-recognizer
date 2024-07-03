@@ -1,20 +1,31 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ScannerScreen from './screens/Scanner';
-import HomeScreen from './screens/Home';
-import ImageReaderScreen from './screens/ImageReader';
 
-const Stack = createNativeStackNavigator();
+import { StyleSheet, View, Text } from 'react-native';
+import { multiply } from 'vision-camera-dynamsoft-label-recognizer';
 
 export default function App() {
+  const [result, setResult] = React.useState<number | undefined>();
+
+  React.useEffect(() => {
+    multiply(3, 7).then(setResult);
+  }, []);
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Scanner" component={ScannerScreen} />
-        <Stack.Screen name="ImageReader" component={ImageReaderScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text>Result: {result}</Text>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  box: {
+    width: 60,
+    height: 60,
+    marginVertical: 20,
+  },
+});
