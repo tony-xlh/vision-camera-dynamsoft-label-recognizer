@@ -154,8 +154,18 @@ export default function ScannerScreen({route}) {
 
   const HasRotation = () => {
     let value = false
-    if (!(frameWidth>frameHeight && Dimensions.get('window').width>Dimensions.get('window').height)){
-      value = true;
+    if (frameWidth>frameHeight){
+      if (Dimensions.get('window').width>Dimensions.get('window').height) {
+        value = false;
+      }else{
+        value = true;
+      }
+    }else if (frameWidth<frameHeight) {
+      if (Dimensions.get('window').width<Dimensions.get('window').height) {
+        value = false;
+      }else{
+        value = true;
+      }
     }
     return value;
   }
