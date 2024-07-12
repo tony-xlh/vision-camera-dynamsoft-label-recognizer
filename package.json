@@ -1,6 +1,6 @@
 {
   "name": "vision-camera-dynamsoft-label-recognizer",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "React Native Vision Camera Frame Processor Plugin of Dynamsoft Label Recognizer",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
