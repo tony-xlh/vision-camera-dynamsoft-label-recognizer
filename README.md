@@ -140,6 +140,12 @@ export interface DLRCharacherResult {
 * Android
 * iOS
 
+
+## Blog
+
+* [Build a Label Recognition Frame Processor Plugin for React Native Vision Camera - Android](https://www.dynamsoft.com/codepool/react-native-vision-camera-label-recognition-plugin-android.html)
+* [Build a Label Recognition Frame Processor Plugin for React Native Vision Camera - iOS](https://www.dynamsoft.com/codepool/react-native-vision-camera-label-recognition-plugin-ios.html)
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
