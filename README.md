@@ -56,7 +56,7 @@ module.exports = {
    const scanResult = await decodeBase64(base64);
    ```
 
-3. License initialization ([apply for a trial license](https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform).
+3. License initialization ([apply for a trial license](https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform)).
 
    ```ts
    await initLicense("your license");
