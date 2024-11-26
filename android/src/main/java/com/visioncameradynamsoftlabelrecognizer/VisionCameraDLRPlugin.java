@@ -7,6 +7,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.dynamsoft.cvr.CaptureVisionRouter;
+import com.dynamsoft.cvr.CapturedResult;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.mrousavy.camera.core.FrameInvalidError;
 import com.mrousavy.camera.frameprocessors.Frame;
@@ -22,7 +24,7 @@ import java.util.Map;
 public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
 
     private ReactApplicationContext context;
-    private LabelRecognizer recognizer = VisionCameraDynamsoftLabelRecognizerModule.recognizer;
+    private CaptureVisionRouter router = VisionCameraDynamsoftLabelRecognizerModule.router;
     @Nullable
     @Override
     public Object callback(@NonNull Frame frame, @Nullable Map<String, Object> arguments) {
@@ -30,6 +32,12 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
         Log.d("DLR","call back");
         Map<String, Object> scanResult = new HashMap<>();
         List<Object> array = new ArrayList<>();
+
+        String template = "ReadPassportAndId";
+        if (arguments != null && arguments.containsKey("template")) {
+          template = (String) arguments.get("template");
+        }
+
         try {
             @SuppressLint("UnsafeOptInUsageError")
             Bitmap bm = BitmapUtils.getBitmap(frame);
@@ -41,10 +49,14 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
                 double height = ((double) scanRegion.get("height")) / 100.0 * bm.getHeight();
                 bm = Bitmap.createBitmap(bm, (int) left, (int) top, (int) width, (int) height, null, false);
             }
-
-            DLRResult[] results = recognizer.recognizeImage(bm);
-            for (DLRResult result:results) {
-                array.add(Utils.getMapFromDLRResult(result).toHashMap());
+            try {
+                CapturedResult result = router.capture(bm,template);
+                RecognizedTextLinesResult linesResult = result.getRecognizedTextLinesResult();
+                if (linesResult != null) {
+                    array.add(Utils.getMapFromLinesResult(linesResult).toHashMap());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             if (arguments != null && arguments.containsKey("includeImageBase64")) {
                 boolean includeImageBase64 = (boolean) arguments.get("includeImageBase64");
@@ -52,7 +64,7 @@ public class VisionCameraDLRPlugin extends FrameProcessorPlugin {
                     scanResult.put("imageBase64",Utils.bitmap2Base64(bm));
                 }
             }
-        } catch (LabelRecognizerException | FrameInvalidError e) {
+        } catch (FrameInvalidError e) {
             e.printStackTrace();
             Log.d("DLR",e.getMessage());
         }

@@ -5,10 +5,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.util.Base64;
 
-import com.dynamsoft.core.Quadrilateral;
-import com.dynamsoft.dlr.DLRCharacterResult;
-import com.dynamsoft.dlr.DLRLineResult;
-import com.dynamsoft.dlr.DLRResult;
+import com.dynamsoft.core.basic_structures.Quadrilateral;
+import com.dynamsoft.dlr.CharacterResult;
+import com.dynamsoft.dlr.RecognizedTextLinesResult;
+import com.dynamsoft.dlr.TextLineResultItem;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 
@@ -27,45 +27,39 @@ public class Utils {
         return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
     }
 
-    public static WritableNativeMap getMapFromDLRResult(DLRResult result){
+    public static WritableNativeMap getMapFromLinesResult(RecognizedTextLinesResult linesResult){
         WritableNativeMap map = new WritableNativeMap();
-        map.putString("referenceRegionName",result.referenceRegionName);
-        map.putString("textAreaName",result.textAreaName);
-        map.putInt("confidence",result.confidence);
-        map.putInt("pageNumber",result.pageNumber);
         WritableNativeArray lineResults = new WritableNativeArray();
-        for (DLRLineResult lineResult:result.lineResults) {
+        for (TextLineResultItem lineResult:linesResult.getItems()) {
             lineResults.pushMap(getMapFromDLRLineResult(lineResult));
         }
         map.putArray("lineResults",lineResults);
-        map.putMap("location",getMapFromLocation(result.location));
         return map;
     }
 
-    private static WritableNativeMap getMapFromDLRLineResult(DLRLineResult result){
+    private static WritableNativeMap getMapFromDLRLineResult(TextLineResultItem result){
         WritableNativeMap map = new WritableNativeMap();
-        map.putString("lineSpecificationName",result.lineSpecificationName);
-        map.putString("text",result.text);
-        map.putString("characterModelName",result.characterModelName);
-        map.putMap("location",getMapFromLocation(result.location));
-        map.putInt("confidence",result.confidence);
+        map.putString("lineSpecificationName",result.getSpecificationName());
+        map.putString("text",result.getText());
+        map.putMap("location",getMapFromLocation(result.getLocation()));
+        map.putInt("confidence",result.getConfidence());
         WritableNativeArray characterResults = new WritableNativeArray();
-        for (DLRCharacterResult characterResult:result.characterResults) {
+        for (CharacterResult characterResult:result.getCharacterResults()) {
             characterResults.pushMap(getMapFromDLRCharacterResult(characterResult));
         }
         map.putArray("characterResults",characterResults);
         return map;
     }
 
-    private static WritableNativeMap getMapFromDLRCharacterResult(DLRCharacterResult result){
+    private static WritableNativeMap getMapFromDLRCharacterResult(CharacterResult result){
         WritableNativeMap map = new WritableNativeMap();
-        map.putString("characterH",String.valueOf(result.characterH));
-        map.putString("characterM",String.valueOf(result.characterM));
-        map.putString("characterL",String.valueOf(result.characterL));
-        map.putInt("characterHConfidence",result.characterHConfidence);
-        map.putInt("characterMConfidence",result.characterMConfidence);
-        map.putInt("characterLConfidence",result.characterLConfidence);
-        map.putMap("location",getMapFromLocation(result.location));
+        map.putString("characterH",String.valueOf(result.getCharacterH()));
+        map.putString("characterM",String.valueOf(result.getCharacterM()));
+        map.putString("characterL",String.valueOf(result.getCharacterL()));
+        map.putInt("characterHConfidence",result.getCharacterHConfidence());
+        map.putInt("characterMConfidence",result.getCharacterMConfidence());
+        map.putInt("characterLConfidence",result.getCharacterLConfidence());
+        map.putMap("location",getMapFromLocation(result.getLocation()));
         return map;
     }
 

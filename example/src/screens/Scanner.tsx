@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, SafeAreaView, Alert, Modal, Pressable, Text, View, Platform, Dimensions } from 'react-native';
-import { recognize, type ScanConfig, type ScanRegion, type DLRCharacherResult, type DLRLineResult, type DLRResult } from 'vision-camera-dynamsoft-label-recognizer';
+import { recognize, type ScanConfig, type ScanRegion, type DLRCharacherResult, type DLRLineResult, type DLRResult, type ScanResult } from 'vision-camera-dynamsoft-label-recognizer';
 import * as DLR from 'vision-camera-dynamsoft-label-recognizer';
 import { Camera, runAsync, runAtTargetFps, useCameraDevice, useCameraDevices, useCameraFormat, useFrameProcessor } from 'react-native-vision-camera';
 import { Svg, Image, Rect, Circle } from 'react-native-svg';
@@ -47,16 +47,6 @@ export default function ScannerScreen({route}) {
       if (result === false) {
         Alert.alert("Error","License invalid");
       }
-
-      try {
-        console.log("mrz use case");
-        await DLR.useCustomModel({customModelFolder:"MRZ",customModelFileNames:["MRZ"]});
-        await DLR.updateTemplate("{\"CharacterModelArray\":[{\"DirectoryPath\":\"\",\"Name\":\"MRZ\"}],\"LabelRecognizerParameterArray\":[{\"Name\":\"default\",\"ReferenceRegionNameArray\":[\"defaultReferenceRegion\"],\"CharacterModelName\":\"MRZ\",\"LetterHeightRange\":[5,1000,1],\"LineStringLengthRange\":[30,44],\"LineStringRegExPattern\":\"([ACI][A-Z<][A-Z<]{3}[A-Z0-9<]{9}[0-9][A-Z0-9<]{15}){(30)}|([0-9]{2}[(01-12)][(01-31)][0-9][MF<][0-9]{2}[(01-12)][(01-31)][0-9][A-Z<]{3}[A-Z0-9<]{11}[0-9]){(30)}|([A-Z<]{0,26}[A-Z]{1,3}[(<<)][A-Z]{1,3}[A-Z<]{0,26}<{0,26}){(30)}|([ACIV][A-Z<][A-Z<]{3}([A-Z<]{0,27}[A-Z]{1,3}[(<<)][A-Z]{1,3}[A-Z<]{0,27}){(31)}){(36)}|([A-Z0-9<]{9}[0-9][A-Z<]{3}[0-9]{2}[(01-12)][(01-31)][0-9][MF<][0-9]{2}[(01-12)][(01-31)][0-9][A-Z0-9<]{8}){(36)}|([PV][A-Z<][A-Z<]{3}([A-Z<]{0,35}[A-Z]{1,3}[(<<)][A-Z]{1,3}[A-Z<]{0,35}<{0,35}){(39)}){(44)}|([A-Z0-9<]{9}[0-9][A-Z<]{3}[0-9]{2}[(01-12)][(01-31)][0-9][MF<][0-9]{2}[(01-12)][(01-31)][0-9][A-Z0-9<]{14}[A-Z0-9<]{2}){(44)}\",\"MaxLineCharacterSpacing\":130,\"TextureDetectionModes\":[{\"Mode\":\"TDM_GENERAL_WIDTH_CONCENTRATION\",\"Sensitivity\":8}],\"Timeout\":9999}],\"LineSpecificationArray\":[{\"BinarizationModes\":[{\"BlockSizeX\":30,\"BlockSizeY\":30,\"Mode\":\"BM_LOCAL_BLOCK\",\"MorphOperation\":\"Close\"}],\"LineNumber\":\"\",\"Name\":\"defaultTextArea->L0\"}],\"ReferenceRegionArray\":[{\"Localization\":{\"FirstPoint\":[0,0],\"SecondPoint\":[100,0],\"ThirdPoint\":[100,100],\"FourthPoint\":[0,100],\"MeasuredByPercentage\":1,\"SourceType\":\"LST_MANUAL_SPECIFICATION\"},\"Name\":\"defaultReferenceRegion\",\"TextAreaNameArray\":[\"defaultTextArea\"]}],\"TextAreaArray\":[{\"Name\":\"defaultTextArea\",\"LineSpecificationNameArray\":[\"defaultTextArea->L0\"]}]}");
-      } catch (error:any) {
-        console.log(error);
-        Alert.alert("Error","Failed to load model.");
-      }
-    
       mounted.value = true;
     })();
     return ()=>{
@@ -66,6 +56,18 @@ export default function ScannerScreen({route}) {
       setIsActive(false);
     }
   }, []);
+
+  const convertAndSetRecognitionResults = (records:Record<string,ScanResult>) => {
+    let scanResult:ScanResult|undefined = records["0"];
+    console.log(records);
+    console.log(scanResult);
+    if (scanResult) {
+      let lineResults = scanResult.results[0]?.lineResults;
+      if (lineResults) {
+        setRecognitionResults(lineResults);
+      }
+    }
+  }
 
   const getText = () => {
     let text = "";
@@ -93,9 +95,9 @@ export default function ScannerScreen({route}) {
     let characters:React.ReactElement[] = [];
     let idx = 0;
     recognitionResults.forEach(lineResult => {
-      lineResult.characterResults.forEach(characterResult => {
+      lineResult.characterResults.forEach((characterResult,index) => {
         characters.push(<Circle 
-          key={prefix+idx}
+          key={prefix+index}
           cx={characterResult.location.points[0]!.x+offsetX} 
           cy={characterResult.location.points[3]!.y+offsetY+4} 
           r="1" stroke="blue" fill="blue"/>);
@@ -174,7 +176,8 @@ export default function ScannerScreen({route}) {
   const setImageDataJS = Worklets.createRunOnJS(setImageData);
   const setRecognitionResultsJS = Worklets.createRunOnJS(setRecognitionResults);
   const setModalVisibleJS = Worklets.createRunOnJS(setModalVisible);
-
+  const convertAndSetRecognitionResultsJS = Worklets.createRunOnJS(convertAndSetRecognitionResults);
+  
   const frameProcessor = useFrameProcessor((frame) => {
     'worklet'
     if (modalVisibleShared.value === false && mounted.value) {
@@ -189,31 +192,36 @@ export default function ScannerScreen({route}) {
         config.scanRegion = scanRegion;
         config.includeImageBase64 = true;
         let scanResult = recognize(frame,config);
-
+        //convertAndSetRecognitionResultsJS(scanResult);
         let results:DLRResult[] = scanResult.results;
+        console.log(results);
         let lineResults:DLRLineResult[] = [];
         for (let index = 0; index < results.length; index++) {
           const result = results[index];
           const lines = result?.lineResults;
           if (lines) {
             lines.forEach(line => {
+              console.log(line.text);
               lineResults.push(line);
+              line.characterResults.forEach(char => {
+                console.log(char.characterH);
+              });
             });
           }
         }
 
-        console.log(results);
         if (modalVisibleShared.value === false) { //check is modal visible again since the recognizing process takes time
-          if (lineResults.length >= 2 ) {
+          if (lineResults.length>0) {
             if (scanResult.imageBase64) {
               console.log("has image: ");
               setImageDataJS("data:image/jpeg;base64,"+scanResult.imageBase64);
             }
+
             setRecognitionResultsJS(lineResults);
             modalVisibleShared.value = true;
             setModalVisibleJS(true);
-          }  
-        }
+          }
+        }  
       })
       
     }
@@ -262,10 +270,10 @@ export default function ScannerScreen({route}) {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {renderImage()}
-            {recognitionResults.map((result) => (
-              <Text key={"line-"+result.location.points[0].x}>
-                {result.characterResults.map((char) => (
-                  <RecognizedCharacter key={"rchar-"+char.location.points[0].x} char={char}/>
+            {recognitionResults.map((result,index) => (
+              <Text key={"line-"+index}>
+                {result.characterResults.map((char,index) => (
+                  <RecognizedCharacter key={"rchar-"+index} char={char}/>
                 ))}  
               </Text>
             ))}

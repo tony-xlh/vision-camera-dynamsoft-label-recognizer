@@ -31,33 +31,26 @@ class Utils {
         return ""
     }
     
-    static func wrapDLRResult (result:iDLRResult) -> [String: Any] {
+    static func wrapLinesResult (result:RecognizedTextLinesResult) -> [String: Any] {
         var dict: [String: Any] = [:]
-        dict["confidence"] = result.confidence
-        dict["pageNumber"] = result.pageNumber
-        dict["referenceRegionName"] = result.referenceRegionName
-        dict["textAreaName"] = result.textAreaName
-        dict["location"] = wrapLocation(location:result.location)
-        
         var lineResults: [[String:Any]] = []
-        for lineResult in result.lineResults! {
+        for lineResult in result.items! {
             let lineResultDict: [String: Any] = wrapDLRLineResult(result: lineResult)
             lineResults.append(lineResultDict)
         }
         dict["lineResults"] = lineResults
-                
         return dict
     }
     
-    static private func wrapDLRLineResult (result:iDLRLineResult) -> [String: Any] {
+    static private func wrapDLRLineResult (result:TextLineResultItem) -> [String: Any] {
         var dict: [String: Any] = [:]
         dict["confidence"] = result.confidence
         dict["text"] = result.text
-        dict["characterModelName"] = result.characterModelName
-        dict["lineSpecificationName"] = result.lineSpecificationName
+        print(result.text)
+        dict["lineSpecificationName"] = result.taskName
         dict["location"] = wrapLocation(location:result.location)
         var characterResults: [[String:Any]] = []
-        for characterResult in result.characterResults! {
+        for characterResult in result.charResult! {
             let characterResultDict: [String: Any] = wrapDLRCharacterResult(result: characterResult)
             characterResults.append(characterResultDict)
         }
@@ -65,19 +58,26 @@ class Utils {
         return dict
     }
     
-    static private func wrapDLRCharacterResult (result:iDLRCharacterResult) -> [String: Any] {
+    static private func wrapDLRCharacterResult (result:CharacterResult) -> [String: Any] {
         var dict: [String: Any] = [:]
-        dict["characterH"] = result.characterH
+        
+        dict["characterH"] = convertCodeToStr(char: result.characterH)
         dict["characterHConfidence"] = result.characterHConfidence
-        dict["characterM"] = result.characterM
+        dict["characterM"] = convertCodeToStr(char: result.characterM)
         dict["characterMConfidence"] = result.characterMConfidence
-        dict["characterL"] = result.characterL
+        dict["characterL"] = convertCodeToStr(char: result.characterL)
         dict["characterLConfidence"] = result.characterLConfidence
         dict["location"] = wrapLocation(location:result.location)
         return dict
     }
+    static private func convertCodeToStr(char:UniChar) -> String{
+        var str = ""
+        str.append(Character(UnicodeScalar(char)!))
+        return str;
+    }
     
-    static private func wrapLocation (location:iQuadrilateral?) -> [String: Any] {
+    
+    static private func wrapLocation (location:Quadrilateral?) -> [String: Any] {
         var dict: [String: Any] = [:]
         var points: [[String:CGFloat]] = []
         let CGPoints = location!.points as! [CGPoint]

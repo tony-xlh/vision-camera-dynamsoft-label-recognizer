@@ -6,6 +6,7 @@ export interface ScanResult {
 export interface ScanConfig{
   scanRegion?: ScanRegion;
   includeImageBase64?: boolean;
+  template?: string;
 }
 
 export interface ScanRegion{
@@ -15,16 +16,7 @@ export interface ScanRegion{
   height: number;
 }
 
-export interface CustomModelConfig {
-  customModelFolder: string;
-  customModelFileNames: string[];
-}
-
 export interface DLRResult {
-  referenceRegionName: string;
-  textAreaName: string;
-  pageNumber: number;
-  location: Quadrilateral;
   lineResults: DLRLineResult[];
 }
 
@@ -40,7 +32,6 @@ export interface Point {
 export interface DLRLineResult {
   text: string;
   confidence: number;
-  characterModelName: string;
   characterResults: DLRCharacherResult[];
   lineSpecificationName: string;
   location: Quadrilateral;

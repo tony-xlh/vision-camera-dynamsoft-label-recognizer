@@ -97,6 +97,13 @@ dependencies {
   implementation "com.facebook.react:react-native:+"
   implementation project(':react-native-vision-camera')
   // DLR
-  implementation 'com.dynamsoft:dynamsoftlabelrecognizer:2.2.20'
+  implementation 'com.dynamsoft:dynamsoftlabelrecognizer:3.4.20'
+  implementation 'com.dynamsoft:dynamsoftcapturevisionrouter:2.4.20'
+  implementation 'com.dynamsoft:dynamsoftlicense:3.4.20'
+  implementation 'com.dynamsoft:dynamsoftcore:3.4.20'
+  implementation 'com.dynamsoft:dynamsoftneuralnetwork:1.0.20'
+  implementation 'com.dynamsoft:dynamsoftimageprocessing:2.4.20'
+  implementation 'com.dynamsoft:dynamsoftmrz:3.4.20'
+
 }
 

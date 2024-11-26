@@ -59,16 +59,25 @@ public class VisionCameraDLRPlugin: FrameProcessorPlugin {
             image = UIImage(cgImage: cropped)
             print("use cropped image")
         }
+        var templateName = "ReadPassportAndId"
+        if arguments != nil {
+            if arguments?["template"] != nil {
+                let template = arguments?["template"] as! String
+                if template != "" {
+                    templateName = template
+                }
+            }
+        }
         
         var scanResult: [String:Any] = [:]
         var returned_results: [Any] = []
-
-        let results = try? VisionCameraDynamsoftLabelRecognizer.recognizer.recognizeImage(image)
+        print("template: %s",templateName)
+        let capturedResult = VisionCameraDynamsoftLabelRecognizer.router.captureFromImage(image, templateName: templateName)
         
-        if results != nil {
-            for result in results! {
-                returned_results.append(Utils.wrapDLRResult(result:result))
-            }
+        
+        let linesResult = capturedResult.recognizedTextLinesResult
+        if linesResult != nil {
+            returned_results.append(Utils.wrapLinesResult(result:linesResult!))
         }
 
 

@@ -1,6 +1,6 @@
 import { VisionCameraProxy, type Frame } from 'react-native-vision-camera'
 import { NativeModules, Platform } from 'react-native';
-import type { CustomModelConfig, ScanConfig, ScanResult } from './Definitions';
+import type { ScanConfig, ScanResult } from './Definitions';
 export * from './Definitions';
 const LINKING_ERROR =
   `The package 'vision-camera-dynamsoft-label-recognizer' doesn't seem to be linked. Make sure: \n\n` +
@@ -25,31 +25,17 @@ export function initLicense(license:string): Promise<boolean> {
 }
 
 /**
- * Update the runtime settings with a template
- */
-export function updateTemplate(template:string): Promise<boolean> {
-  return VisionCameraDynamsoftLabelRecognizer.updateTemplate(template);
-}
-
-/**
- * Reset the runtime settings
- */
-export function resetRuntimeSettings(): Promise<boolean> {
-  return VisionCameraDynamsoftLabelRecognizer.resetRuntimeSettings();
-}
-
-/**
- * Use a custom model
- */
-export function useCustomModel(config:CustomModelConfig): Promise<boolean> {
-  return VisionCameraDynamsoftLabelRecognizer.useCustomModel(config);
-}
-
-/**
  * Recognize text from base64
  */
-export function decodeBase64(base64:string): Promise<ScanResult> {
-  return VisionCameraDynamsoftLabelRecognizer.decodeBase64(base64);
+export function decodeBase64(base64:string,template?:string): Promise<ScanResult> {
+  return VisionCameraDynamsoftLabelRecognizer.decodeBase64(base64,template ?? "ReadPassportAndId");
+}
+
+/**
+ * Update the runtime settings
+ */
+export function initRuntimeSettings(template:string): Promise<boolean> {
+  return VisionCameraDynamsoftLabelRecognizer.initRuntimeSettings(template);
 }
 
 const plugin = VisionCameraProxy.initFrameProcessorPlugin('recognize',{})
@@ -72,6 +58,9 @@ export function recognize(frame: Frame,config: ScanConfig): ScanResult {
       scanRegionRecord["width"] = config.scanRegion.width;
       scanRegionRecord["height"] = config.scanRegion.height;
       record["scanRegion"] = scanRegionRecord;
+    }
+    if (config.template) {
+      record["template"] = config.template;
     }
     return plugin.call(frame,record) as any;
   }else{
