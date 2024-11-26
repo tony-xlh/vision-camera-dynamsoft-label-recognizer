@@ -17,7 +17,7 @@ For vision-camera v4, use versions >= 2.0.0.
 
 | Product      | Android |    iOS |
 | ----------- | ----------- | -----------  |
-| Dynamsoft Label Recognizer    | 2.x       | 2.x     |
+| Dynamsoft Label Recognizer    | 3.4.20       | 3.4.20     |
 
 ## Installation
 
@@ -78,17 +78,9 @@ export interface ScanRegion{
 export interface ScanConfig{
   scanRegion?: ScanRegion;
   includeImageBase64?: boolean;
-}
-
-export interface CustomModelConfig {
-  customModelFolder: string;
-  customModelFileNames: string[];
+  template?: String;
 }
 ```
-
-You can use a custom model like a model for MRZ passport reading using the `CustomModelConfig` prop and update the template. You can find the MRZ model and template in the example.
-
-You need to put the model folder in the `assets` folder for Android or the root for iOS.
 
 About the result:
 
@@ -99,10 +91,6 @@ export interface ScanResult {
 }
 
 export interface DLRResult {
-  referenceRegionName: string;
-  textAreaName: string;
-  pageNumber: number;
-  location: Quadrilateral;
   lineResults: DLRLineResult[];
 }
 
@@ -118,7 +106,6 @@ export interface Point {
 export interface DLRLineResult {
   text: string;
   confidence: number;
-  characterModelName: string;
   characterResults: DLRCharacherResult[];
   lineSpecificationName: string;
   location: Quadrilateral;
