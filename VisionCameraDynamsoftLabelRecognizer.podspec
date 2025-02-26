@@ -15,12 +15,12 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/xulihang/vision-camera-dynamsoft-label-recognizer.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
-  s.dependency "DynamsoftCore", "= 3.4.20"
-  s.dependency "DynamsoftLicense", "= 3.4.20"
-  s.dependency "DynamsoftImageProcessing", "= 2.4.20"
-  s.dependency "DynamsoftCaptureVisionRouter", "= 2.4.20"
-  s.dependency "DynamsoftCore", "= 3.4.20"
-  s.dependency "DynamsoftLabelRecognizer", '= 3.4.20'
+  s.dependency "DynamsoftCore", "= 3.4.30"
+  s.dependency "DynamsoftLicense", "= 3.4.40"
+  s.dependency "DynamsoftImageProcessing", "= 2.4.30"
+  s.dependency "DynamsoftCaptureVisionRouter", "= 2.4.30"
+  s.dependency "DynamsoftCore", "= 3.4.30"
+  s.dependency "DynamsoftLabelRecognizer", '= 3.4.30'
   s.dependency "DynamsoftNeuralNetwork", '= 1.0.20'
   s.dependency "DynamsoftMRZ", "= 3.4.20"
 
