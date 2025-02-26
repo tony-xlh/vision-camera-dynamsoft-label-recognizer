@@ -17,7 +17,7 @@ For vision-camera v4, use versions >= 2.0.0.
 
 | Product      | Android |    iOS |
 | ----------- | ----------- | -----------  |
-| Dynamsoft Label Recognizer    | 3.4.20       | 3.4.20     |
+| Dynamsoft Label Recognizer    | 3.4       | 3.4     |
 
 ## Installation
 
