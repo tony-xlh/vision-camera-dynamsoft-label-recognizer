@@ -5,6 +5,8 @@ React Native Vision Camera Frame Processor Plugin of [Dynamsoft Label Recognizer
 
 [Demo video](https://user-images.githubusercontent.com/5462205/204175763-ea23321d-8ae1-40ea-b9ce-209bbe6405bb.mp4)
 
+If you do not want to use Vision Camera, you can use the [offical React Native package](https://github.com/Dynamsoft/capture-vision-react-native-samples) by Dynamsoft.
+
 ## Versions
 
 For vision-camera v2, use versions 0.x.
